@@ -41,3 +41,24 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3092236485
+    locked: 0
+  - name: Map
+    uniqueID: 169320981
+    locked: 0
+  - name: LevelComponent
+    uniqueID: 2729981385
+    locked: 0
+  - name: Collectables
+    uniqueID: 3803515095
+    locked: 0
+  - name: Enemy
+    uniqueID: 565287067
+    locked: 0
+  - name: Player
+    uniqueID: 3310002175
+    locked: 0
+  - name: UI
+    uniqueID: 3914710737
+    locked: 0
