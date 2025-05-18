@@ -12,8 +12,14 @@ public class CharacterMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius = 0.3f;
 
+    [Header("Bounce Settings")]
+    public float bounceForce = 5f;
+
     private Rigidbody2D rb;
     private bool isGrounded;
+    private bool wasGroundedLastFrame;
+    private bool hasBounceCharge = false;
+
     private float horizontalInput;
 
     public static CharacterMovement Instance { get; private set; }
@@ -37,36 +43,38 @@ public class CharacterMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        // Jump
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
-            Debug.Log("Jump triggered!");
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            hasBounceCharge = true; // ✅ gain 1 bounce after jump
+            Debug.Log("Jump triggered, bounce charge granted");
         }
     }
 
     void FixedUpdate()
     {
-        // Ground check using OverlapCircle
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        Debug.Log("Grounded: " + isGrounded);
 
-        // Move
+        // ✅ On landing
+        if (!wasGroundedLastFrame && isGrounded)
+        {
+            if (hasBounceCharge)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, bounceForce);
+                hasBounceCharge = false; // ✅ use up the bounce
+                Debug.Log("Bounce triggered!");
+            }
+        }
+
+        // Horizontal movement
         rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+
+        wasGroundedLastFrame = isGrounded;
     }
 
-    // Public accessors
-    public bool IsGrounded()
-    {
-        return isGrounded;
-    }
+    public bool IsGrounded() => isGrounded;
+    public float GetVerticalVelocity() => rb.velocity.y;
 
-    public float GetVerticalVelocity()
-    {
-        return rb.velocity.y;
-    }
-
-    // ✅ Visualize the ground check area in Scene View
     private void OnDrawGizmosSelected()
     {
         if (groundCheck != null)

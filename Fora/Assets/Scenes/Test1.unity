@@ -1853,7 +1853,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheck: {fileID: 1513202073}
-  groundCheckRadius: 0.54
+  groundCheckRadius: 0.5
+  bounceForce: 5
 --- !u!212 &1513202072
 SpriteRenderer:
   m_ObjectHideFlags: 0
