@@ -2,33 +2,43 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player;
+    public Vector3 offset = new Vector3(0, 2, -10f);
     public float smoothSpeed = 0.125f;
-    public Vector3 offset;
 
-    public CharacterMovement playerScript; // Drag your Player GameObject here
+    private Transform player;
+    private CharacterMovement playerScript;
 
-    private void LateUpdate()
+    void Start()
     {
-        float targetY;
-
-        // Allow access to vertical movement conditions
-        float playerY = player.position.y;
-        float verticalVelocity = playerScript.GetVerticalVelocity();
-
-        // Follow Y if grounded or falling, but not while jumping up
-        if (playerScript.IsGroundedPublic() || verticalVelocity <= 0f)
+        if (CharacterMovement.Instance != null)
         {
-            targetY = playerY + offset.y;
+            player = CharacterMovement.Instance.transform;
+            playerScript = CharacterMovement.Instance;
         }
         else
         {
-            targetY = transform.position.y; // Stay at current Y during jump
+            Debug.LogError("CharacterMovement singleton not found.");
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (player == null || playerScript == null) return;
+
+        float targetY;
+        float verticalVelocity = playerScript.GetVerticalVelocity();
+
+        if (playerScript.IsGrounded() || verticalVelocity <= 0f)
+        {
+            targetY = player.position.y + offset.y;
+        }
+        else
+        {
+            targetY = transform.position.y;
         }
 
         Vector3 targetPosition = new Vector3(player.position.x + offset.x, targetY, player.position.z + offset.z);
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
         transform.position = smoothedPosition;
     }
-
 }

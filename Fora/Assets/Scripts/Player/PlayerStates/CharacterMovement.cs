@@ -1,154 +1,64 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-
+[RequireComponent(typeof(Rigidbody2D))]
 public class CharacterMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
-    public float gravity = 20f;
-    public float terminalVelocity = -25f;
+    public LayerMask groundLayer;
+    public Transform groundCheck;
+    public float groundCheckRadius = 0.2f;
 
-    public float radius = 0.5f;
-    public LayerMask obstacleLayer;
-
-    public float groundRayLength = 0.1f;
-
-    private float verticalVelocity = 0f;
-    private float horizontalInput = 0f;
-    private bool jumpInput = false;
-
-    [Range(0f, 1f)]
-    public float bounceFactor = 0.6f; // 1 = perfect bounce, 0 = no bounce
-    public float minBounceVelocity = 1f; // below this = no more bounce
-
-    public int maxBounces = 3;     // how many times to bounce
-    private int bounceCount = 0;   // current bounce count
-
+    private Rigidbody2D rb;
     private bool isGrounded;
+    private float horizontalInput;
+
+    public static CharacterMovement Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
-        // Capture input here
         horizontalInput = Input.GetAxisRaw("Horizontal");
-        jumpInput = Input.GetButtonDown("Jump");
 
-        // Jump logic
-        if (isGrounded && jumpInput)
+        // Jump
+        if (isGrounded && Input.GetButtonDown("Jump"))
         {
-            verticalVelocity = jumpForce;
-            jumpInput = false;
-            bounceCount = 0; // Reset when jumping manually
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
     }
 
     void FixedUpdate()
     {
-        isGrounded = IsGrounded();
-
-        // Gravity simulation
-        bool shouldZeroVelocity = isGrounded && Mathf.Abs(verticalVelocity) < minBounceVelocity;
-
-        if (!shouldZeroVelocity)
-        {
-            verticalVelocity -= gravity * Time.fixedDeltaTime;
-        }
-        else
-        {
-            verticalVelocity = 0;
-        }
-
-        verticalVelocity = Mathf.Max(verticalVelocity, terminalVelocity);
-
-        Vector2 move = Vector2.zero;
+        // Ground check
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
         // Horizontal movement
-        if (horizontalInput != 0 && !IsHittingWall(new Vector2(horizontalInput, 0)))
-        {
-            move.x = horizontalInput * moveSpeed * Time.fixedDeltaTime;
-        }
-
-        // Vertical movement with raycast collision
-        if (verticalVelocity < 0) // Falling
-        {
-            float distToGround = radius + groundRayLength;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, distToGround, obstacleLayer);
-            Debug.DrawRay(transform.position, Vector2.down * distToGround, Color.cyan);
-
-            if (hit.collider != null)
-            {
-                float gap = hit.distance - radius;
-
-                if (verticalVelocity < -minBounceVelocity && bounceCount < maxBounces)
-                {
-                    verticalVelocity = -verticalVelocity * bounceFactor;
-                    bounceCount++;
-                }
-                else
-                {
-                    verticalVelocity = 0f;
-                }
-
-                // Prevent snapping below surface
-                float bounceMove = verticalVelocity * Time.fixedDeltaTime;
-                if (bounceMove < -gap)
-                {
-                    move.y = -gap;
-                }
-                else
-                {
-                    move.y = bounceMove;
-                }
-
-            }
-            else
-            {
-                move.y = verticalVelocity * Time.fixedDeltaTime;
-            }
-        }
-        else
-        {
-            move.y = verticalVelocity * Time.fixedDeltaTime;
-        }
-
-        transform.Translate(move);
+        rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
     }
 
-    bool IsHittingWall(Vector2 dir)
-    {
-        Vector2 origin = transform.position;
-        float[] yOffsets = new float[] { radius * 0.8f, 0f, -radius * 0.8f };
-
-        foreach (float y in yOffsets)
-        {
-            Vector2 start = origin + new Vector2(0, y);
-            float horizontalLength = Mathf.Sqrt(Mathf.Max(radius * radius - y * y, 0.0001f));
-            RaycastHit2D hit = Physics2D.Raycast(start, dir.normalized, horizontalLength + 0.02f, obstacleLayer);
-            Debug.DrawRay(start, dir.normalized * (horizontalLength + 0.02f), Color.red);
-            if (hit.collider != null)
-                return true;
-        }
-
-        return false;
-    }
-
-    bool IsGrounded()
-    {
-        Vector2 origin = transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, radius + groundRayLength, obstacleLayer);
-        Debug.DrawRay(origin, Vector2.down * (radius + groundRayLength), Color.green);
-        return hit.collider != null;
-    }
-
-    // ✅ ADD THESE BELOW:
-    public bool IsGroundedPublic()
+    // ✅ Public method for camera to check if grounded
+    public bool IsGrounded()
     {
         return isGrounded;
     }
 
+    // ✅ Public method for camera to get vertical velocity
     public float GetVerticalVelocity()
     {
-        return verticalVelocity;
+        return rb.velocity.y;
     }
 }
