@@ -210,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 318525676}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.91, y: -2.96, z: -10}
+  m_LocalPosition: {x: 6.77, y: -2.36, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -272,10 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a75075a25218df4292218bc281dadb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1513202073}
-  smoothSpeed: 2
-  offset: {x: 0, y: 0, z: -10}
-  playerScript: {fileID: 1513202071}
+  offset: {x: 0, y: 2, z: -10}
+  smoothSpeed: 0.125
 --- !u!1 &752732228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1829,6 +1827,7 @@ GameObject:
   - component: {fileID: 1513202072}
   - component: {fileID: 1513202071}
   - component: {fileID: 1513202075}
+  - component: {fileID: 1513202076}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -1850,16 +1849,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 10
-  gravity: 20
-  terminalVelocity: -25
-  radius: 0.51
-  obstacleLayer:
+  groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  groundRayLength: 0.001
-  bounceFactor: 0.6
-  minBounceVelocity: 0.1
-  maxBounces: 1
+  groundCheck: {fileID: 1513202073}
+  groundCheckRadius: 0.54
 --- !u!212 &1513202072
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1936,7 +1930,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1513202069}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ac02d9e8a69d08441a0b392fee48ef53, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1962,6 +1956,33 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!50 &1513202076
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513202069}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 10
+  m_LinearDrag: 6
+  m_AngularDrag: 0.05
+  m_GravityScale: 2
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1 &1900457813
 GameObject:
   m_ObjectHideFlags: 0
