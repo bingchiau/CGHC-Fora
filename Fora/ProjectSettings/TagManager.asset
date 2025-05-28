@@ -8,11 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Map
   - Water
   - UI
   - Collider
-  - 
+  - SlopeMap
   - 
   - 
   - 
@@ -61,4 +61,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 3914710737
+    locked: 0
+  - name: SlopeMap
+    uniqueID: 4203666923
     locked: 0
