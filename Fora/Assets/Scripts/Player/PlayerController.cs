@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour
     [Header("Collisions")]
     [SerializeField] private LayerMask collideWith;
     [SerializeField] private int verticalRayCount = 4;
+    [SerializeField] private int horizontalRayCount = 4;
+
+    #region Properties
+    // Return if the Player is facing right
+    public bool FacingRight { get; set; }
+    #endregion
 
     #region Internal
 
@@ -28,7 +34,10 @@ public class PlayerController : MonoBehaviour
     private float _currentGravity;
     private Vector2 _force;
     private Vector2 _movePosition;
-    private float _skin = 0.05f;
+    private float _skin = 0.01f;
+
+    private float _internalFaceDirection = 1f; // 1 for right, -1 for left
+    private float _faceDirection;
 
     #endregion
 
@@ -46,8 +55,18 @@ public class PlayerController : MonoBehaviour
         StartMovement();
 
         SetRayOrigins();
+        GetFaceDirection();
 
-        CollisionBelow();
+        if (FacingRight)
+        {
+            HorizontalCollision(1);
+        }
+        else
+        {
+            HorizontalCollision(-1);
+        }
+
+            CollisionBelow();
 
         transform.Translate(_movePosition, Space.Self);
 
@@ -109,6 +128,31 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region Direction
+    // Manage the direction player facing
+    private void GetFaceDirection()
+    {
+        _faceDirection = _internalFaceDirection;
+        FacingRight = _faceDirection == 1; // if FacingRight is true
+
+        if (_force.x > 0.0001f)
+        {
+            _faceDirection = 1f;
+            FacingRight = true;
+        }
+        else if (_force.x < -0.0001f)
+        {
+            _faceDirection = -1f;
+            FacingRight = false;
+        }
+        else
+        {
+             _internalFaceDirection = _faceDirection;
+        }
+        
+    }
+    #endregion
+
     #region Collisions
     #region Collision Below
 
@@ -168,6 +212,42 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #endregion
+    #region Collision Horizontal
+
+    private void HorizontalCollision(int direction)
+    {
+        Vector2 rayHorizontalBottom = (_boundsBottomLeft + _boundsBottomRight) / 2f;
+        Vector2 rayHorizontalTop = (_boundsTopLeft + _boundsTopRight) / 2f;
+        rayHorizontalBottom += (Vector2)(transform.up * _skin);
+        rayHorizontalTop -= (Vector2)(transform.up * _skin);
+
+        float rayLength = Mathf.Abs(_force.x * Time.deltaTime) + _boundsWidth / 2f + _skin;
+
+        for (int i = 0; i < horizontalRayCount; i++)
+        {
+            Vector2 rayOrigin = Vector2.Lerp(rayHorizontalBottom, rayHorizontalTop, (float)i / (horizontalRayCount - 1));
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction * transform.right, rayLength, collideWith);
+            Debug.DrawRay(rayOrigin, transform.right * rayLength * direction, Color.cyan);
+
+            if (hit)
+            {
+                if (direction >= 0)
+                {
+                    _movePosition.x = hit.distance - _boundsWidth / 2f - _skin * 2f;
+                    _conditions.IsCollidingRight = true;
+                }
+                else
+                {
+                    _movePosition.x = -hit.distance + _boundsWidth / 2f + _skin * 2f;
+                    _conditions.IsCollidingLeft = true;
+                }
+
+                _force.x = 0f;
+            }
+        }
+
+    }
     #endregion
     #endregion
 }
