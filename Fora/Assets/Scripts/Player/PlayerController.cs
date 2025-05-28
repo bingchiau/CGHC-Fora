@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class PlayerController : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float gravity = -20f;
+    [SerializeField] private float gravity = -30f;
 
     [Header("Collisions")]
     [SerializeField] private LayerMask collideWith;
@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     #region Properties
     // Return if the Player is facing right
     public bool FacingRight { get; set; }
+
+    // Return the Gravity value
+    public float Gravity => gravity;
     #endregion
 
     #region Internal
@@ -118,6 +121,11 @@ public class PlayerController : MonoBehaviour
         _force.x = xForce;
     }
 
+    public void SetVerticalForce(float yForce)
+    {
+        _force.y = yForce;
+    }
+
     // Calculate the gravity to apply
     private void ApplyGravity()
     {
@@ -195,7 +203,16 @@ public class PlayerController : MonoBehaviour
 
             if (hit)
             {
-                _movePosition.y = -hit.distance + _boundsHeight / 2f + _skin;
+                if (_force.y > 0)
+                {
+                    _movePosition.y = _force.y * Time.deltaTime;
+                    _conditions.IsCollidingBelow = false;
+                }
+                else
+                {
+                    _movePosition.y = -hit.distance + _boundsHeight / 2f + _skin;
+                }
+                    
 
                 _conditions.IsCollidingBelow = true;
                 _conditions.IsFalling = false;
@@ -205,10 +222,7 @@ public class PlayerController : MonoBehaviour
                     _movePosition.y = 0f;
                 }
             }
-            else
-            {
-                _conditions.IsCollidingBelow = false;
-            }
+            
         }
     }
 
