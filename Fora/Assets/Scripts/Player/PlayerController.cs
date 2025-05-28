@@ -6,7 +6,8 @@ using UnityEngine.Rendering.Universal;
 public class PlayerController : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float gravity = -30f;
+    [SerializeField] private float gravity = -20f;
+    [SerializeField] private float _fallMultiplier = 1.5f;
 
     [Header("Collisions")]
     [SerializeField] private LayerMask collideWith;
@@ -19,6 +20,12 @@ public class PlayerController : MonoBehaviour
 
     // Return the Gravity value
     public float Gravity => gravity;
+
+    // Return the Force applied
+    public Vector2 Force => _force;
+
+    // Return the conditions
+    public PlayerConditions Conditions => _conditions;
     #endregion
 
     #region Internal
@@ -130,6 +137,11 @@ public class PlayerController : MonoBehaviour
     private void ApplyGravity()
     {
         _currentGravity = gravity;
+
+        if (_force.y < 0)
+        {
+            _currentGravity *= _fallMultiplier; // Apply fall multiplier if falling
+        }
 
         _force.y += _currentGravity * Time.deltaTime;
     }

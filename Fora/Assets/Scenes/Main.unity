@@ -1255,6 +1255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: -20
+  _fallMultiplier: 1.5
   collideWith:
     serializedVersion: 2
     m_Bits: 64
@@ -1298,7 +1299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpHeight: 4
-  _maxJumps: 2
+  _maxJumps: 1
 --- !u!1 &1056302680
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,26 @@ public class PlayerJump : PlayerStates
 {
     [Header("Settings")]
     [SerializeField] private float _jumpHeight = 4f;
-    [SerializeField] private int _maxJumps = 2;
+    [SerializeField] private int _maxJumps = 1;
+
+    // Return how many jumps player has left
+    public int JumpsLeft { get; private set; }
+
+    protected override void InitState()
+    {
+        base.InitState();
+        JumpsLeft = _maxJumps;
+    }
+    
+    public override void ExecuteState()
+    {
+        if (_playerController.Conditions.IsCollidingBelow && _playerController.Force.y == 0f)
+        {
+            JumpsLeft = _maxJumps; // Reset jumps when colliding below
+            _playerController.Conditions.IsJumping = false; // Reset jumping condition
+        }
+       
+    }
 
     protected override void GetInput()
     {
@@ -18,7 +37,32 @@ public class PlayerJump : PlayerStates
 
     private void Jump()
     {
+        if (!CanJump())
+        {
+            return;
+        }
+        if (JumpsLeft == 0)
+        {
+            return;
+        }
+
+        JumpsLeft--;
+
         float jumpForce = Mathf.Sqrt(_jumpHeight * 2f * Mathf.Abs(_playerController.Gravity));
         _playerController.SetVerticalForce(jumpForce);
+    }
+
+    private bool CanJump()
+    {
+        if (!_playerController.Conditions.IsCollidingBelow && JumpsLeft <= 0)
+        {
+            return false; // Cannot jump if not colliding below and no jumps left
+        }
+        if (_playerController.Conditions.IsCollidingBelow && JumpsLeft <= 0)
+        {
+            return false; // Cannot jump if colliding below but no jumps left
+        }
+
+        return true; // Can jump if colliding below or has jumps left
     }
 }
