@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour
             if (slopeAngle > 0 && slopeAngle <= maxSlopeAngle)
             {
                 // 2) Walk up slope
-                //   tangent = perpendicular to normal
+                // Rotate the surface normal by -90 degrees then multiply with direction to get (tangent) vector up the slope.
                 Vector2 slopeTangent = new Vector2(hit.normal.y, -hit.normal.x) * direction;
                 slopeTangent.Normalize();
 
