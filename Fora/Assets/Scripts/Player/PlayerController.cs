@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     // Return the conditions
     public PlayerConditions Conditions => _conditions;
+
+    public float Friction { get; set; }
     #endregion
 
     #region Internal
