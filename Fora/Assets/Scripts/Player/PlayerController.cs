@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float gravity = -20f;
-    [SerializeField] private float _fallMultiplier = 1.5f;
+    [SerializeField] private float _fallMultiplier = 2f;
 
     [Header("Collisions")]
     [SerializeField] private LayerMask collideWith;
@@ -76,7 +76,8 @@ public class PlayerController : MonoBehaviour
             HorizontalCollision(-1);
         }
 
-            CollisionBelow();
+        CollisionBelow();
+        CollisionAbove();
 
         transform.Translate(_movePosition, Space.Self);
 
@@ -270,6 +271,39 @@ public class PlayerController : MonoBehaviour
                 }
 
                 _force.x = 0f;
+            }
+        }
+
+    }
+    #endregion
+    #region Collision Above
+
+    private void CollisionAbove()
+    {
+        if (_movePosition.y < 0)
+        {
+            return; // No need to check if moving down
+        }
+
+        // Set ray length
+        float rayLength = _movePosition.y + _boundsHeight / 2f;
+
+        // Origin Points
+        Vector2 rayTopLeft = (_boundsBottomLeft + _boundsTopLeft) / 2f;
+        Vector2 rayTopRight = (_boundsBottomRight + _boundsTopRight) / 2f;
+        rayTopLeft += (Vector2)transform.right * _movePosition.x;
+        rayTopRight += (Vector2)transform.right * _movePosition.x;
+
+        for (int i = 0; i < verticalRayCount; i++)
+        {
+            Vector2 rayOrigin = Vector2.Lerp(rayTopLeft, rayTopRight, (float)i / (float)(verticalRayCount - 1));
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, transform.up, rayLength, collideWith);
+            Debug.DrawRay(rayOrigin, transform.up * rayLength, Color.red);
+
+            if (hit)
+            {
+                _movePosition.y = hit.distance - _boundsHeight / 2f;
+                _conditions.IsCollidingAbove = true;
             }
         }
 
