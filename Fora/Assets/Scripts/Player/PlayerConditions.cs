@@ -7,7 +7,6 @@
     public bool IsFalling { get; set; }
     public bool IsJumping { get; set; }
 
-    // ← NEW:
     /// <summary>True when we’ve hit a walkable slope in HorizontalCollision</summary>
     public bool IsOnSlope { get; set; }
     /// <summary>The angle (in degrees) of that slope</summary>
@@ -20,9 +19,7 @@
         IsCollidingRight = false;
         IsCollidingLeft = false;
         IsFalling = false;
-        // ← ALSO RESET:
         IsOnSlope = false;
         SlopeAngle = 0f;
-        // (optionally reset IsJumping here if you set it elsewhere)
     }
 }
