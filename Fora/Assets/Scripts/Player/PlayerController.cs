@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float gravity = -20f;
     [SerializeField] private float _fallMultiplier = 2f;
+    [SerializeField] private float weight = 1f;
 
     [Header("Collisions")]
     [SerializeField] private LayerMask collideWith;
@@ -27,7 +28,11 @@ public class PlayerController : MonoBehaviour
     // Return the conditions
     public PlayerConditions Conditions => _conditions;
 
+    // Set and return the friction value
     public float Friction { get; set; }
+    
+    // Return the weight value
+    public float Weight => weight;
     #endregion
 
     #region Internal
@@ -80,6 +85,11 @@ public class PlayerController : MonoBehaviour
 
         CollisionBelow();
         CollisionAbove();
+
+        if (weight <= 0f)
+        {
+            weight = 1f; // Ensure weight is never zero or negative
+        }
 
         transform.Translate(_movePosition, Space.Self);
 
@@ -181,6 +191,8 @@ public class PlayerController : MonoBehaviour
 
     private void CollisionBelow()
     {
+        Friction = 0f;
+
         if (_movePosition.y < 0.0001f)
         {
             _conditions.IsFalling = true;
@@ -218,6 +230,8 @@ public class PlayerController : MonoBehaviour
 
             if (hit)
             {
+                GameObject hitObject = hit.collider.gameObject;
+
                 if (_force.y > 0)
                 {
                     _movePosition.y = _force.y * Time.deltaTime;
@@ -227,7 +241,6 @@ public class PlayerController : MonoBehaviour
                 {
                     _movePosition.y = -hit.distance + _boundsHeight / 2f + _skin;
                 }
-                    
 
                 _conditions.IsCollidingBelow = true;
                 _conditions.IsFalling = false;
@@ -236,8 +249,14 @@ public class PlayerController : MonoBehaviour
                 {
                     _movePosition.y = 0f;
                 }
+
+                if (hitObject.GetComponent<SpecialSurface>() != null)
+                {
+                    Friction = hitObject.GetComponent<SpecialSurface>().Friction;
+                }
+
             }
-            
+
         }
     }
 

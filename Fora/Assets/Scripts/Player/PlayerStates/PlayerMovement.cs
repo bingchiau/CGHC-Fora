@@ -34,6 +34,8 @@ public class PlayerMovement : PlayerStates
         }
 
         float moveSpeed = _movement * speed;
+        moveSpeed = EvaluateWeight(moveSpeed);
+        moveSpeed = EvaluateFriction(moveSpeed);
         _playerController.SetHorizontalForce(moveSpeed);
     }
 
@@ -41,6 +43,22 @@ public class PlayerMovement : PlayerStates
     protected override void GetInput()
     {
         _horizontalMovement = _horizontalInput;
+    }
+
+    private float EvaluateFriction(float moveSpeed)
+    {
+        if (_playerController.Friction > 0)
+        {
+            moveSpeed = Mathf.Lerp(_playerController.Force.x, moveSpeed, _playerController.Friction * 10f * Time.deltaTime);
+        }
+        return moveSpeed;
+    }
+
+    private float EvaluateWeight(float moveSpeed)
+    {
+
+        moveSpeed /= _playerController.Weight;
+        return moveSpeed;
     }
 }
 
