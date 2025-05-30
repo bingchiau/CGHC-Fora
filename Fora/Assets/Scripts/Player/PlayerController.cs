@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float gravity = -20f;
     [SerializeField] private float _fallMultiplier = 2f;
-    [SerializeField] private float weight = 1f;
+    [SerializeField] private float _weight = 1f;
 
     [Header("Collisions")]
     [SerializeField] private LayerMask collideWith;
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     public float Friction { get; set; }
     
     // Return the weight value
-    public float Weight => weight;
+    public float WeightRatio => _weightRatio;
     #endregion
 
     #region Internal
@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour
 
     private float _boundsWidth; 
     private float _boundsHeight;
+
+    private float _maxWeight = 5f;
+    private float _weightRatio;
 
     private float _currentGravity;
     private Vector2 _force;
@@ -90,10 +93,15 @@ public class PlayerController : MonoBehaviour
         CollisionBelow();
         CollisionAbove();
 
-        if (weight <= 0f)
+        if (_weight <= 0f)
         {
-            weight = 1f; // Ensure weight is never zero or negative
+            _weight = 1f; // Ensure weight is never zero or negative
         }
+        else if (_weight > _maxWeight)
+        {
+            _weight = _maxWeight; // Clamp weight to a maximum value
+        }
+        _weightRatio = _weight / _maxWeight; // Calculate weight ratio
 
         transform.Translate(_movePosition, Space.Self);
 
@@ -162,6 +170,11 @@ public class PlayerController : MonoBehaviour
 
         _force.y += _currentGravity * Time.deltaTime;
     }
+
+    //private void CalculateWeight(float weight)
+    //{
+        
+    //}
 
     #endregion
 

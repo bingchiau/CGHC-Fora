@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerMovement : PlayerStates
 {
     [Header("Settings")]
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float _maxSpeed = 10f;
+    [SerializeField] private float _minSpeed = 5f;
 
     private float _horizontalMovement;
     private float _movement;
@@ -33,8 +34,8 @@ public class PlayerMovement : PlayerStates
             _movement = 0f;
         }
 
-        float moveSpeed = _movement * speed;
-        moveSpeed = EvaluateWeight(moveSpeed);
+        float moveSpeed = EvaluateWeight(_maxSpeed, _minSpeed);
+        moveSpeed = _movement * moveSpeed;
         moveSpeed = EvaluateFriction(moveSpeed);
         _playerController.SetHorizontalForce(moveSpeed);
     }
@@ -54,10 +55,10 @@ public class PlayerMovement : PlayerStates
         return moveSpeed;
     }
 
-    private float EvaluateWeight(float moveSpeed)
+    private float EvaluateWeight(float max, float min)
     {
 
-        moveSpeed /= _playerController.Weight;
+        float moveSpeed = Mathf.Lerp(max, min, _playerController.WeightRatio);
         return moveSpeed;
     }
 }

@@ -1709,6 +1709,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3448247260571277786, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
+      propertyPath: _jumpHeight
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4064147293458135440, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1762,8 +1766,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8390773163194684709, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
+      propertyPath: _weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390773163194684709, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
       propertyPath: collideWith.m_Bits
       value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158092873553610377, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158092873553610377, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
+      propertyPath: _maxSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158092873553610377, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
+      propertyPath: _minSpeed
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

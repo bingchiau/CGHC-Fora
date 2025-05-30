@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerJump : PlayerStates
 {
     [Header("Settings")]
-    [SerializeField] private float _jumpHeight = 4f;
+    [SerializeField] private float _maxJumpHeight = 5f;
+    [SerializeField] private float _minJumpHeight = 1f;
     [SerializeField] private int _maxJumps = 1;
 
     // Return how many jumps player has left
@@ -16,7 +17,7 @@ public class PlayerJump : PlayerStates
         base.InitState();
         JumpsLeft = _maxJumps;
     }
-    
+
     public override void ExecuteState()
     {
         if (_playerController.Conditions.IsCollidingBelow && _playerController.Force.y == 0f)
@@ -24,7 +25,7 @@ public class PlayerJump : PlayerStates
             JumpsLeft = _maxJumps; // Reset jumps when colliding below
             _playerController.Conditions.IsJumping = false; // Reset jumping condition
         }
-       
+
     }
 
     protected override void GetInput()
@@ -48,7 +49,9 @@ public class PlayerJump : PlayerStates
 
         JumpsLeft--;
 
-        float jumpForce = Mathf.Sqrt(_jumpHeight * 2f * Mathf.Abs(_playerController.Gravity));
+        float jumpForce = EvaluateWeight(_maxJumpHeight, _minJumpHeight); // Adjust jump force based on player weight
+        jumpForce = Mathf.Sqrt(jumpForce * 2f * Mathf.Abs(_playerController.Gravity));
+        
         _playerController.SetVerticalForce(jumpForce);
     }
 
@@ -64,5 +67,11 @@ public class PlayerJump : PlayerStates
         }
 
         return true; // Can jump if colliding below or has jumps left
+    }
+
+    private float EvaluateWeight(float max, float min)
+    {
+        float jumpForce = Mathf.Lerp(max, min, _playerController.WeightRatio);
+        return jumpForce;
     }
 }
