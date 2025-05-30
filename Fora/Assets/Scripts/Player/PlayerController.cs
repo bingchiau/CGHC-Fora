@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int verticalRayCount = 4;
     [SerializeField] private int horizontalRayCount = 4;
 
+    [Header("Movement")]
+    [Tooltip("Maximum slope (in degrees) the player can walk up")]
+    [SerializeField] private float maxSlopeAngle = 45f;
+
     #region Properties
     // Return if the Player is facing right
     public bool FacingRight { get; set; }
@@ -265,36 +269,59 @@ public class PlayerController : MonoBehaviour
 
     private void HorizontalCollision(int direction)
     {
-        Vector2 rayHorizontalBottom = (_boundsBottomLeft + _boundsBottomRight) / 2f;
-        Vector2 rayHorizontalTop = (_boundsTopLeft + _boundsTopRight) / 2f;
-        rayHorizontalBottom += (Vector2)(transform.up * _skin);
-        rayHorizontalTop -= (Vector2)(transform.up * _skin);
+        Vector2 rayBottom = (_boundsBottomLeft + _boundsBottomRight) * 0.5f;
+        Vector2 rayTop = (_boundsTopLeft + _boundsTopRight) * 0.5f;
+        rayBottom += (Vector2)transform.up * _skin;
+        rayTop -= (Vector2)transform.up * _skin;
 
-        float rayLength = Mathf.Abs(_force.x * Time.deltaTime) + _boundsWidth / 2f + _skin;
+        float moveDistance = Mathf.Abs(_force.x * Time.deltaTime);
+        float rayLength = moveDistance + _boundsWidth * 0.5f + _skin;
 
         for (int i = 0; i < horizontalRayCount; i++)
         {
-            Vector2 rayOrigin = Vector2.Lerp(rayHorizontalBottom, rayHorizontalTop, (float)i / (horizontalRayCount - 1));
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction * transform.right, rayLength, collideWith);
-            Debug.DrawRay(rayOrigin, transform.right * rayLength * direction, Color.cyan);
+            Vector2 origin = Vector2.Lerp(rayBottom, rayTop, i / (float)(horizontalRayCount - 1));
+            RaycastHit2D hit = Physics2D.Raycast(origin, direction * transform.right, rayLength, collideWith);
+            Debug.DrawRay(origin, transform.right * rayLength * direction, Color.cyan);
 
-            if (hit)
+            if (!hit) continue;
+
+            // 1) Check slope angle
+            float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+            Debug.Log(slopeAngle);
+            if (slopeAngle > 0 && slopeAngle <= maxSlopeAngle)
             {
-                if (direction >= 0)
-                {
-                    _movePosition.x = hit.distance - _boundsWidth / 2f - _skin * 2f;
-                    _conditions.IsCollidingRight = true;
-                }
-                else
-                {
-                    _movePosition.x = -hit.distance + _boundsWidth / 2f + _skin * 2f;
-                    _conditions.IsCollidingLeft = true;
-                }
+                // 2) Walk up slope
+                // Rotate the surface normal by -90 degrees then multiply with direction to get (tangent) vector up the slope.
+                Vector2 slopeTangent = new Vector2(hit.normal.y, -hit.normal.x) * direction;
+                slopeTangent.Normalize();
 
-                _force.x = 0f;
+                // 3) Recompute movement along slope
+                _movePosition = slopeTangent * moveDistance;
+
+                // 4) Zero out gravity-induced fall and mark grounded
+                _force.y = 0f;
+                _conditions.IsOnSlope = true;
+                _conditions.SlopeAngle = slopeAngle;
+                _conditions.IsCollidingBelow = true;
+                return; // we handled movement, skip “wall” logic
             }
-        }
 
+            // 5) Otherwise it’s a wall – block horizontal movement
+            if (direction > 0)
+            {
+                _movePosition.x = hit.distance - _boundsWidth * 0.5f - _skin * 2f;
+                _conditions.IsCollidingRight = true;
+            }
+            else
+            {
+                _movePosition.x = -hit.distance + _boundsWidth * 0.5f + _skin * 2f;
+                _conditions.IsCollidingLeft = true;
+            }
+
+            _force.x = 0f;
+            return;
+        }
     }
     #endregion
     #region Collision Above
