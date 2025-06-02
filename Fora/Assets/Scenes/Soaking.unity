@@ -2076,7 +2076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8390773163194684709, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
       propertyPath: horizontalRayCount
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [Header("Collisions")]
     [SerializeField] private LayerMask collideWith;
     [SerializeField] private int verticalRayCount = 7;
-    [SerializeField] private int horizontalRayCount = 4;
+    [SerializeField] private int horizontalRayCount = 7;
 
     [Header("Movement")]
     [Tooltip("Maximum slope (in degrees) the player can walk up")]
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //ApplyGravity();
+        ApplyGravity();
         StartMovement();
 
         SetRayOrigins(0);
@@ -244,7 +244,6 @@ public class PlayerController : MonoBehaviour
             Vector2 rayOrigin = Vector2.Lerp(leftOrigin, rightOrigin, (float)i / (float)(verticalRayCount - 1));
 
             rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
-            Debug.Log(rayLength);
 
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, -transform.up, rayLength, collideWith);
             Debug.DrawRay(rayOrigin, -transform.up * rayLength, Color.green);
@@ -294,13 +293,19 @@ public class PlayerController : MonoBehaviour
         rayTop -= (Vector2)transform.up * _skin;
 
         float moveDistance = Mathf.Abs(_force.x * Time.deltaTime);
-        float rayLength = moveDistance + _boundsWidth * 0.5f + _skin;
+
+        float rayLength;
+        float turnAngle = 22.5f;
 
         for (int i = 0; i < horizontalRayCount; i++)
         {
             Vector2 origin = Vector2.Lerp(rayBottom, rayTop, i / (float)(horizontalRayCount - 1));
+            
+            rayLength = moveDistance + Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
+
             RaycastHit2D hit = Physics2D.Raycast(origin, direction * transform.right, rayLength, collideWith);
             Debug.DrawRay(origin, transform.right * rayLength * direction, Color.cyan);
+            turnAngle += 22.5f;
 
             if (!hit) continue;
 
@@ -329,12 +334,12 @@ public class PlayerController : MonoBehaviour
             // 5) Otherwise it’s a wall – block horizontal movement
             if (direction > 0)
             {
-                _movePosition.x = hit.distance - _boundsWidth * 0.5f - _skin * 2f;
+                _movePosition.x = hit.distance - rayLength;
                 _conditions.IsCollidingRight = true;
             }
             else
             {
-                _movePosition.x = -hit.distance + _boundsWidth * 0.5f + _skin * 2f;
+                _movePosition.x = -hit.distance + rayLength;
                 _conditions.IsCollidingLeft = true;
             }
 
