@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -59,6 +60,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 _force;
     private Vector2 _movePosition;
     private float _skin = 0.02f;
+
+    private bool _checkStop = false;
 
     private float _internalFaceDirection = 1f; // 1 for right, -1 for left
     private float _faceDirection;
@@ -305,8 +308,6 @@ public class PlayerController : MonoBehaviour
         rayBottom += (Vector2)transform.up * _skin;
         rayTop -= (Vector2)transform.up * _skin;
 
-        float moveDistance = Mathf.Abs(_force.x * Time.deltaTime);
-
         float rayLength;
         float turnAngle = 22.5f;
 
@@ -324,11 +325,20 @@ public class PlayerController : MonoBehaviour
 
             if (!hit) continue;
 
+            if (!_checkStop)
+            {
+                _force.x = 0f; // Reset horizontal force when colliding
+                _force.y = 0f; 
+                _checkStop = true; // Stop further raycasts after the first hit
+            }
+
             // 1) Check slope angle
             float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
             if (slopeAngle > 0 && slopeAngle <= maxSlopeAngle)
             {
+                float moveDistance = Mathf.Abs(_force.x * Time.deltaTime);
+
                 // 2) Walk up slope
                 // Rotate the surface normal by -90 degrees then multiply with direction to get (tangent) vector up the slope.
                 Vector2 slopeTangent = new Vector2(hit.normal.y, -hit.normal.x) * direction;
@@ -338,10 +348,11 @@ public class PlayerController : MonoBehaviour
 
                 // 3) Recompute movement along slope
                 _movePosition = slopeTangent * moveDistance;
-
+                
                 // 4) Zero out gravity-induced fall and mark grounded
                 if (_force.y > 0 && _conditions.IsJumping == true)
                 {
+                    _checkStop = false;
                     _movePosition.y = _force.y * Time.deltaTime; // allow jump
                     _conditions.IsCollidingBelow = false;
                     _conditions.IsOnSlope = false;
@@ -354,6 +365,8 @@ public class PlayerController : MonoBehaviour
 
                 return; // we handled movement, skip “wall” logic
             }
+
+            
 
             // 5) Otherwise it’s a wall – block horizontal movement
             if (direction > 0)
@@ -370,6 +383,8 @@ public class PlayerController : MonoBehaviour
             _force.x = 0f;
             return;
         }
+
+        
     }
     #endregion
     #region Collision Above

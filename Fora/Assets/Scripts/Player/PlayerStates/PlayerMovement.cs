@@ -61,5 +61,6 @@ public class PlayerMovement : PlayerStates
         float moveSpeed = Mathf.Lerp(max, min, _playerController.WeightRatio);
         return moveSpeed;
     }
+    
 }
 
