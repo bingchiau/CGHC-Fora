@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     private float _currentGravity;
     private Vector2 _force;
     private Vector2 _movePosition;
-    private float _skin = 0.02f;
+    private float _skin = 0.06f;
 
     private bool _checkStop = false;
 
