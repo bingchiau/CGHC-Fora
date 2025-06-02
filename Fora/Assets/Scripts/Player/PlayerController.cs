@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [Header("Collisions")]
     [SerializeField] private LayerMask collideWith;
     [SerializeField] private int verticalRayCount = 7;
-    [SerializeField] private int horizontalRayCount = 1;
+    [SerializeField] private int horizontalRayCount = 4;
 
     [Header("Movement")]
     [Tooltip("Maximum slope (in degrees) the player can walk up")]
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        ApplyGravity();
+        //ApplyGravity();
         StartMovement();
 
         SetRayOrigins(0);
@@ -353,7 +353,8 @@ public class PlayerController : MonoBehaviour
         }
 
         // Set ray length
-        float rayLength = _movePosition.y + _boundsHeight / 2f;
+        float rayLength;
+        float turnAngle = 22.5f;
 
         // Origin Points
         Vector2 rayTopLeft = (_boundsBottomLeft + _boundsTopLeft) / 2f;
@@ -364,12 +365,17 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < verticalRayCount; i++)
         {
             Vector2 rayOrigin = Vector2.Lerp(rayTopLeft, rayTopRight, (float)i / (float)(verticalRayCount - 1));
+
+            rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
+            Debug.Log(rayLength);
+
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, transform.up, rayLength, collideWith);
             Debug.DrawRay(rayOrigin, transform.up * rayLength, Color.red);
+            turnAngle += 22.5f;
 
             if (hit)
             {
-                _movePosition.y = hit.distance - _boundsHeight / 2f;
+                _movePosition.y = hit.distance - rayLength;
                 _conditions.IsCollidingAbove = true;
             }
         }
