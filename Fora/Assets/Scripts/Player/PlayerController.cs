@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //ApplyGravity();
+        ApplyGravity();
         StartMovement();
 
         SetRayOrigins(0);
@@ -226,11 +226,9 @@ public class PlayerController : MonoBehaviour
         }
 
         // Calculate ray length
-        float rayLength = _boundsHeight / 2f + _skin;
-        if (_movePosition.y < 0)
-        {
-            rayLength += Mathf.Abs(_movePosition.y);
-        }
+        float rayLength;
+        float turnAngle = 22.5f;
+        
 
         // Calculate ray origin
         Vector2 leftOrigin = (_boundsBottomLeft + _boundsTopLeft) / 2f;
@@ -238,7 +236,7 @@ public class PlayerController : MonoBehaviour
         leftOrigin += (Vector2)(transform.up * _skin) + (Vector2)(transform.right * _movePosition.x);
         rightOrigin += (Vector2)(transform.up * _skin) + (Vector2)(transform.right * _movePosition.x);
 
-        float turnAngle = 22.5f;
+        
 
         // Raycast
         for (int i = 0; i < verticalRayCount; i++)
@@ -263,7 +261,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    _movePosition.y = -hit.distance + _boundsHeight / 2f + _skin;
+                    _movePosition.y = -hit.distance + rayLength;
                 }
 
                 _conditions.IsCollidingBelow = true;
