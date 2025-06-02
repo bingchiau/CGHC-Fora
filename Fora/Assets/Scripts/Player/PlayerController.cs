@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Collisions")]
     [SerializeField] private LayerMask collideWith;
-    [SerializeField] private int verticalRayCount = 4;
+    [SerializeField] private int verticalRayCount = 7;
     [SerializeField] private int horizontalRayCount = 1;
 
     [Header("Movement")]
@@ -41,16 +41,16 @@ public class PlayerController : MonoBehaviour
 
     #region Internal
 
-    private CircleCollider2D[] _circleCollider2D;
+    private CircleCollider2D _circleCollider2D;
     private PlayerConditions _conditions;
 
-    private Vector2[] _boundsTopLeft = new Vector2[2];
-    private Vector2[] _boundsTopRight = new Vector2[2];
-    private Vector2[] _boundsBottomLeft = new Vector2[2];
-    private Vector2[] _boundsBottomRight = new Vector2[2];
+    private Vector2 _boundsTopLeft;
+    private Vector2 _boundsTopRight;
+    private Vector2 _boundsBottomLeft;
+    private Vector2 _boundsBottomRight;
 
-    private float[] _boundsWidth = new float[2]; 
-    private float[] _boundsHeight = new float[2];
+    private float _boundsWidth; 
+    private float _boundsHeight;
 
     private float _maxWeight = 5f;
     private float _weightRatio;
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _circleCollider2D = GetComponents<CircleCollider2D>();   
+        _circleCollider2D = GetComponent<CircleCollider2D>();   
 
         _conditions = new PlayerConditions();
         _conditions.Reset();
@@ -116,15 +116,15 @@ public class PlayerController : MonoBehaviour
 
     private void SetRayOrigins(int i)
     {
-        Bounds playerBounds = _circleCollider2D[0].bounds;
+        Bounds playerBounds = _circleCollider2D.bounds;
 
-        _boundsBottomLeft[i] = new Vector2(playerBounds.min.x, playerBounds.min.y);
-        _boundsBottomRight[i] = new Vector2(playerBounds.max.x, playerBounds.min.y);
-        _boundsTopLeft[i] = new Vector2(playerBounds.min.x, playerBounds.max.y);
-        _boundsTopRight[i] = new Vector2(playerBounds.max.x, playerBounds.max.y);
+        _boundsBottomLeft = new Vector2(playerBounds.min.x, playerBounds.min.y);
+        _boundsBottomRight = new Vector2(playerBounds.max.x, playerBounds.min.y);
+        _boundsTopLeft = new Vector2(playerBounds.min.x, playerBounds.max.y);
+        _boundsTopRight = new Vector2(playerBounds.max.x, playerBounds.max.y);
 
-        _boundsHeight[i] = Vector2.Distance(_boundsBottomLeft[i], _boundsTopLeft[i]);
-        _boundsWidth[i] = Vector2.Distance(_boundsBottomLeft[i], _boundsBottomRight[i]);
+        _boundsHeight = Vector2.Distance(_boundsBottomLeft, _boundsTopLeft);
+        _boundsWidth = Vector2.Distance(_boundsBottomLeft, _boundsBottomRight);
 
     }
     #endregion
@@ -226,24 +226,31 @@ public class PlayerController : MonoBehaviour
         }
 
         // Calculate ray length
-        float rayLength = _boundsHeight[0] / 2f + _skin;
+        float rayLength = _boundsHeight / 2f + _skin;
         if (_movePosition.y < 0)
         {
             rayLength += Mathf.Abs(_movePosition.y);
         }
 
         // Calculate ray origin
-        Vector2 leftOrigin = (_boundsBottomLeft[0] + _boundsTopLeft[0]) / 2f;
-        Vector2 rightOrigin = (_boundsBottomRight[0] + _boundsTopRight[0]) / 2f;
+        Vector2 leftOrigin = (_boundsBottomLeft + _boundsTopLeft) / 2f;
+        Vector2 rightOrigin = (_boundsBottomRight + _boundsTopRight) / 2f;
         leftOrigin += (Vector2)(transform.up * _skin) + (Vector2)(transform.right * _movePosition.x);
         rightOrigin += (Vector2)(transform.up * _skin) + (Vector2)(transform.right * _movePosition.x);
+
+        float turnAngle = 22.5f;
 
         // Raycast
         for (int i = 0; i < verticalRayCount; i++)
         {
             Vector2 rayOrigin = Vector2.Lerp(leftOrigin, rightOrigin, (float)i / (float)(verticalRayCount - 1));
+
+            rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
+            Debug.Log(rayLength);
+
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, -transform.up, rayLength, collideWith);
             Debug.DrawRay(rayOrigin, -transform.up * rayLength, Color.green);
+            turnAngle += 22.5f;
 
             if (hit)
             {
@@ -256,7 +263,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    _movePosition.y = -hit.distance + _boundsHeight[0] / 2f + _skin;
+                    _movePosition.y = -hit.distance + _boundsHeight / 2f + _skin;
                 }
 
                 _conditions.IsCollidingBelow = true;
@@ -283,13 +290,13 @@ public class PlayerController : MonoBehaviour
 
     private void HorizontalCollision(int direction)
     {
-        Vector2 rayBottom = (_boundsBottomLeft[0] + _boundsBottomRight[0]) * 0.5f;
-        Vector2 rayTop = (_boundsTopLeft[0] + _boundsTopRight[0]) * 0.5f;
+        Vector2 rayBottom = (_boundsBottomLeft + _boundsBottomRight) * 0.5f;
+        Vector2 rayTop = (_boundsTopLeft + _boundsTopRight) * 0.5f;
         rayBottom += (Vector2)transform.up * _skin;
         rayTop -= (Vector2)transform.up * _skin;
 
         float moveDistance = Mathf.Abs(_force.x * Time.deltaTime);
-        float rayLength = moveDistance + _boundsWidth[0] * 0.5f + _skin;
+        float rayLength = moveDistance + _boundsWidth * 0.5f + _skin;
 
         for (int i = 0; i < horizontalRayCount; i++)
         {
@@ -324,12 +331,12 @@ public class PlayerController : MonoBehaviour
             // 5) Otherwise it’s a wall – block horizontal movement
             if (direction > 0)
             {
-                _movePosition.x = hit.distance - _boundsWidth[0] * 0.5f - _skin * 2f;
+                _movePosition.x = hit.distance - _boundsWidth * 0.5f - _skin * 2f;
                 _conditions.IsCollidingRight = true;
             }
             else
             {
-                _movePosition.x = -hit.distance + _boundsWidth[0] * 0.5f + _skin * 2f;
+                _movePosition.x = -hit.distance + _boundsWidth * 0.5f + _skin * 2f;
                 _conditions.IsCollidingLeft = true;
             }
 
@@ -348,11 +355,11 @@ public class PlayerController : MonoBehaviour
         }
 
         // Set ray length
-        float rayLength = _movePosition.y + _boundsHeight[0] / 2f;
+        float rayLength = _movePosition.y + _boundsHeight / 2f;
 
         // Origin Points
-        Vector2 rayTopLeft = (_boundsBottomLeft[0] + _boundsTopLeft[0]) / 2f;
-        Vector2 rayTopRight = (_boundsBottomRight[0] + _boundsTopRight[0]) / 2f;
+        Vector2 rayTopLeft = (_boundsBottomLeft + _boundsTopLeft) / 2f;
+        Vector2 rayTopRight = (_boundsBottomRight + _boundsTopRight) / 2f;
         rayTopLeft += (Vector2)transform.right * _movePosition.x;
         rayTopRight += (Vector2)transform.right * _movePosition.x;
 
@@ -364,7 +371,7 @@ public class PlayerController : MonoBehaviour
 
             if (hit)
             {
-                _movePosition.y = hit.distance - _boundsHeight[0] / 2f;
+                _movePosition.y = hit.distance - _boundsHeight / 2f;
                 _conditions.IsCollidingAbove = true;
             }
         }
