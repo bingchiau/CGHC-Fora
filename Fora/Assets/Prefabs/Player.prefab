@@ -256,7 +256,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -280,8 +280,8 @@ MonoBehaviour:
   collideWith:
     serializedVersion: 2
     m_Bits: 256
-  verticalRayCount: 4
-  horizontalRayCount: 4
+  verticalRayCount: 7
+  horizontalRayCount: 7
   maxSlopeAngle: 45
 --- !u!114 &6445295484122930143
 MonoBehaviour:
@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSpeed: 10
-  _minSpeed: 5
+  _minSpeed: 3
 --- !u!114 &3448247260571277786
 MonoBehaviour:
   m_ObjectHideFlags: 0

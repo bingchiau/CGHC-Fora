@@ -6,7 +6,7 @@ public class PlayerMovement : PlayerStates
 {
     [Header("Settings")]
     [SerializeField] private float _maxSpeed = 10f;
-    [SerializeField] private float _minSpeed = 5f;
+    [SerializeField] private float _minSpeed = 3f;
 
     private float _horizontalMovement;
     private float _movement;

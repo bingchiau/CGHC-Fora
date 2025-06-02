@@ -46,12 +46,13 @@ public class PlayerJump : PlayerStates
         {
             return;
         }
-
+        
         JumpsLeft--;
 
         float jumpForce = EvaluateWeight(_maxJumpHeight, _minJumpHeight); // Adjust jump force based on player weight
         jumpForce = Mathf.Sqrt(jumpForce * 2f * Mathf.Abs(_playerController.Gravity));
         
+        Debug.Log("jumpForce" + jumpForce);
         _playerController.SetVerticalForce(jumpForce);
     }
 
@@ -60,10 +61,6 @@ public class PlayerJump : PlayerStates
         if (!_playerController.Conditions.IsCollidingBelow && JumpsLeft <= 0)
         {
             return false; // Cannot jump if not colliding below and no jumps left
-        }
-        if (_playerController.Conditions.IsCollidingBelow && JumpsLeft <= 0)
-        {
-            return false; // Cannot jump if colliding below but no jumps left
         }
 
         return true; // Can jump if colliding below or has jumps left

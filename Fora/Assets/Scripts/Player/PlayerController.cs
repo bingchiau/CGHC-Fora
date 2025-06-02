@@ -78,8 +78,7 @@ public class PlayerController : MonoBehaviour
         ApplyGravity();
         StartMovement();
 
-        SetRayOrigins(0);
-        SetRayOrigins(1);
+        SetRayOrigins();
         GetFaceDirection();
 
         if (FacingRight)
@@ -94,7 +93,7 @@ public class PlayerController : MonoBehaviour
         CollisionBelow();
         CollisionAbove();
 
-        if (_weight <= 0f)
+        if (_weight <= 1f)
         {
             _weight = 1f; // Ensure weight is never zero or negative
         }
@@ -114,7 +113,7 @@ public class PlayerController : MonoBehaviour
 
     // Calculate ray based on our collider
 
-    private void SetRayOrigins(int i)
+    private void SetRayOrigins()
     {
         Bounds playerBounds = _circleCollider2D.bounds;
 
@@ -170,11 +169,6 @@ public class PlayerController : MonoBehaviour
 
         _force.y += _currentGravity * Time.deltaTime;
     }
-
-    //private void CalculateWeight(float weight)
-    //{
-        
-    //}
 
     #endregion
 
@@ -244,6 +238,11 @@ public class PlayerController : MonoBehaviour
             Vector2 rayOrigin = Vector2.Lerp(leftOrigin, rightOrigin, (float)i / (float)(verticalRayCount - 1));
 
             rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
+            float temp = rayLength;
+            if (_movePosition.y < 0)
+            {
+                rayLength += Mathf.Abs(_movePosition.y);
+            }
 
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, -transform.up, rayLength, collideWith);
             Debug.DrawRay(rayOrigin, -transform.up * rayLength, Color.green);
@@ -260,7 +259,8 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    _movePosition.y = -hit.distance + rayLength;
+                    _force.y = 0f; // Reset vertical force when colliding below
+                    _movePosition.y = -hit.distance + temp;
                 }
 
                 _conditions.IsCollidingBelow = true;
@@ -301,14 +301,13 @@ public class PlayerController : MonoBehaviour
         {
             Vector2 origin = Vector2.Lerp(rayBottom, rayTop, i / (float)(horizontalRayCount - 1));
             
-            rayLength = moveDistance + Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
+            rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
 
             RaycastHit2D hit = Physics2D.Raycast(origin, direction * transform.right, rayLength, collideWith);
             Debug.DrawRay(origin, transform.right * rayLength * direction, Color.cyan);
             turnAngle += 22.5f;
 
             if (!hit) continue;
-
             // 1) Check slope angle
             float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
@@ -324,7 +323,7 @@ public class PlayerController : MonoBehaviour
                 _movePosition = slopeTangent * moveDistance;
 
                 // 4) Zero out gravity-induced fall and mark grounded
-                _force.y = 0f;
+                    _force.y = 0f;
                 _conditions.IsOnSlope = true;
                 _conditions.SlopeAngle = slopeAngle;
                 _conditions.IsCollidingBelow = true;
@@ -372,7 +371,12 @@ public class PlayerController : MonoBehaviour
             Vector2 rayOrigin = Vector2.Lerp(rayTopLeft, rayTopRight, (float)i / (float)(verticalRayCount - 1));
 
             rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
-            Debug.Log(rayLength);
+            float temp = rayLength;
+
+            if (_movePosition.y > 0)
+            {
+                rayLength += Mathf.Abs(_movePosition.y);
+            }
 
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, transform.up, rayLength, collideWith);
             Debug.DrawRay(rayOrigin, transform.up * rayLength, Color.red);
@@ -380,7 +384,7 @@ public class PlayerController : MonoBehaviour
 
             if (hit)
             {
-                _movePosition.y = hit.distance - rayLength;
+                _movePosition.y = hit.distance - temp;
                 _conditions.IsCollidingAbove = true;
             }
         }
