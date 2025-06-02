@@ -54,6 +54,7 @@ public class PlayerJump : PlayerStates
         
         Debug.Log("jumpForce" + jumpForce);
         _playerController.SetVerticalForce(jumpForce);
+        _playerController.Conditions.IsJumping = true;
     }
 
     private bool CanJump()

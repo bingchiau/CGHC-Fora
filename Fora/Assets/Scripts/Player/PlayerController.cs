@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
         SetRayOrigins();
         GetFaceDirection();
+        RotateModel();
 
         if (FacingRight)
         {
@@ -105,6 +106,7 @@ public class PlayerController : MonoBehaviour
 
         transform.Translate(_movePosition, Space.Self);
 
+        SetRayOrigins();
         CalculateMovement();
 
     }
@@ -189,11 +191,22 @@ public class PlayerController : MonoBehaviour
             _faceDirection = -1f;
             FacingRight = false;
         }
+
+        _internalFaceDirection = _faceDirection;
+
+        
+    }
+
+    private void RotateModel()
+    {
+        if (FacingRight)
+        {
+            transform.localScale = new Vector3(0.7f, 0.7f, 0.7f); // Face right
+        }
         else
         {
-             _internalFaceDirection = _faceDirection;
+            transform.localScale = new Vector3(-0.7f, 0.7f, 0.7f); // Face left
         }
-        
     }
     #endregion
 
@@ -245,7 +258,7 @@ public class PlayerController : MonoBehaviour
             }
 
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, -transform.up, rayLength, collideWith);
-            Debug.DrawRay(rayOrigin, -transform.up * rayLength, Color.green);
+            //Debug.DrawRay(rayOrigin, -transform.up * rayLength, Color.green);
             turnAngle += 22.5f;
 
             if (hit)
@@ -303,6 +316,8 @@ public class PlayerController : MonoBehaviour
             
             rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
 
+            float temp = rayLength;
+            rayLength += moveDistance; // Add move distance to ray length
             RaycastHit2D hit = Physics2D.Raycast(origin, direction * transform.right, rayLength, collideWith);
             Debug.DrawRay(origin, transform.right * rayLength * direction, Color.cyan);
             turnAngle += 22.5f;
@@ -311,34 +326,48 @@ public class PlayerController : MonoBehaviour
             // 1) Check slope angle
             float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-            Debug.Log(slopeAngle);
             if (slopeAngle > 0 && slopeAngle <= maxSlopeAngle)
             {
                 // 2) Walk up slope
                 // Rotate the surface normal by -90 degrees then multiply with direction to get (tangent) vector up the slope.
                 Vector2 slopeTangent = new Vector2(hit.normal.y, -hit.normal.x) * direction;
                 slopeTangent.Normalize();
+                Debug.DrawRay(hit.point, slopeTangent, Color.red);
+                Debug.DrawRay(hit.point, hit.normal, Color.green);
+
+                
 
                 // 3) Recompute movement along slope
                 _movePosition = slopeTangent * moveDistance;
 
                 // 4) Zero out gravity-induced fall and mark grounded
-                    _force.y = 0f;
+                if (_force.y > 0 && _conditions.IsJumping == true)
+                {
+                    Debug.Log("jump up" + _force.y);
+                    _movePosition.y = _force.y * Time.deltaTime; // allow jump
+                    _conditions.IsCollidingBelow = false;
+                    _conditions.IsOnSlope = false;
+                }
+
+                _force.y = 0f;
                 _conditions.IsOnSlope = true;
                 _conditions.SlopeAngle = slopeAngle;
                 _conditions.IsCollidingBelow = true;
+
+                Debug.Log(_force.y);
+
                 return; // we handled movement, skip “wall” logic
             }
 
             // 5) Otherwise it’s a wall – block horizontal movement
             if (direction > 0)
             {
-                _movePosition.x = hit.distance - rayLength;
+                _movePosition.x = hit.distance - temp;
                 _conditions.IsCollidingRight = true;
             }
             else
             {
-                _movePosition.x = -hit.distance + rayLength;
+                _movePosition.x = -hit.distance + temp;
                 _conditions.IsCollidingLeft = true;
             }
 
