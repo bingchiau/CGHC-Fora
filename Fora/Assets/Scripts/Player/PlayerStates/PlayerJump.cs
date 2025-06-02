@@ -52,7 +52,6 @@ public class PlayerJump : PlayerStates
         float jumpForce = EvaluateWeight(_maxJumpHeight, _minJumpHeight); // Adjust jump force based on player weight
         jumpForce = Mathf.Sqrt(jumpForce * 2f * Mathf.Abs(_playerController.Gravity));
         
-        Debug.Log("jumpForce" + jumpForce);
         _playerController.SetVerticalForce(jumpForce);
         _playerController.Conditions.IsJumping = true;
     }

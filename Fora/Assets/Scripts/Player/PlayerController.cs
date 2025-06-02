@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     private float _currentGravity;
     private Vector2 _force;
     private Vector2 _movePosition;
-    private float _skin = 0.01f;
+    private float _skin = 0.02f;
 
     private float _internalFaceDirection = 1f; // 1 for right, -1 for left
     private float _faceDirection;
@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
             }
 
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, -transform.up, rayLength, collideWith);
-            //Debug.DrawRay(rayOrigin, -transform.up * rayLength, Color.green);
+            Debug.DrawRay(rayOrigin, -transform.up * rayLength, Color.green);
             turnAngle += 22.5f;
 
             if (hit)
@@ -317,12 +317,13 @@ public class PlayerController : MonoBehaviour
             rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
 
             float temp = rayLength;
-            rayLength += moveDistance; // Add move distance to ray length
+            //rayLength += moveDistance; // Add move distance to ray length
             RaycastHit2D hit = Physics2D.Raycast(origin, direction * transform.right, rayLength, collideWith);
             Debug.DrawRay(origin, transform.right * rayLength * direction, Color.cyan);
             turnAngle += 22.5f;
 
             if (!hit) continue;
+
             // 1) Check slope angle
             float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
@@ -335,15 +336,12 @@ public class PlayerController : MonoBehaviour
                 Debug.DrawRay(hit.point, slopeTangent, Color.red);
                 Debug.DrawRay(hit.point, hit.normal, Color.green);
 
-                
-
                 // 3) Recompute movement along slope
                 _movePosition = slopeTangent * moveDistance;
 
                 // 4) Zero out gravity-induced fall and mark grounded
                 if (_force.y > 0 && _conditions.IsJumping == true)
                 {
-                    Debug.Log("jump up" + _force.y);
                     _movePosition.y = _force.y * Time.deltaTime; // allow jump
                     _conditions.IsCollidingBelow = false;
                     _conditions.IsOnSlope = false;
@@ -353,8 +351,6 @@ public class PlayerController : MonoBehaviour
                 _conditions.IsOnSlope = true;
                 _conditions.SlopeAngle = slopeAngle;
                 _conditions.IsCollidingBelow = true;
-
-                Debug.Log(_force.y);
 
                 return; // we handled movement, skip “wall” logic
             }
