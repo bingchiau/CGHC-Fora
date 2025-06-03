@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 public class PlayerController : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float gravity = -20f;
+    [SerializeField] private float _gravity = -20f;
     [SerializeField] private float _fallMultiplier = 2f;
     [SerializeField] private float _weight = 1f;
 
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public bool FacingRight { get; set; }
 
     // Return the Gravity value
-    public float Gravity => gravity;
+    public float Gravity => _gravity;
 
     // Return the Force applied
     public Vector2 Force => _force;
@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     private float _weightRatio;
 
     private float _currentGravity;
+    private float _originalGravity;
     private Vector2 _force;
     private Vector2 _movePosition;
     private float _skin = 0.06f;
@@ -169,7 +170,7 @@ public class PlayerController : MonoBehaviour
     // Calculate the gravity to apply
     private void ApplyGravity()
     {
-        _currentGravity = gravity;
+        _currentGravity = _gravity;
 
         if (_force.y < 0)
         {
@@ -177,6 +178,23 @@ public class PlayerController : MonoBehaviour
         }
 
         _force.y += _currentGravity * Time.deltaTime;
+    }
+
+    public void StopGravity()
+    {
+        _originalGravity = _gravity;
+        _gravity = 0f;
+    }
+
+    public void ResumeGravity()
+    {
+        _gravity = _originalGravity;
+    }   
+
+    public void ApplyDash(float _dashPower)
+    {
+        //something missing
+        _movePosition = new Vector2(_dashPower * _internalFaceDirection, 0f);
     }
 
     #endregion
