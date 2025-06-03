@@ -14,7 +14,6 @@ public class PlayerMovement : PlayerStates
     protected override void InitState()
     {
         base.InitState();
-
     }
 
     public override void ExecuteState()

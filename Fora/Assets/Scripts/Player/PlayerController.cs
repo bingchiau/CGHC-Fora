@@ -75,6 +75,9 @@ public class PlayerController : MonoBehaviour
 
         _conditions = new PlayerConditions();
         _conditions.Reset();
+
+        _weightRatio = _weight / _maxWeight;
+        UIManager.Instance.UpdateWeight(_weightRatio); // Update weight at the start
     }
 
     private void Update()

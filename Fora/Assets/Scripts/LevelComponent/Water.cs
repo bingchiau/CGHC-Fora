@@ -15,6 +15,7 @@ public class Water : MonoBehaviour
             return;
         }
         _playerController.AddWeight(_weightAdd);
+        UIManager.Instance.UpdateWeight(_playerController.WeightRatio);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
