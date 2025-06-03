@@ -2334,11 +2334,11 @@ CompositeCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -2449,11 +2449,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1298329234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 049b6781e62aebc4ea2548feaa7315c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cd1ed3be1ed42d49b083990c1fa3188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  friction: 0.5
-  horizontalMovement: 4
+  _weightAdd: 0.2
 --- !u!1 &1531851551
 GameObject:
   m_ObjectHideFlags: 0
@@ -2551,12 +2550,24 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5671252452462703296, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671252452462703296, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671252452462703296, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671252452462703296, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.42
+      value: -2.246
       objectReference: {fileID: 0}
     - target: {fileID: 5671252452462703296, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.93
+      value: -7.577
       objectReference: {fileID: 0}
     - target: {fileID: 5671252452462703296, guid: 50a054d584622e9408afa2f5475cecc9, type: 3}
       propertyPath: m_LocalPosition.z

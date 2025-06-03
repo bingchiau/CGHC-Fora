@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpecialSurface : MonoBehaviour
+public class Water : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float friction = 10f;
-
-    public float Friction => friction;
-
+    [SerializeField] private float _weightAdd = 0.2f;
     private PlayerController _playerController;
 
     private void Update()
@@ -17,6 +14,7 @@ public class SpecialSurface : MonoBehaviour
         {
             return;
         }
+        _playerController.AddWeight(_weightAdd);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

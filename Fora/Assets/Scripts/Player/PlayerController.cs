@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
     private float _boundsHeight;
 
     private float _maxWeight = 5f;
+    private float _minWeight = 1f;
     private float _weightRatio;
 
     private float _currentGravity;
@@ -97,9 +98,9 @@ public class PlayerController : MonoBehaviour
         CollisionBelow();
         CollisionAbove();
 
-        if (_weight <= 1f)
+        if (_weight <= _minWeight)
         {
-            _weight = 1f; // Ensure weight is never zero or negative
+            _weight = _minWeight; // Ensure weight is never zero or negative
         }
         else if (_weight > _maxWeight)
         {
@@ -173,6 +174,19 @@ public class PlayerController : MonoBehaviour
         }
 
         _force.y += _currentGravity * Time.deltaTime;
+    }
+
+    #endregion
+
+    #region Weight
+
+    public void AddWeight(float weight)
+    {
+        _weight += weight * Time.deltaTime;
+        if (_weight > _maxWeight)
+        {
+            _weight = _maxWeight; // Clamp to max weight
+        }
     }
 
     #endregion
