@@ -162,19 +162,16 @@ public class PlayerController : MonoBehaviour
     public void SetHorizontalForce(float xForce)
     {
         _force.x = xForce;
-        //Debug.Log(_force.x);
-    }
-
-    public void AddHorizontalMovement(float xForce)
-    {
-        
-        _force.x += xForce;
-        Debug.Log("yes added" + _force.x);
     }
 
     public void SetVerticalForce(float yForce)
     {
         _force.y = yForce;
+    }
+
+    public void SetForce(Vector2 force)
+    {
+        _force = force;
     }
 
     // Calculate the gravity to apply
@@ -357,7 +354,7 @@ public class PlayerController : MonoBehaviour
             rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
 
             float temp = rayLength;
-            //rayLength += moveDistance; // Add move distance to ray length
+
             RaycastHit2D hit = Physics2D.Raycast(origin, direction * transform.right, rayLength, collideWith);
             Debug.DrawRay(origin, transform.right * rayLength * direction, Color.cyan);
             turnAngle += 22.5f;
