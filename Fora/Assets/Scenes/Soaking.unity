@@ -2797,7 +2797,7 @@ TrailRenderer:
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -2879,6 +2879,7 @@ MonoBehaviour:
   _dashPower: 20
   _dashDuration: 0.2
   _dashCooldown: 1
+  _maxDashes: 1
   _dashTrail: {fileID: 2606844401760950927}
 --- !u!20 &3489371747581674925
 Camera:

@@ -5,16 +5,17 @@ using UnityEngine;
 public class PlayerDash : PlayerStates
 {
     [Header("Settings")]
-    [SerializeField] private float _dashPower = 20f;
+    [SerializeField] private float _dashPower = 30f;
     [SerializeField] private float _dashDuration = 0.2f;
     [SerializeField] private float _dashCooldown = 1f;
+    [SerializeField] private int _maxDashes = 1;
     [SerializeField] private TrailRenderer _dashTrail;
-
-    private bool canDash = true;
-
+    
+    public int DashLeft { get; private set; }
     protected override void InitState()
     {
         base.InitState();
+        DashLeft = _maxDashes;
     }
 
     public override void ExecuteState()
@@ -27,24 +28,63 @@ public class PlayerDash : PlayerStates
 
     protected override void GetInput()
     {
-        if (Input.GetKeyDown(KeyCode.J) && canDash)
+        if (Input.GetKey(KeyCode.J))
         {
-            StartCoroutine(Dash());
+            Dash();
         }
     }
 
-    private IEnumerator Dash()
+    private void Dash()
     {
-        canDash = false;
+        if (!CanDash())
+        {
+            return;
+        }
+
+        StartCoroutine(DashCountdown());
+    }
+
+    private bool CanDash()
+    {
+        if (_playerController.Conditions.IsCollidingRight || _playerController.Conditions.IsCollidingLeft)
+        {
+            return false;
+        }
+        else if (_playerController.Conditions.IsOnSlope)
+        {
+            return false;
+        }
+        else if (DashLeft <= 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private IEnumerator DashCountdown()
+    {
+        DashLeft--;
+
+        float timer = 0f;
+        float direction = transform.localScale.x;
         _playerController.Conditions.IsDashing = true;
         _playerController.StopGravity();
-        _playerController.ApplyDash(_dashPower);
         _dashTrail.emitting = true;
-        yield return new WaitForSeconds(_dashDuration);
+
+        while (timer < _dashDuration)
+        {
+            _playerController.SetHorizontalForce(_dashPower * direction);
+            timer += Time.deltaTime;
+            yield return null; // Wait for next frame
+        }
+
+        _playerController.SetHorizontalForce(0f); // Stop the dash
         _dashTrail.emitting = false;
         _playerController.ResumeGravity();
         _playerController.Conditions.IsDashing = false;
+
         yield return new WaitForSeconds(_dashCooldown);
-        canDash = true;
+        DashLeft++;
     }
 }

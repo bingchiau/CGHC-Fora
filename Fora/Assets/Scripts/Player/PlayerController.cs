@@ -79,6 +79,8 @@ public class PlayerController : MonoBehaviour
 
         _weightRatio = _weight / _maxWeight;
         UIManager.Instance.UpdateWeight(_weightRatio); // Update weight at the start
+
+        _originalGravity = _gravity;    
     }
 
     private void Update()
@@ -160,6 +162,14 @@ public class PlayerController : MonoBehaviour
     public void SetHorizontalForce(float xForce)
     {
         _force.x = xForce;
+        //Debug.Log(_force.x);
+    }
+
+    public void AddHorizontalMovement(float xForce)
+    {
+        
+        _force.x += xForce;
+        Debug.Log("yes added" + _force.x);
     }
 
     public void SetVerticalForce(float yForce)
@@ -190,12 +200,6 @@ public class PlayerController : MonoBehaviour
     {
         _gravity = _originalGravity;
     }   
-
-    public void ApplyDash(float _dashPower)
-    {
-        //something missing
-        _movePosition = new Vector2(_dashPower * _internalFaceDirection, 0f);
-    }
 
     #endregion
 
