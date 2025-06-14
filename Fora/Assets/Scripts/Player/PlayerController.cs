@@ -118,6 +118,7 @@ public class PlayerController : MonoBehaviour
 
         transform.Translate(_movePosition, Space.Self);
         CalculateMovement();
+        //Debug.Log("bounce" + _conditions.IsBouncing);
         
     }
 
@@ -337,6 +338,8 @@ public class PlayerController : MonoBehaviour
                     Friction = hitObject.GetComponent<SpecialSurface>().Friction;
                 }
 
+                //_conditions.IsBouncing = false;
+
             }
 
         }
@@ -372,6 +375,7 @@ public class PlayerController : MonoBehaviour
 
             _hitPoint = hit.normal;
             Debug.DrawRay(hit.point, hit.normal, Color.green);
+            //_conditions.IsBouncing = false;
 
             if (!_checkStop)
             {
@@ -482,6 +486,7 @@ public class PlayerController : MonoBehaviour
                 }
                 _movePosition.y = hit.distance - temp;
                 _conditions.IsCollidingAbove = true;
+                //_conditions.IsBouncing = false;
             }
         }
 

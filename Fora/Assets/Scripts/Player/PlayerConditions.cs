@@ -7,6 +7,7 @@
     public bool IsFalling { get; set; }
     public bool IsJumping { get; set; }
     public bool IsDashing { get; set; }
+    public bool IsBouncing { get; set; }
 
     /// <summary>True when we’ve hit a walkable slope in HorizontalCollision</summary>
     public bool IsOnSlope { get; set; }

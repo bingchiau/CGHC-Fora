@@ -8,7 +8,7 @@ public class PlayerDash : PlayerStates
     [Header("Settings")]
     [SerializeField] private float _dashPower = 15f;
     [SerializeField] private float _dashDuration = 0.2f;
-    [SerializeField] private float _dashCooldown = 1f;
+    [SerializeField] private float _dashCooldown = 0.5f;
     [SerializeField] private int _maxDashes = 1;
     [SerializeField] private TrailRenderer _dashTrail;
     
@@ -98,9 +98,8 @@ public class PlayerDash : PlayerStates
             
             if (_canBounce)
             {
-                //Debug.Log("bounce");
                 Vector2 dir = _playerController.Bounce(direction.normalized);
-                _playerController.SetForce(dir * _dashPower);
+                _playerController.SetForce(dir * _dashPower);       
             }
             else
             {
@@ -116,8 +115,10 @@ public class PlayerDash : PlayerStates
         _dashTrail.emitting = false;
         _playerController.ResumeGravity();
         _playerController.Conditions.IsDashing = false;
+        _playerController.Conditions.IsBouncing = true;
 
         yield return new WaitForSeconds(_dashCooldown);
         _finishCooldown = true;
+        _playerController.Conditions.IsBouncing = false;
     }
 }

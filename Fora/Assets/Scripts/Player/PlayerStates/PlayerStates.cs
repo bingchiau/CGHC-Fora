@@ -16,7 +16,7 @@ public class PlayerStates : MonoBehaviour
     // We call some logic need in the start
     protected virtual void InitState()
     {
-        _playerController = GetComponent<PlayerController>();
+        _playerController = GetComponent<PlayerController>();       
     }
 
     // Override to create state logic
@@ -28,8 +28,16 @@ public class PlayerStates : MonoBehaviour
     // Gets the input from the player
     public virtual void LocalInput()
     {
-        _horizontalInput = Input.GetAxis("Horizontal");
-        _verticalInput = Input.GetAxis("Vertical");
+        if (_playerController.Conditions.IsBouncing)
+        {
+            _horizontalInput = 0f;
+            _verticalInput = 0f;
+        }
+        else
+        {
+            _horizontalInput = Input.GetAxis("Horizontal");
+            _verticalInput = Input.GetAxis("Vertical");
+        }
 
         GetInput();
     }
