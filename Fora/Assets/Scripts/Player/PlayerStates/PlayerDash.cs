@@ -13,7 +13,7 @@ public class PlayerDash : PlayerStates
     [SerializeField] private TrailRenderer _dashTrail;
     
     private bool _finishCooldown = false;
-
+    private bool _canBounce;
     public int DashLeft { get; private set; }
     protected override void InitState()
     {
@@ -87,11 +87,27 @@ public class PlayerDash : PlayerStates
 
         while (timer < _dashDuration)
         {
-            _playerController.SetForce(_dashPower * direction.normalized);
+            if (_playerController.Conditions.IsCollidingRight || _playerController.Conditions.IsCollidingLeft)
+            {
+                _canBounce = true;
+            }
+            
+            if (_canBounce)
+            {
+                Debug.Log("bounce");
+                Vector2 dir = _playerController.Bounce(direction.normalized);
+                _playerController.SetForce(dir * _dashPower);
+            }
+            else
+            {
+                _playerController.SetForce(_dashPower * direction.normalized);
+            }
+            
             timer += Time.deltaTime;
             yield return null; // Wait for next frame
         }
 
+        _canBounce = false; // Reset bounce state
         _playerController.SetHorizontalForce(0f); // Stop the dash
         _dashTrail.emitting = false;
         _playerController.ResumeGravity();

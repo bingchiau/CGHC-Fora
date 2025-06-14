@@ -334,6 +334,8 @@ public class PlayerController : MonoBehaviour
     #endregion
     #region Collision Horizontal
 
+    Vector2 hitPoint;
+
     private void HorizontalCollision(int direction)
     {
         Vector2 rayBottom = (_boundsBottomLeft + _boundsBottomRight) * 0.5f;
@@ -357,6 +359,9 @@ public class PlayerController : MonoBehaviour
             turnAngle += 22.5f;
 
             if (!hit) continue;
+
+            hitPoint = hit.normal;
+            Debug.DrawRay(hit.point, hit.normal, Color.green);
 
             if (!_checkStop)
             {
@@ -465,11 +470,11 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    private void Bounce(Vector2 inDirection, Vector2 normal)
+    public Vector2 Bounce(Vector2 inDirection)
     {
         Debug.Log("yes bounce");
-        Vector2 bounceDir =  Vector2.Reflect(inDirection, normal);
-        _force = bounceDir * 0.7f; // Apply a bounce force
+        Vector2 bounceDir =  Vector2.Reflect(inDirection, hitPoint);
+        return bounceDir;
     }
     #endregion
 }
