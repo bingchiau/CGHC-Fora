@@ -37,7 +37,7 @@ public class PlayerDash : PlayerStates
 
     protected override void GetInput()
     {
-        if (Input.GetKey(KeyCode.J))
+        if (Input.GetMouseButtonDown(1))
         {
             Dash();
         }
