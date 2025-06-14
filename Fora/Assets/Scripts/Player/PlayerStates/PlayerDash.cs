@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerDash : PlayerStates
 {
     [Header("Settings")]
-    [SerializeField] private float _dashPower = 17f;
+    [SerializeField] private float _dashPower = 15f;
     [SerializeField] private float _dashDuration = 0.2f;
     [SerializeField] private float _dashCooldown = 1f;
     [SerializeField] private int _maxDashes = 1;

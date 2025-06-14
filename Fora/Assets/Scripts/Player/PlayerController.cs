@@ -115,10 +115,8 @@ public class PlayerController : MonoBehaviour
         _weightRatio = _weight / _maxWeight; // Calculate weight ratio
 
         transform.Translate(_movePosition, Space.Self);
-
-        SetRayOrigins();
         CalculateMovement();
-
+        
     }
 
     #region Ray Origins
@@ -282,8 +280,6 @@ public class PlayerController : MonoBehaviour
         leftOrigin += (Vector2)(transform.up * _skin) + (Vector2)(transform.right * _movePosition.x);
         rightOrigin += (Vector2)(transform.up * _skin) + (Vector2)(transform.right * _movePosition.x);
 
-        
-
         // Raycast
         for (int i = 0; i < verticalRayCount; i++)
         {
@@ -293,6 +289,7 @@ public class PlayerController : MonoBehaviour
             float temp = rayLength;
             if (_movePosition.y < 0)
             {
+                
                 rayLength += Mathf.Abs(_movePosition.y);
             }
 
@@ -354,7 +351,7 @@ public class PlayerController : MonoBehaviour
             rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
 
             float temp = rayLength;
-
+            
             RaycastHit2D hit = Physics2D.Raycast(origin, direction * transform.right, rayLength, collideWith);
             Debug.DrawRay(origin, transform.right * rayLength * direction, Color.cyan);
             turnAngle += 22.5f;
@@ -467,5 +464,12 @@ public class PlayerController : MonoBehaviour
 
     }
     #endregion
+
+    private void Bounce(Vector2 inDirection, Vector2 normal)
+    {
+        Debug.Log("yes bounce");
+        Vector2 bounceDir =  Vector2.Reflect(inDirection, normal);
+        _force = bounceDir * 0.7f; // Apply a bounce force
+    }
     #endregion
 }
