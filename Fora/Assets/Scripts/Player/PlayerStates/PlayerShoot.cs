@@ -7,7 +7,12 @@ public class PlayerShoot : PlayerStates
 {
     [Header("Settings")]
     [SerializeField] private GameObject aim;
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform shootPoint;
+    [Range(0.1f, 2f)]
+    [SerializeField] private float fireRate = 0.5f;
 
+    private float _fireTimer;
     private float _mx;
     private float _my;
 
@@ -39,10 +44,20 @@ public class PlayerShoot : PlayerStates
         {
             aim.transform.localRotation = Quaternion.Euler(0, 0, -angle);
         }
+
+        if (Input.GetMouseButton(0) && _fireTimer <= 0)
+        {
+            Shoot();
+            _fireTimer = fireRate;
+        }
+        else
+        {
+            _fireTimer -= Time.deltaTime;
+        }
     }
 
     private void Shoot()
     {
-        //...
+        Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
     }
 }
