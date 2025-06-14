@@ -87,14 +87,18 @@ public class PlayerDash : PlayerStates
 
         while (timer < _dashDuration)
         {
-            if (_playerController.Conditions.IsCollidingRight || _playerController.Conditions.IsCollidingLeft)
+            if (_playerController.Conditions.IsCollidingRight || 
+                _playerController.Conditions.IsCollidingLeft || 
+                _playerController.Conditions.IsOnSlope ||
+                _playerController.Conditions.IsCollidingBelow ||
+                _playerController.Conditions.IsCollidingAbove)
             {
                 _canBounce = true;
             }
             
             if (_canBounce)
             {
-                Debug.Log("bounce");
+                //Debug.Log("bounce");
                 Vector2 dir = _playerController.Bounce(direction.normalized);
                 _playerController.SetForce(dir * _dashPower);
             }

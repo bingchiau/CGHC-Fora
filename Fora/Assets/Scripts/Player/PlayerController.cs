@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
     private float _boundsWidth; 
     private float _boundsHeight;
 
+    private Vector2 _hitPoint;
+
     private float _maxWeight = 5f;
     private float _minWeight = 1f;
     private float _weightRatio;
@@ -300,6 +302,16 @@ public class PlayerController : MonoBehaviour
             if (hit)
             {
                 GameObject hitObject = hit.collider.gameObject;
+                
+                if (Conditions.IsDashing)
+                {
+                    _hitPoint = hit.normal;
+                }
+                else
+                {
+                    _hitPoint = Vector2.zero;
+                }
+                //Debug.DrawRay(hit.point, hit.normal, Color.green);
 
                 if (_force.y > 0)
                 {
@@ -334,8 +346,6 @@ public class PlayerController : MonoBehaviour
     #endregion
     #region Collision Horizontal
 
-    Vector2 hitPoint;
-
     private void HorizontalCollision(int direction)
     {
         Vector2 rayBottom = (_boundsBottomLeft + _boundsBottomRight) * 0.5f;
@@ -360,7 +370,7 @@ public class PlayerController : MonoBehaviour
 
             if (!hit) continue;
 
-            hitPoint = hit.normal;
+            _hitPoint = hit.normal;
             Debug.DrawRay(hit.point, hit.normal, Color.green);
 
             if (!_checkStop)
@@ -462,6 +472,14 @@ public class PlayerController : MonoBehaviour
 
             if (hit)
             {
+                if (Conditions.IsDashing)
+                {
+                    _hitPoint = hit.normal;
+                }
+                else
+                {
+                    _hitPoint = Vector2.zero;
+                }
                 _movePosition.y = hit.distance - temp;
                 _conditions.IsCollidingAbove = true;
             }
@@ -472,8 +490,8 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 Bounce(Vector2 inDirection)
     {
-        Debug.Log("yes bounce");
-        Vector2 bounceDir =  Vector2.Reflect(inDirection, hitPoint);
+        //Debug.Log("yes bounce");
+        Vector2 bounceDir =  Vector2.Reflect(inDirection, _hitPoint);
         return bounceDir;
     }
     #endregion
