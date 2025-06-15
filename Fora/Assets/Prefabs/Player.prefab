@@ -462,6 +462,7 @@ MonoBehaviour:
   _dashCooldown: 0.5
   _maxDashes: 1
   _dashTrail: {fileID: 5107393054429176165}
+  aim: {fileID: 5969962939511435056}
 --- !u!114 &887303546173535630
 MonoBehaviour:
   m_ObjectHideFlags: 0

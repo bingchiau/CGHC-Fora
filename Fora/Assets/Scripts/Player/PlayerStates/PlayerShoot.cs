@@ -15,10 +15,8 @@ public class PlayerShoot : PlayerStates
     [SerializeField] private float damage = 5f;
 
     private float _fireTimer;
-    private float _mx;
-    private float _my;
 
-    private Vector2 mousePos;
+    private Vector2 _mousePos;
 
     protected override void InitState()
     {
@@ -32,11 +30,9 @@ public class PlayerShoot : PlayerStates
 
     protected override void GetInput()
     {
-        _mx = Input.GetAxisRaw("Horizontal");
-        _my = Input.GetAxisRaw("Vertical");
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x) * Mathf.Rad2Deg - 90;
+        float angle = Mathf.Atan2(_mousePos.y - transform.position.y, _mousePos.x - transform.position.x) * Mathf.Rad2Deg - 90;
 
         if (_playerController.FacingRight)
         {

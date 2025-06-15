@@ -11,9 +11,12 @@ public class PlayerDash : PlayerStates
     [SerializeField] private float _dashCooldown = 0.5f;
     [SerializeField] private int _maxDashes = 1;
     [SerializeField] private TrailRenderer _dashTrail;
+    [SerializeField] private GameObject aim;
     
     private bool _finishCooldown = false;
     private bool _canBounce;
+
+    private Vector3 _mousePos;
 
     public int DashLeft { get; private set; }
     protected override void InitState()
@@ -78,11 +81,10 @@ public class PlayerDash : PlayerStates
         DashLeft--;
         _finishCooldown = false;
         float timer = 0f;
-        Vector2 direction = new Vector2(_horizontalInput, _verticalInput);
-        if (direction == Vector2.zero) // If no input, default to right
-        {
-            direction = new Vector2(transform.localScale.x, 0f);
-        }
+
+        _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = aim.transform.up;
+
         _playerController.Conditions.IsDashing = true;
         _playerController.StopGravity();
         _dashTrail.emitting = true;
