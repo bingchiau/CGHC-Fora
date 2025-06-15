@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -11,6 +12,7 @@ public class PlayerShoot : PlayerStates
     [SerializeField] private Transform shootPoint;
     [Range(0.1f, 2f)]
     [SerializeField] private float fireRate = 0.5f;
+    [SerializeField] private float damage = 5f;
 
     private float _fireTimer;
     private float _mx;
@@ -24,8 +26,8 @@ public class PlayerShoot : PlayerStates
     }
 
     public override void ExecuteState()
-    {
-      
+    {  
+        //...
     }
 
     protected override void GetInput()
@@ -56,8 +58,22 @@ public class PlayerShoot : PlayerStates
         }
     }
 
+    private bool CanShoot()
+    {
+        if (_playerController.WeightRatio <= 0.2f)
+        {
+            return false;
+        }
+        return true;
+    }
+
     private void Shoot()
     {
-        Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
+        if (CanShoot())
+        {
+            Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
+            _playerController.ReduceWeight(damage / 100);
+            UIManager.Instance.UpdateWeight(_playerController.WeightRatio);
+        }
     }
 }

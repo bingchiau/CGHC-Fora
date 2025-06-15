@@ -208,7 +208,16 @@ public class PlayerController : MonoBehaviour
         _weight += weight * Time.deltaTime;
         if (_weight > _maxWeight)
         {
-            _weight = _maxWeight; // Clamp to max weight
+            _weight = _maxWeight; 
+        }
+    }
+
+    public void ReduceWeight(float weight)
+    {
+        _weight -= weight;
+        if (_weight < _minWeight)
+        {
+            _weight = _minWeight; 
         }
     }
 

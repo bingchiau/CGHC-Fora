@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dashPower: 15
-  _dashDuration: 0.2
+  _dashDuration: 0.3
   _dashCooldown: 0.5
   _maxDashes: 1
   _dashTrail: {fileID: 5107393054429176165}
@@ -478,6 +478,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 425885748081601758, guid: 4e85de14f200e66438aafe105cb07bd0, type: 3}
   shootPoint: {fileID: 7658335721864813758}
   fireRate: 0.2
+  damage: 5
 --- !u!1 &3932523266426000708
 GameObject:
   m_ObjectHideFlags: 0
