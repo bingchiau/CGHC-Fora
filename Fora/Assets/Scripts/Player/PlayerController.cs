@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     
     // Return the weight value
     public float WeightRatio => _weightRatio;
+
+    public Vector2 BounceDir => bounceDir;
     #endregion
 
     #region Internal
@@ -54,6 +56,7 @@ public class PlayerController : MonoBehaviour
     private float _boundsHeight;
 
     private Vector2 _hitPoint;
+    private Vector2 bounceDir;
 
     private float _maxWeight = 5f;
     private float _minWeight = 1f;
@@ -118,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
         transform.Translate(_movePosition, Space.Self);
         CalculateMovement();
-        //Debug.Log("bounce" + _conditions.IsBouncing);
+        
         
     }
 
@@ -505,7 +508,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 Bounce(Vector2 inDirection)
     {
         //Debug.Log("yes bounce");
-        Vector2 bounceDir =  Vector2.Reflect(inDirection, _hitPoint);
+        bounceDir =  Vector2.Reflect(inDirection, _hitPoint);
         return bounceDir;
     }
     #endregion

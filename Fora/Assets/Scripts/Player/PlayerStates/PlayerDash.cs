@@ -14,6 +14,7 @@ public class PlayerDash : PlayerStates
     
     private bool _finishCooldown = false;
     private bool _canBounce;
+
     public int DashLeft { get; private set; }
     protected override void InitState()
     {
@@ -51,6 +52,7 @@ public class PlayerDash : PlayerStates
         }
 
         StartCoroutine(DashCountdown());
+        StartCoroutine(BounceCooldown());
     }
 
     private bool CanDash()
@@ -94,12 +96,13 @@ public class PlayerDash : PlayerStates
                 _playerController.Conditions.IsCollidingAbove)
             {
                 _canBounce = true;
+                _playerController.Conditions.IsBouncing = true;
             }
-            
+
             if (_canBounce)
             {
                 Vector2 dir = _playerController.Bounce(direction.normalized);
-                _playerController.SetForce(dir * _dashPower);       
+                _playerController.SetForce(dir * _dashPower);
             }
             else
             {
@@ -115,10 +118,16 @@ public class PlayerDash : PlayerStates
         _dashTrail.emitting = false;
         _playerController.ResumeGravity();
         _playerController.Conditions.IsDashing = false;
-        _playerController.Conditions.IsBouncing = true;
-
+        
         yield return new WaitForSeconds(_dashCooldown);
         _finishCooldown = true;
+
+    }
+
+    private IEnumerator BounceCooldown()
+    {
+        yield return new WaitForSeconds(0.5f);
         _playerController.Conditions.IsBouncing = false;
+               
     }
 }

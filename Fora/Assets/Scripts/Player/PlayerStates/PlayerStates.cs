@@ -31,7 +31,7 @@ public class PlayerStates : MonoBehaviour
         if (_playerController.Conditions.IsBouncing)
         {
             _horizontalInput = 0f;
-            _verticalInput = 0f;
+            return;
         }
         else
         {

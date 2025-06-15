@@ -33,8 +33,17 @@ public class PlayerMovement : PlayerStates
             _movement = 0f;
         }
 
-            float moveSpeed = EvaluateWeight(_maxSpeed, _minSpeed);
-        moveSpeed = _movement * moveSpeed;
+        float moveSpeed = EvaluateWeight(_maxSpeed, _minSpeed);
+
+        if (_playerController.Conditions.IsBouncing)
+        {
+            moveSpeed = _playerController.BounceDir.x * moveSpeed;
+        }
+        else
+        {
+            moveSpeed = _movement * moveSpeed;
+        }
+        
         moveSpeed = EvaluateFriction(moveSpeed);
         _playerController.SetHorizontalForce(moveSpeed);
     }
