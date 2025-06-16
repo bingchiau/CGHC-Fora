@@ -1,88 +1,112 @@
 using UnityEngine;
 
-public class BossWaypointMover_Smooth : MonoBehaviour
+public class BossWaypointMover_Curve : MonoBehaviour
 {
     [Header("Waypoint Offsets (from start position)")]
     public Vector3[] offsets;
 
     private Vector3[] waypoints;
-    private int currentWaypointIndex = 0;
     private Vector3 startPosition;
 
     [Header("Movement")]
-    public float timeToReachPoint = 2f; // How long to travel from one waypoint to next
-
-    private float progress = 0f;
-    private Vector3 previousPoint, nextPoint;
+    public float timeToCompletePath = 8f; // Total time for full loop
+    private float t = 0f; // Overall path progress
 
     void Start()
     {
-        // Cache start
         startPosition = transform.position;
 
-        // Compute waypoints
+        // Compute absolute waypoint positions
         waypoints = new Vector3[offsets.Length];
         for (int i = 0; i < offsets.Length; i++)
         {
             waypoints[i] = startPosition + offsets[i];
         }
-
-        // Initialize first pair
-        previousPoint = transform.position;
-        nextPoint = waypoints[currentWaypointIndex];
     }
 
     void Update()
     {
-        if (waypoints.Length == 0) return;
+        if (waypoints.Length < 2) return;
 
-        progress += Time.deltaTime / timeToReachPoint;
-        float easedProgress = EaseInOut(progress);
+        // Increase t smoothly
+        t += Time.deltaTime / timeToCompletePath;
+        if (t > 1f) t -= 1f;
 
-        // Interpolate position with easing
-        transform.position = Vector3.Lerp(previousPoint, nextPoint, easedProgress);
-
-        // If reached, go to next
-        if (progress >= 1f)
-        {
-            progress = 0f;
-
-            previousPoint = nextPoint;
-            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
-            nextPoint = waypoints[currentWaypointIndex];
-        }
+        // Compute where to be on curve at t
+        Vector3 positionOnCurve = GetPointOnClosedCatmullRom(t);
+        transform.position = positionOnCurve;
     }
 
-    // Smoothstep easing: slow at start & end, fast in middle
-    float EaseInOut(float t)
+    // Catmull-Rom Spline: closed loop
+    Vector3 GetPointOnClosedCatmullRom(float t)
     {
-        return t * t * (3f - 2f * t);  // classic smoothstep
+        int numPoints = waypoints.Length;
+
+        // Scale t to point index space
+        float scaledT = t * numPoints;
+        int i0 = Mathf.FloorToInt(scaledT) % numPoints;
+        int i1 = (i0 + 1) % numPoints;
+        int iMinus = (i0 - 1 + numPoints) % numPoints;
+        int iPlus = (i1 + 1) % numPoints;
+
+        float localT = scaledT - i0;
+
+        return CatmullRom(
+            waypoints[iMinus],
+            waypoints[i0],
+            waypoints[i1],
+            waypoints[iPlus],
+            localT
+        );
+    }
+
+    Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
+    {
+        // Catmull-Rom formula
+        return 0.5f * (
+            (2f * p1) +
+            (-p0 + p2) * t +
+            (2f * p0 - 5f * p1 + 4f * p2 - p3) * t * t +
+            (-p0 + 3f * p1 - 3f * p2 + p3) * t * t * t
+        );
     }
 
     void OnDrawGizmos()
     {
-        if (offsets == null || offsets.Length == 0) return;
+        if (offsets == null || offsets.Length < 2) return;
 
-        Vector3 basePosition = Application.isPlaying ? startPosition : transform.position;
+        Gizmos.color = Color.yellow;
 
-        Gizmos.color = Color.cyan;
+        // Preview the curve in Editor
+        Vector3 basePos = Application.isPlaying ? startPosition : transform.position;
+
+        // Compute absolute points
+        Vector3[] absPoints = new Vector3[offsets.Length];
         for (int i = 0; i < offsets.Length; i++)
         {
-            Vector3 point = basePosition + offsets[i];
-            Gizmos.DrawSphere(point, 0.2f);
-
-            if (i < offsets.Length - 1)
-            {
-                Vector3 nextPoint = basePosition + offsets[i + 1];
-                Gizmos.DrawLine(point, nextPoint);
-            }
+            absPoints[i] = basePos + offsets[i];
         }
 
-        if (offsets.Length > 1)
+        Vector3 prev = absPoints[0];
+        for (float t = 0; t < 1f; t += 0.02f)
         {
-            Vector3 lastPoint = basePosition + offsets[offsets.Length - 1];
-            Vector3 firstPoint = basePosition + offsets[0];
-            Gizmos.DrawLine(lastPoint, firstPoint);
+            Vector3 point = GetPointOnClosedCatmullRomPreview(absPoints, t);
+            Gizmos.DrawLine(prev, point);
+            prev = point;
         }
+        Gizmos.DrawLine(prev, absPoints[0]); // close loop
+    }
+
+    Vector3 GetPointOnClosedCatmullRomPreview(Vector3[] pts, float t)
+    {
+        int numPoints = pts.Length;
+        float scaledT = t * numPoints;
+        int i0 = Mathf.FloorToInt(scaledT) % numPoints;
+        int i1 = (i0 + 1) % numPoints;
+        int iMinus = (i0 - 1 + numPoints) % numPoints;
+        int iPlus = (i1 + 1) % numPoints;
+
+        float localT = scaledT - i0;
+        return CatmullRom(pts[iMinus], pts[i0], pts[i1], pts[iPlus], localT);
     }
 }
