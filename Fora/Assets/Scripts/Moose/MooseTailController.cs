@@ -23,6 +23,10 @@ public class MooseTailController : MonoBehaviour
     [Header("Tail Bend")]
     public float sweepWaveAmplitude = 20f; // how curvy during sweep
 
+    [Header("Trigger Radius")]
+    public float triggerRadius = 3f;   // range to detect player
+    public float sweepCooldown = 3f;   // Cooldown between sweeps
+
     private enum TailState { Idle, Sweep }
     private TailState state = TailState.Idle;
 
@@ -30,18 +34,14 @@ public class MooseTailController : MonoBehaviour
     private float sweepTargetAngle;
     private float sweepCurrentAngle;
 
+    private float nextSweepTime = 0f; // cooldown timer
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K) && state == TailState.Idle)
+        bool playerInRange = Vector2.Distance(player.position, transform.position) <= triggerRadius;
+        if (playerInRange && state == TailState.Idle && Time.time >= nextSweepTime)
         {
-            Vector2 dir = player.position - transform.position;
-            float baseAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-
-            sweepStartAngle = baseAngle - sweepAngle / 2f;
-            sweepTargetAngle = baseAngle + sweepAngle / 2f;
-            sweepCurrentAngle = sweepStartAngle;
-
-            state = TailState.Sweep;
+            TriggerTailSweep();
         }
 
         switch (state)
@@ -83,7 +83,6 @@ public class MooseTailController : MonoBehaviour
 
             float length = (state == TailState.Idle) ? idleSegmentLength : attackSegmentLength;
 
-            // Add curvature per segment: wave bends it more
             float wave = 0;
             if (state == TailState.Sweep)
                 wave = Mathf.Sin(Time.time * 8f + i * 0.5f) * sweepWaveAmplitude / segments.Length;
@@ -93,5 +92,25 @@ public class MooseTailController : MonoBehaviour
             Vector3 offset = segments[i].right * length;
             pos += offset;
         }
+    }
+
+    private void TriggerTailSweep()
+    {
+        Vector2 dir = player.position - transform.position;
+        float baseAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        sweepStartAngle = baseAngle - sweepAngle / 2f;
+        sweepTargetAngle = baseAngle + sweepAngle / 2f;
+        sweepCurrentAngle = sweepStartAngle;
+
+        state = TailState.Sweep;
+
+        nextSweepTime = Time.time + sweepCooldown;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, triggerRadius);
     }
 }

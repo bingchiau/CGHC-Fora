@@ -235,6 +235,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &786175553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 786175554}
+  m_Layer: 0
+  m_Name: TailTriggerZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &786175554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786175553}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.42, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1690129081}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &912830676
 GameObject:
   m_ObjectHideFlags: 0
@@ -13352,11 +13383,13 @@ MonoBehaviour:
   player: {fileID: 2606844401760950927}
   idleWaveFrequency: 2
   idleWaveAmplitude: 15
-  sweepAngle: 205.4
+  sweepAngle: 235.7
   sweepSpeed: 201.6
-  idleSegmentLength: 0.34
-  attackSegmentLength: 0.74
-  sweepWaveAmplitude: 45.4
+  idleSegmentLength: 0.43
+  attackSegmentLength: 0.93
+  sweepWaveAmplitude: 81.2
+  triggerRadius: 6
+  sweepCooldown: 2
 --- !u!1 &1087095837
 GameObject:
   m_ObjectHideFlags: 0
@@ -14181,6 +14214,7 @@ Transform:
   m_Children:
   - {fileID: 475327729}
   - {fileID: 1053880732}
+  - {fileID: 786175554}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1690129082
@@ -14218,7 +14252,7 @@ MonoBehaviour:
   fireballPrefab: {fileID: 8602327959006207736, guid: 64533b8bfb49688478a3f8cb288cc16c, type: 3}
   fireballSpawnPoint: {fileID: 475327729}
   fireballAttackWaypointIndex: 2
-  fireballAttackChance: 1
+  fireballAttackChance: 0
   fireballAttackDuration: 3
   fireballFireRate: 0.5
   fireballSpeed: 5
@@ -14415,6 +14449,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 887303546173535630, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2602808519105835487, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2602808519105835487, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
       propertyPath: _dashPower
       value: 15
@@ -14423,10 +14465,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5107393054429176165, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5154765248665853591, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 3489371747581674925}
+    - target: {fileID: 7099955891876718503, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7495783217031418463, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 110.9
@@ -14466,6 +14516,14 @@ PrefabInstance:
     - target: {fileID: 7495783217031418463, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8888610189420963329, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8888610189420963329, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
