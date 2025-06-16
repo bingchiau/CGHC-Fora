@@ -5,7 +5,7 @@ using UnityEngine;
 public class Water : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float _weightAdd = 0.2f;
+    [SerializeField] private float _weightAdd = 0.8f;
     private PlayerController _playerController;
 
     private void Update()
