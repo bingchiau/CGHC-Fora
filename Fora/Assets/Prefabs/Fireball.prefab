@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1464608302524421905}
   - component: {fileID: 6763991366729711556}
   - component: {fileID: 1070419057672767500}
-  - component: {fileID: 267722220906172555}
+  - component: {fileID: -6893701221307297340}
+  - component: {fileID: 9129384517124611100}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -135,7 +136,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &267722220906172555
+--- !u!114 &-6893701221307297340
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,7 +145,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 8602327959006207736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 294c55cf94b8394408a3c79a9c98155d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6709140da170d664e9893e31f4b1dc00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 3
+  damageAmount: 20
+--- !u!58 &9129384517124611100
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602327959006207736}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.38
