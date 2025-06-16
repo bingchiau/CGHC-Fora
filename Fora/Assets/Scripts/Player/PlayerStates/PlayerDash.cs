@@ -6,7 +6,8 @@ using UnityEngine;
 public class PlayerDash : PlayerStates
 {
     [Header("Settings")]
-    [SerializeField] private float _dashPower = 15f;
+    [SerializeField] private float _minDashPower = 5f;
+    [SerializeField] private float _maxDashPower = 15f;
     [SerializeField] private float _dashDuration = 0.2f;
     [SerializeField] private float _dashCooldown = 0.5f;
     [SerializeField] private int _maxDashes = 1;
@@ -15,8 +16,7 @@ public class PlayerDash : PlayerStates
     
     private bool _finishCooldown = false;
     private bool _canBounce;
-
-    private Vector3 _mousePos;
+    private float _dashPower;
 
     public int DashLeft { get; private set; }
     protected override void InitState()
@@ -37,6 +37,8 @@ public class PlayerDash : PlayerStates
         {
             DashLeft = _maxDashes;
         }
+
+        _dashPower = EvaluateWeight(_maxDashPower, _minDashPower);
     }
 
     protected override void GetInput()
@@ -82,7 +84,7 @@ public class PlayerDash : PlayerStates
         _finishCooldown = false;
         float timer = 0f;
 
-        _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // check aim direction
         Vector2 direction = aim.transform.up;
 
         _playerController.Conditions.IsDashing = true;
@@ -131,5 +133,12 @@ public class PlayerDash : PlayerStates
         yield return new WaitForSeconds(0.5f);
         _playerController.Conditions.IsBouncing = false;
                
+    }
+
+    private float EvaluateWeight(float max, float min)
+    {
+
+        float dashPower = Mathf.Lerp(max, min, _playerController.WeightRatio);
+        return dashPower;
     }
 }
