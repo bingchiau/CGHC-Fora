@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BossWaypointMover_Curve : MonoBehaviour
+public class BossWaypointMover : MonoBehaviour
 {
     [Header("Waypoint Offsets (from start position)")]
     public Vector3[] offsets;
@@ -11,6 +11,11 @@ public class BossWaypointMover_Curve : MonoBehaviour
     [Header("Movement")]
     public float timeToCompletePath = 8f; // Total time for full loop
     private float t = 0f; // Overall path progress
+
+    public bool IsPaused { get; set; } = false;
+
+    // Read-only access to t for AI scripts
+    public float PathProgress => t;
 
     void Start()
     {
@@ -27,22 +32,20 @@ public class BossWaypointMover_Curve : MonoBehaviour
     void Update()
     {
         if (waypoints.Length < 2) return;
+        if (IsPaused) return;
 
         // Increase t smoothly
         t += Time.deltaTime / timeToCompletePath;
         if (t > 1f) t -= 1f;
 
-        // Compute where to be on curve at t
         Vector3 positionOnCurve = GetPointOnClosedCatmullRom(t);
         transform.position = positionOnCurve;
     }
 
-    // Catmull-Rom Spline: closed loop
     Vector3 GetPointOnClosedCatmullRom(float t)
     {
         int numPoints = waypoints.Length;
 
-        // Scale t to point index space
         float scaledT = t * numPoints;
         int i0 = Mathf.FloorToInt(scaledT) % numPoints;
         int i1 = (i0 + 1) % numPoints;
@@ -62,7 +65,6 @@ public class BossWaypointMover_Curve : MonoBehaviour
 
     Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
     {
-        // Catmull-Rom formula
         return 0.5f * (
             (2f * p1) +
             (-p0 + p2) * t +
@@ -77,10 +79,8 @@ public class BossWaypointMover_Curve : MonoBehaviour
 
         Gizmos.color = Color.yellow;
 
-        // Preview the curve in Editor
         Vector3 basePos = Application.isPlaying ? startPosition : transform.position;
 
-        // Compute absolute points
         Vector3[] absPoints = new Vector3[offsets.Length];
         for (int i = 0; i < offsets.Length; i++)
         {

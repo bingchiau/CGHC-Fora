@@ -122,6 +122,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &475327728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 475327729}
+  m_Layer: 0
+  m_Name: FireballSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &475327729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475327728}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.75, y: -1.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1690129081}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -13274,7 +13305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1053880732}
-  - component: {fileID: 1053880733}
+  - component: {fileID: 1053880734}
   m_Layer: 0
   m_Name: Tail
   m_TagString: Untagged
@@ -13298,7 +13329,7 @@ Transform:
   - {fileID: 1725725266}
   m_Father: {fileID: 1690129081}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1053880733
+--- !u!114 &1053880734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13307,7 +13338,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1053880730}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22623cba6ca1dc74c9f8257abe7619af, type: 3}
+  m_Script: {fileID: 11500000, guid: 38bacb3c99748de48bb580c5b8aecbc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   segments:
@@ -14075,6 +14106,7 @@ GameObject:
   - component: {fileID: 1690129081}
   - component: {fileID: 1690129080}
   - component: {fileID: 1690129082}
+  - component: {fileID: 1690129083}
   m_Layer: 0
   m_Name: Moose
   m_TagString: Untagged
@@ -14147,6 +14179,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 475327729}
   - {fileID: 1053880732}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14164,10 +14197,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offsets:
   - {x: -10.99, y: 1.62, z: 0}
-  - {x: -10.87, y: 3.51, z: 0}
-  - {x: 3.49, y: 2.96, z: 0}
+  - {x: -10.87, y: 3.89, z: 0}
+  - {x: 3.49, y: 3.18, z: 0}
   - {x: 2.02, y: -1.35, z: 0}
   timeToCompletePath: 5.15
+--- !u!114 &1690129083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690129079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36853a9cff03ba141acfb9a81164aaa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mover: {fileID: 1690129082}
+  player: {fileID: 2606844401760950927}
+  fireballPrefab: {fileID: 8602327959006207736, guid: 64533b8bfb49688478a3f8cb288cc16c, type: 3}
+  fireballSpawnPoint: {fileID: 475327729}
+  fireballAttackWaypointIndex: 2
+  fireballAttackChance: 1
+  fireballAttackDuration: 3
+  fireballFireRate: 0.5
+  fireballSpeed: 5
 --- !u!1 &1725725265
 GameObject:
   m_ObjectHideFlags: 0
@@ -14574,7 +14628,7 @@ MonoBehaviour:
   verticalFollow: 1
   horizontalInFluence: 1
   horizontalSmoothness: 3
-  verticalInFluence: 1
+  verticalInFluence: 0.945
   verticalSmoothness: 3
 --- !u!114 &8055181962534117825 stripped
 MonoBehaviour:
