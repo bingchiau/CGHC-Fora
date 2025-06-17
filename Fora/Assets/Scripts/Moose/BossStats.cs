@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BossStats : MonoBehaviour
 {
@@ -8,9 +8,24 @@ public class BossStats : MonoBehaviour
 
     public bool isInvincible = false;
 
+    [Header("After Death")]
+    public GameObject bossDeathScene; // The object to activate
+    public float deathSceneDelay = 2f; // Delay before activating and destroying
+
     void Awake()
     {
         currentHealth = maxHealth;
+    }
+
+    void Update()
+    {
+        // DEV key to force kill
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log("DEV: Forced boss death via K key");
+            currentHealth = 0;
+            Die();
+        }
     }
 
     public void TakeDamage(int amount)
@@ -39,11 +54,14 @@ public class BossStats : MonoBehaviour
     private void Die()
     {
         Debug.Log("Boss has died!");
-        // Optional: play death animation, drop loot, disable AI
-        GetComponent<MooseBossAI>().enabled = false;
-        // You might want to stop movement too:
-        GetComponent<BossWaypointMover>().IsPaused = true;
-        // Optional: Destroy(gameObject); 
+
+        // Use the death handler to finish up
+        BossDeathHandler handler = FindObjectOfType<BossDeathHandler>();
+        if (handler != null)
+        {
+            handler.HandleBossDeath(gameObject, bossDeathScene, deathSceneDelay);
+        }
+
     }
 
     public void ResetHealth()

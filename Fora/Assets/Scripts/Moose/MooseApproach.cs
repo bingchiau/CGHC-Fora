@@ -44,13 +44,17 @@ public class MooseApproach : MonoBehaviour
 
     void Update()
     {
-        if (currentIndex >= waypoints.Length - 1) return;
+        if (currentIndex >= waypoints.Length - 1)
+        {
+            // ✅ If reached final waypoint, destroy the GameObject
+            Destroy(gameObject);
+            return;
+        }
 
         float stepDuration = waypoints[currentIndex].duration;
 
         elapsed += Time.deltaTime;
         float t = Mathf.Clamp01(elapsed / stepDuration);
-        // no extra easing = constant speed
 
         transform.position = Vector2.Lerp(worldPositions[currentIndex], worldPositions[currentIndex + 1], t);
         float scale = Mathf.Lerp(waypoints[currentIndex].scale, waypoints[currentIndex + 1].scale, t);
