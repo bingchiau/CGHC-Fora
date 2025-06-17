@@ -4,11 +4,8 @@ using System.Collections;
 public class BossDeathHandler : MonoBehaviour
 {
     /// <summary>
-    /// Call this to handle boss death in a robust way.
+    /// Call this to handle boss death: deactivate + destroy + show death scene
     /// </summary>
-    /// <param name="boss">The boss GameObject to deactivate and destroy</param>
-    /// <param name="bossDeathScene">The GameObject to activate</param>
-    /// <param name="delay">How long to wait before activating and destroying</param>
     public void HandleBossDeath(GameObject boss, GameObject bossDeathScene, float delay)
     {
         StartCoroutine(DeathSequence(boss, bossDeathScene, delay));
@@ -16,19 +13,23 @@ public class BossDeathHandler : MonoBehaviour
 
     private IEnumerator DeathSequence(GameObject boss, GameObject bossDeathScene, float delay)
     {
-        // ✅ Fully deactivate the boss GameObject
         boss.SetActive(false);
-
-        // ✅ Wait for the delay
         yield return new WaitForSeconds(delay);
-
-        // ✅ Activate the death scene if assigned
-        if (bossDeathScene != null)
-        {
-            bossDeathScene.SetActive(true);
-        }
-
-        // ✅ Destroy the boss GameObject to clean up
+        if (bossDeathScene != null) bossDeathScene.SetActive(true);
         Destroy(boss);
+    }
+
+    /// <summary>
+    /// NEW: Call this to shake the camera after a delay — for dramatic effects AFTER death
+    /// </summary>
+    public void ShakeCameraAfterDelay(Camera2D camera2D, float delay, float duration, float magnitude)
+    {
+        StartCoroutine(ShakeAfterDelayCoroutine(camera2D, delay, duration, magnitude));
+    }
+
+    private IEnumerator ShakeAfterDelayCoroutine(Camera2D camera2D, float delay, float duration, float magnitude)
+    {
+        yield return new WaitForSeconds(delay);
+        if (camera2D != null) camera2D.ShakeCamera(duration, magnitude);
     }
 }

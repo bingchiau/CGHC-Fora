@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,10 +17,16 @@ public class Camera2D : MonoBehaviour
     [SerializeField][Range(0, 1)] private float verticalInFluence = 1f;
     [SerializeField] private float verticalSmoothness = 3f;
 
+    [Header("Shake Settings")]
+    [SerializeField] private float shakeDuration = 0f;
+    [SerializeField] private float shakeMagnitude = 0.3f;
+    [SerializeField] private float shakeFrequency = 1f; // how fast the shake oscillates
+
+    private float shakeTimer = 0f;
+    private float shakeElapsed = 0f;
+
     // Position of the Target
     public Vector3 TargetPosition { get; private set; }
-
-    // Reference of the Target Position known by the camera
     public Vector3 CameraTargetPosition { get; private set; }
 
     private float _targetHorizontalSmoothFollow;
@@ -36,53 +42,74 @@ public class Camera2D : MonoBehaviour
         MoveCamera();
     }
 
-    // Returns the position of out target
+    // Returns the position of our target
     private Vector3 GetTargetPosition(PlayerMotor player)
     {
-        float xPos = 0f;
-        float yPos = 0f;
-
-        xPos += (player.transform.position.x) * horizontalInFluence;
-        yPos += (player.transform.position.y) * verticalInFluence;
-
-        Vector3 positionTarget = new Vector3(xPos, yPos, transform.position.z);
-        return positionTarget;
+        float xPos = player.transform.position.x * horizontalInFluence;
+        float yPos = player.transform.position.y * verticalInFluence;
+        return new Vector3(xPos, yPos, transform.position.z);
     }
 
-    // Centers the camera on the target
+    // Centers the camera on the target immediately
     private void CenterOnTarget(PlayerMotor player)
     {
         Vector3 targetPosition = GetTargetPosition(player);
         _targetHorizontalSmoothFollow = targetPosition.x;
-        _targetVerticalSmoothFollow = targetPosition.y; 
-
+        _targetVerticalSmoothFollow = targetPosition.y;
         transform.localPosition = targetPosition;
     }
 
-    // Moves the camera
     private void MoveCamera()
     {
-        // Calculate Position
+        // Compute target follow position
         TargetPosition = GetTargetPosition(_playerToFollow);
         CameraTargetPosition = new Vector3(TargetPosition.x, TargetPosition.y, 0f);
 
-        // Follow on selected axis
-        float xPos = horizontalFollow? CameraTargetPosition.x : transform.localPosition.x;
-        float yPos = verticalFollow? CameraTargetPosition.y : transform.localPosition.y;
-
-        // Set smooth value
+        // Smooth follow
         _targetHorizontalSmoothFollow = Mathf.Lerp(_targetHorizontalSmoothFollow, CameraTargetPosition.x, horizontalSmoothness * Time.deltaTime);
         _targetVerticalSmoothFollow = Mathf.Lerp(_targetVerticalSmoothFollow, CameraTargetPosition.y, verticalSmoothness * Time.deltaTime);
 
-        // Get direction towards target pos
-        float xDirection = _targetHorizontalSmoothFollow - transform.localPosition.x;
-        float yDirection = _targetVerticalSmoothFollow - transform.localPosition.y;
-        Vector3 deltaDirection = new Vector3(xDirection, yDirection, 0f);
+        float xFollow = horizontalFollow ? _targetHorizontalSmoothFollow : transform.localPosition.x;
+        float yFollow = verticalFollow ? _targetVerticalSmoothFollow : transform.localPosition.y;
 
-        // New position
-        Vector3 newCameraPosition = transform.localPosition + deltaDirection;
+        // Base follow position
+        Vector3 followPosition = new Vector3(xFollow, yFollow, transform.localPosition.z);
 
-        // Apply new position
-        transform.localPosition = new Vector3(newCameraPosition.x, newCameraPosition.y, transform.localPosition.z);
+        // Consistent step shake: toggle pattern
+        if (shakeTimer > 0f)
+        {
+            shakeElapsed += Time.deltaTime;
+
+            // Compute toggle: flip every half period
+            float period = 1f / shakeFrequency;
+            bool isOffsetPhase = Mathf.FloorToInt(shakeElapsed / (period * 0.5f)) % 2 == 0;
+
+            float fade = shakeTimer / shakeDuration;
+
+            if (isOffsetPhase)
+            {
+                float offset = shakeMagnitude * fade;
+                followPosition.x += offset;
+                followPosition.y += offset; // or -offset for other diagonal
+            }
+
+            shakeTimer -= Time.deltaTime;
+        }
+        else
+        {
+            shakeElapsed = 0f; // reset
+        }
+
+        transform.localPosition = followPosition;
+    }
+
+
+    // Public method to trigger camera shake
+    public void ShakeCamera(float duration, float magnitude)
+    {
+        shakeDuration = duration;
+        shakeMagnitude = magnitude;
+        shakeTimer = duration;
+        shakeElapsed = 0f;
     }
 }
