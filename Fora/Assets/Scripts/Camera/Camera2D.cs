@@ -20,10 +20,17 @@ public class Camera2D : MonoBehaviour
     [Header("Shake Settings")]
     [SerializeField] private float shakeDuration = 0f;
     [SerializeField] private float shakeMagnitude = 0.3f;
-    [SerializeField] private float shakeFrequency = 1f; // how fast the shake oscillates
+    [SerializeField] private float shakeFrequency = 1f; // toggles per second
 
     private float shakeTimer = 0f;
     private float shakeElapsed = 0f;
+
+    [Header("Rotation Settings")]
+    private Quaternion startRotation;
+    private Quaternion targetRotation;
+    private float rotationDuration = 0f;
+    private float rotationTimer = 0f;
+    private bool isRotating = false;
 
     // Position of the Target
     public Vector3 TargetPosition { get; private set; }
@@ -35,11 +42,14 @@ public class Camera2D : MonoBehaviour
     private void Awake()
     {
         CenterOnTarget(_playerToFollow);
+        startRotation = transform.rotation;
+        targetRotation = transform.rotation;
     }
 
     private void Update()
     {
         MoveCamera();
+        RotateCamera();
     }
 
     // Returns the position of our target
@@ -80,7 +90,6 @@ public class Camera2D : MonoBehaviour
         {
             shakeElapsed += Time.deltaTime;
 
-            // Compute toggle: flip every half period
             float period = 1f / shakeFrequency;
             bool isOffsetPhase = Mathf.FloorToInt(shakeElapsed / (period * 0.5f)) % 2 == 0;
 
@@ -103,6 +112,20 @@ public class Camera2D : MonoBehaviour
         transform.localPosition = followPosition;
     }
 
+    private void RotateCamera()
+    {
+        if (isRotating)
+        {
+            rotationTimer += Time.deltaTime;
+            float t = Mathf.Clamp01(rotationTimer / rotationDuration);
+            transform.rotation = Quaternion.Lerp(startRotation, targetRotation, t);
+
+            if (t >= 1f)
+            {
+                isRotating = false;
+            }
+        }
+    }
 
     // Public method to trigger camera shake
     public void ShakeCamera(float duration, float magnitude)
@@ -111,5 +134,15 @@ public class Camera2D : MonoBehaviour
         shakeMagnitude = magnitude;
         shakeTimer = duration;
         shakeElapsed = 0f;
+    }
+
+    // Public method to rotate camera by a given degrees smoothly
+    public void RotateCameraBy(float degrees, float duration)
+    {
+        startRotation = transform.rotation;
+        targetRotation = startRotation * Quaternion.Euler(0, 0, degrees);
+        rotationDuration = duration;
+        rotationTimer = 0f;
+        isRotating = true;
     }
 }

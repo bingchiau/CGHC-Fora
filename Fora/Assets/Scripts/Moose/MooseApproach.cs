@@ -15,8 +15,9 @@ public class MooseApproach : MonoBehaviour
     public MooseWaypoint[] waypoints;
 
     [Header("References")]
-    public Camera2D camera2D; // Drag your Camera2D here
+    public Camera2D camera2D;                // Drag your Camera2D here
     public BossDeathHandler bossDeathHandler; // Drag your BossDeathHandler here
+    public GameObject objectToActivateBeforeDestroy; // ✅ NEW: object to activate before destroying self
 
     private Vector2[] worldPositions;
     private float elapsed = 0f;
@@ -50,13 +51,19 @@ public class MooseApproach : MonoBehaviour
     {
         if (currentIndex >= waypoints.Length - 1)
         {
-            // ✅ Tell handler to shake camera after 5 seconds
+            // ✅ 1) Activate object before destroy
+            if (objectToActivateBeforeDestroy != null)
+            {
+                objectToActivateBeforeDestroy.SetActive(true);
+            }
+
+            // ✅ 2) Tell handler to shake camera after 5 seconds
             if (bossDeathHandler != null && camera2D != null)
             {
                 bossDeathHandler.ShakeCameraAfterDelay(camera2D, 5f, 60f, 0.025f);
             }
 
-            // ✅ Destroy this boss approach
+            // ✅ 3) Destroy this boss approach
             Destroy(gameObject);
             return;
         }
@@ -78,6 +85,7 @@ public class MooseApproach : MonoBehaviour
             elapsed = 0f;
             currentIndex++;
 
+            // ✅ Optional: small immediate shake when reaching WP 1
             if (currentIndex == 1 && camera2D != null)
             {
                 camera2D.ShakeCamera(1f, 0.05f);
