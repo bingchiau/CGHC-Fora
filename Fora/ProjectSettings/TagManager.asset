@@ -65,3 +65,6 @@ TagManager:
   - name: SlopeMap
     uniqueID: 4203666923
     locked: 0
+  - name: Projectile
+    uniqueID: 3138369251
+    locked: 0
