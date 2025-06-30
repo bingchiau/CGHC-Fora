@@ -91,18 +91,19 @@ public class PlayerDash : PlayerStates
         _playerController.StopGravity();
         _dashTrail.emitting = true;
 
+        
+
         while (timer < _dashDuration)
         {
-            if (_playerController.Conditions.IsCollidingRight || 
-                _playerController.Conditions.IsCollidingLeft || 
-                _playerController.Conditions.IsOnSlope ||
-                _playerController.Conditions.IsCollidingBelow ||
-                _playerController.Conditions.IsCollidingAbove)
+            _playerController.Conditions.IsBouncing = true;
+            RaycastHit2D ray = Physics2D.Raycast(_playerController.transform.position, direction, 1f, LayerMask.GetMask("Map"));
+            Debug.DrawRay(_playerController.transform.position, direction * 1f, Color.green);
+            if (ray)
             {
-                _canBounce = true;
-                _playerController.Conditions.IsBouncing = true;
+                Debug.Log("hit a wall");
+                _canBounce = true;    
             }
-
+            
             if (_canBounce)
             {
                 Vector2 dir = _playerController.Bounce(direction.normalized);
@@ -117,22 +118,26 @@ public class PlayerDash : PlayerStates
             yield return null; // Wait for next frame
         }
 
-        _canBounce = false; // Reset bounce state
-        _playerController.SetHorizontalForce(0f); // Stop the dash
+        _canBounce = false;
+        _playerController.SetHorizontalForce(0f);
+        _playerController.SetVerticalForce(0f);// Stop the dash
         _dashTrail.emitting = false;
-        _playerController.ResumeGravity();
+        
         _playerController.Conditions.IsDashing = false;
         
         yield return new WaitForSeconds(_dashCooldown);
         _finishCooldown = true;
+        _playerController.Conditions.IsBouncing = false;
+        _playerController.ResumeGravity();
 
     }
 
     private IEnumerator BounceCooldown()
     {
+
         yield return new WaitForSeconds(0.5f);
-        _playerController.Conditions.IsBouncing = false;
-               
+        _canBounce = false;
+         
     }
 
     private float EvaluateWeight(float max, float min)

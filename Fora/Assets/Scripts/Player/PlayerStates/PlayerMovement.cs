@@ -37,7 +37,8 @@ public class PlayerMovement : PlayerStates
 
         if (_playerController.Conditions.IsBouncing)
         {
-            moveSpeed = _playerController.BounceDir.x * moveSpeed;
+            moveSpeed = 0f;
+
         }
         else
         {
@@ -46,6 +47,7 @@ public class PlayerMovement : PlayerStates
         
         moveSpeed = EvaluateFriction(moveSpeed);
         _playerController.SetHorizontalForce(moveSpeed);
+        
     }
 
     // Initialize our internal movement direction

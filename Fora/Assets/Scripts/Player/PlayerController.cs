@@ -38,8 +38,6 @@ public class PlayerController : MonoBehaviour
     
     // Return the weight value
     public float WeightRatio => _weightRatio;
-
-    public Vector2 BounceDir => bounceDir;
     #endregion
 
     #region Internal

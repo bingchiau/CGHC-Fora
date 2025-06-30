@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 1021720779}
   m_Layer: 8
   m_Name: Floor & Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3129,6 +3129,9 @@ MonoBehaviour:
   horizontalSmoothness: 3
   verticalInFluence: 1
   verticalSmoothness: 3
+  shakeDuration: 0
+  shakeMagnitude: 0.3
+  shakeFrequency: 1
 --- !u!114 &8055181962534117825 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8907940984826917410, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
