@@ -96,8 +96,8 @@ public class PlayerDash : PlayerStates
         while (timer < _dashDuration)
         {
             _playerController.Conditions.IsBouncing = true;
-            RaycastHit2D ray = Physics2D.Raycast(_playerController.transform.position, direction, 0.5f, LayerMask.GetMask("Map"));
-            Debug.DrawRay(_playerController.transform.position, direction * 0.5f, Color.green);
+            RaycastHit2D ray = Physics2D.Raycast(_playerController.transform.position, direction, 0.7f, LayerMask.GetMask("Map"));
+            Debug.DrawRay(_playerController.transform.position, direction * 0.7f, Color.green);
             if (ray)
             {
                 Debug.Log("hit a wall");
