@@ -125,7 +125,7 @@ public class PlayerDash : PlayerStates
         
         _playerController.Conditions.IsDashing = false;
         
-        yield return new WaitForSeconds(_dashCooldown);
+        yield return new WaitForSeconds(0.2f);
         _finishCooldown = true;
         _playerController.Conditions.IsBouncing = false;
         _playerController.ResumeGravity();
