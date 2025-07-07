@@ -2,64 +2,115 @@ using UnityEngine;
 
 public class DroppingFireball : MonoBehaviour
 {
-    public Transform spawnPoint;
-    public LayerMask mapLayerMask;
-    public GameObject playerObject;
-    public float dropDelay = 0.5f;
-    public float delayVelocity = 0f;
-    public float delayDrag = 0f;
-    public float delayGravity = 0f;
+    public Vector3 localStartOffset = Vector3.zero;
+    public Vector3 localEndOffset = new Vector3(0, 0, 5);
+    public float speed = 1f;
+    public float delayBeforeRespawn = 1f;
+    public float knockbackStrength = 20f;
 
-    private Rigidbody2D rb;
-    private bool isDelaying = false;
+    private Vector3 _origin;
+    private float journeyLength;
+    private float startTime;
+    private bool isMoving = true;
+
+    private SpriteRenderer spriteRenderer;
+    private Collider2D objectCollider;
+
+    private Vector3 StartPosition => _origin + localStartOffset;
+    private Vector3 EndPosition => _origin + localEndOffset;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-            Debug.LogError("DroppingFireball needs a Rigidbody2D!");
+        _origin = transform.position;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        objectCollider = GetComponent<Collider2D>();
+
+        ResetToStart();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void ResetToStart()
     {
-        if (isDelaying) return;
+        transform.position = StartPosition;
+        startTime = Time.time;
+        journeyLength = Vector3.Distance(StartPosition, EndPosition);
 
-        // - MAP Collision -
-        if (((1 << other.gameObject.layer) & mapLayerMask) != 0)
+        // Reactivate visibility and collision
+        if (spriteRenderer != null) spriteRenderer.enabled = true;
+        if (objectCollider != null) objectCollider.enabled = true;
+
+        isMoving = true;
+    }
+
+    void Update()
+    {
+        if (!isMoving) return;
+
+        float distCovered = (Time.time - startTime) * speed;
+        float fraction = distCovered / journeyLength;
+
+        transform.position = Vector3.Lerp(StartPosition, EndPosition, fraction);
+
+        if (fraction >= 1f)
         {
-            ResetAndDelayDrop();
+            StartCoroutine(ResetThenWait());
         }
+    }
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // - PLAYER Collision -     !!ADD DAMAGE TO PLAYER!!
-        if (other.gameObject == playerObject)
+    private System.Collections.IEnumerator ResetThenWait()
+    {
+        isMoving = false;
+
+        // Disable visuals and collision
+        if (spriteRenderer != null) spriteRenderer.enabled = false;
+        if (objectCollider != null) objectCollider.enabled = false;
+
+        // Teleport to start right away
+        transform.position = StartPosition;
+
+        yield return new WaitForSeconds(delayBeforeRespawn);
+        ResetToStart();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
         {
-            Debug.Log("Hit the player.");
-            // TO-DO: Add damage here if needed later
-            ResetAndDelayDrop();
+            Debug.Log("Hit player, resetting and applying knockback.");
+            StopAllCoroutines();
+            StartCoroutine(ResetThenWait());
+
+            DamagePlayer(other.gameObject);
         }
     }
 
-
-    void ResetAndDelayDrop()
+    private void DamagePlayer(GameObject player)
     {
-        // Immediately teleport back
-        transform.position = spawnPoint.position;
+        // TO-DO: Player damage
+        Debug.Log("TODO: Custom damage logic here.");
 
-        // Stop motion and disable gravity
-        rb.velocity = Vector2.zero;
-        rb.angularVelocity = delayVelocity;
-        rb.angularDrag = delayDrag;
-        rb.gravityScale = delayGravity;
+        PlayerController pc = player.GetComponent<PlayerController>();
+        if (pc != null)
+        {
+            Vector2 knockbackDir = (EndPosition - StartPosition).normalized;
+            knockbackDir = new Vector2(knockbackDir.x, knockbackDir.y); // Only XY
 
-        // Start delay
-        isDelaying = true;
-        Invoke(nameof(EnableGravity), dropDelay);
+            pc.SetForce(knockbackDir * knockbackStrength);
+        }
     }
 
-    void EnableGravity()
+    private void OnDrawGizmos()
     {
-        rb.gravityScale = 1f; // or whatever your default gravity was
-        isDelaying = false;
+        Vector3 origin = Application.isPlaying ? _origin : transform.position;
+        Vector3 s = origin + localStartOffset;
+        Vector3 e = origin + localEndOffset;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(s, 0.2f);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(e, 0.2f);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(s, e);
     }
 }
