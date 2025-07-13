@@ -428,6 +428,10 @@ public class PlayerController : MonoBehaviour
                     _movePosition.y = _force.y * Time.deltaTime; // allow jump
                     _conditions.IsCollidingBelow = false;
                     _conditions.IsOnSlope = false;
+
+                    // Alan - For platform follow (Disable follow when jumping)
+                    transform.SetParent(null);
+
                 }
 
                 _force.y = 0f;
@@ -520,4 +524,11 @@ public class PlayerController : MonoBehaviour
         return bounceDir;
     }
     #endregion
+
+    // Alan - For platform follow transform
+    public void ApplyPlatformOffset(Vector3 offset)
+    {
+        transform.position += offset;
+    }
+
 }
