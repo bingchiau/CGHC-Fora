@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour
     public void ResumeGravity()
     {
         _gravity = _originalGravity;
-    }   
+    }
 
     #endregion
 
@@ -211,8 +211,12 @@ public class PlayerController : MonoBehaviour
         _weight += weight * Time.deltaTime;
         if (_weight > _maxWeight)
         {
-            _weight = _maxWeight; 
+            _weight = _maxWeight;
         }
+
+        _weightRatio = _weight / _maxWeight;
+
+        UIManager.Instance.UpdateWeight(_weightRatio); // Update UI
     }
 
     public void ReduceWeight(float weight)
@@ -220,8 +224,12 @@ public class PlayerController : MonoBehaviour
         _weight -= weight;
         if (_weight < _minWeight)
         {
-            _weight = _minWeight; 
+            _weight = _minWeight;
         }
+
+        _weightRatio = _weight / _maxWeight; // Recalculate weight ratio
+
+        UIManager.Instance.UpdateWeight(_weightRatio); // Update UI 
     }
 
     #endregion

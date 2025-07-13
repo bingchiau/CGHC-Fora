@@ -162,5 +162,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObject: {fileID: 0}
-  cooldownTime: 5
-  fadeDuration: 1
+  cooldownTime: 4
+  fadeDuration: 0.5

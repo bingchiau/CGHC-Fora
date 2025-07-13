@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class DroppingFireball : MonoBehaviour
 {
-    public Vector3 localStartOffset = Vector3.zero;
-    public Vector3 localEndOffset = new Vector3(0, 0, 5);
-    public float speed = 1f;
-    public float delayBeforeRespawn = 1f;
-    public float knockbackStrength = 20f;
+    [SerializeField] private Vector3 localStartOffset = Vector3.zero;
+    [SerializeField] private Vector3 localEndOffset = new Vector3(0, 0, 5);
+    [SerializeField] private float speed = 1f;
+    [SerializeField] private float delayBeforeRespawn = 1f;
+    [SerializeField] private float knockbackStrength = 20f;
 
     private Vector3 _origin;
     private float journeyLength;
