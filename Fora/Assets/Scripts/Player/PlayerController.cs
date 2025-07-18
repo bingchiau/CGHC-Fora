@@ -198,7 +198,7 @@ public class PlayerController : MonoBehaviour
     public void ResumeGravity()
     {
         _gravity = _originalGravity;
-    }
+    }   
 
     #endregion
 
@@ -209,12 +209,8 @@ public class PlayerController : MonoBehaviour
         _weight += weight * Time.deltaTime;
         if (_weight > _maxWeight)
         {
-            _weight = _maxWeight;
+            _weight = _maxWeight; 
         }
-
-        _weightRatio = _weight / _maxWeight;
-
-        UIManager.Instance.UpdateWeight(_weightRatio); // Update UI
     }
 
     public void ReduceWeight(float weight)
@@ -222,12 +218,8 @@ public class PlayerController : MonoBehaviour
         _weight -= weight;
         if (_weight < _minWeight)
         {
-            _weight = _minWeight;
+            _weight = _minWeight; 
         }
-
-        _weightRatio = _weight / _maxWeight; // Recalculate weight ratio
-
-        UIManager.Instance.UpdateWeight(_weightRatio); // Update UI 
     }
 
     #endregion
@@ -426,10 +418,6 @@ public class PlayerController : MonoBehaviour
                     _movePosition.y = _force.y * Time.deltaTime; // allow jump
                     _conditions.IsCollidingBelow = false;
                     _conditions.IsOnSlope = false;
-
-                    // Alan - For platform follow (Disable follow when jumping)
-                    transform.SetParent(null);
-
                 }
 
                 _force.y = 0f;
@@ -522,11 +510,4 @@ public class PlayerController : MonoBehaviour
         return bounceDir;
     }
     #endregion
-
-    // Alan - For platform follow transform
-    public void ApplyPlatformOffset(Vector3 offset)
-    {
-        transform.position += offset;
-    }
-
 }
