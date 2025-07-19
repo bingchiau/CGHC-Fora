@@ -64,7 +64,9 @@ public class PlayerController : MonoBehaviour
     private float _originalGravity;
     private Vector2 _force;
     private Vector2 _movePosition;
-    private float _skin = 0.06f;
+    //private float _skin = 0.06f;
+    // Alan change
+    private float _skin = 0.02f;
 
     private bool _checkStop = false;
 
@@ -117,7 +119,9 @@ public class PlayerController : MonoBehaviour
         }
         _weightRatio = _weight / _maxWeight; // Calculate weight ratio
 
-        transform.Translate(_movePosition, Space.Self);
+        //transform.Translate(_movePosition, Space.Self);
+        // Alan change
+        transform.position += (Vector3)_movePosition;
         CalculateMovement();
         
         
@@ -306,7 +310,9 @@ public class PlayerController : MonoBehaviour
         {
             Vector2 rayOrigin = Vector2.Lerp(leftOrigin, rightOrigin, (float)i / (float)(verticalRayCount - 1));
 
-            rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
+            //rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
+            // Alan change
+            rayLength = (_boundsHeight / 2f + _skin) * Mathf.Max(Mathf.Sin(turnAngle * Mathf.Deg2Rad), 0.1f);
             float temp = rayLength;
             if (_movePosition.y < 0)
             {
