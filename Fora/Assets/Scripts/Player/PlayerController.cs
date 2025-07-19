@@ -119,8 +119,8 @@ public class PlayerController : MonoBehaviour
 
         transform.Translate(_movePosition, Space.Self);
         CalculateMovement();
-        
-        
+
+
     }
 
     #region Ray Origins
