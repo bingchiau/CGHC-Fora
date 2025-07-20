@@ -1,22 +1,28 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class BossArenaActivator : MonoBehaviour
 {
-    [Header("The boss GameObject to activate")]
-    public GameObject boss;
+    [Header("Boss & Visual")]
+    [SerializeField] private GameObject boss;
+    [SerializeField] private GameObject objectToFadeIn;
+    [SerializeField] private float fadeDuration = 2f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            if (boss != null)
-            {
-                boss.SetActive(true);
-                Debug.Log("Boss Activated!");
-            }
+        if (!other.CompareTag("Player")) return;
 
-            // Optional: disable this trigger so it doesn't fire again
-            gameObject.SetActive(false);
+        boss?.SetActive(true);
+
+        if (objectToFadeIn != null)
+        {
+            objectToFadeIn.SetActive(true);
+
+            if (objectToFadeIn.TryGetComponent(out FadeEffect fade))
+                fade.FadeIn(fadeDuration);
         }
+
+        Debug.Log("[BossArenaActivator] Boss activated, object fading in.");
+        gameObject.SetActive(false);
     }
 }
