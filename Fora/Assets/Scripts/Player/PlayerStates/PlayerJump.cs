@@ -63,6 +63,11 @@ public class PlayerJump : PlayerStates
             return false; // Cannot jump if not colliding below and no jumps left
         }
 
+        if (!CanMove)
+        {
+            return false;
+        }
+
         return true; // Can jump if colliding below or has jumps left
     }
 

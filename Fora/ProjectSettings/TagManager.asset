@@ -15,8 +15,8 @@ TagManager:
   - Collider
   - SlopeMap
   - Map
-  - PlayerHitBox
   - Enemy
+  - PlayerHitBox
   - EnemyHitBox
   - 
   - 

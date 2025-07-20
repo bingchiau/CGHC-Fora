@@ -11,7 +11,7 @@ public class Hog : MonoBehaviour
 
     public Vector2 _directionVector;
 
-    private Animator _aninator;
+    private Animator _animator;
     private Rigidbody2D _rb;
     private WalkDirection _direction;  
     private EnemyConditions _enemyConditions;
@@ -48,7 +48,7 @@ public class Hog : MonoBehaviour
         private set
         {
             _hasTarget = value;
-            _aninator.SetBool("hasTarget", value);
+            _animator.SetBool("hasTarget", value);
         }
     }
 
@@ -56,7 +56,7 @@ public class Hog : MonoBehaviour
     {
         get
         {
-            return _aninator.GetBool("canMove");
+            return _animator.GetBool("canMove");
         }
     }
 
@@ -66,7 +66,7 @@ public class Hog : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _enemyConditions = GetComponent<EnemyConditions>();
-        _aninator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
         _directionVector = Vector2.right;
     }
 

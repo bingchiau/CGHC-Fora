@@ -159,8 +159,8 @@ GameObject:
   - component: {fileID: 5107393054429176165}
   - component: {fileID: 2602808519105835487}
   - component: {fileID: 887303546173535630}
-  - component: {fileID: 8528931612341855148}
   - component: {fileID: 4062958691865615426}
+  - component: {fileID: 5006270075339105308}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -486,19 +486,6 @@ MonoBehaviour:
   shootPoint: {fileID: 7658335721864813758}
   fireRate: 0.2
   damage: 5
---- !u!114 &8528931612341855148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3543793056131580008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a133cff0f60b3ad4586e3e796981c31f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifes: 3
 --- !u!114 &4062958691865615426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +503,27 @@ MonoBehaviour:
   isInvincible: 0
   invincibilityDuration: 2
   flashFrequency: 10
+--- !u!95 &5006270075339105308
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543793056131580008}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 89e8772149a84b5459b9cce73107af87, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3932523266426000708
 GameObject:
   m_ObjectHideFlags: 0

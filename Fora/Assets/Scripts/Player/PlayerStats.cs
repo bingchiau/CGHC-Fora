@@ -13,10 +13,27 @@ public class PlayerStats : MonoBehaviour
 
     private float invincibilityTimer = 0f;
     private SpriteRenderer spriteRenderer;
+    private Animator _animator;
+
+    [SerializeField] private bool _isAlive = true;
+
+    public bool IsAlive
+    {
+        get
+        {
+            return _isAlive;
+        }
+        set
+        {
+            _isAlive = value;
+            _animator.SetBool("isAlive", value);
+        }
+    }
 
     void Awake()
     {
         currentHealth = maxHealth;
+        _animator = GetComponent<Animator>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer == null)
@@ -56,7 +73,7 @@ public class PlayerStats : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (isInvincible) return;
+        if (isInvincible && !IsAlive) return;
 
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
@@ -84,7 +101,7 @@ public class PlayerStats : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player has died.");
-        // Optional: handle death animation, game over, respawn, etc.
+        IsAlive = false;
     }
 
     public void ResetHealth()
