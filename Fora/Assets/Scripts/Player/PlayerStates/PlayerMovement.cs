@@ -37,7 +37,7 @@ public class PlayerMovement : PlayerStates
 
         if (_playerController.Conditions.IsBouncing)
         {
-            moveSpeed = 0f;
+            moveSpeed = _movement * 3f;
 
         }
         else

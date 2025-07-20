@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStates : MonoBehaviour
@@ -28,17 +29,27 @@ public class PlayerStates : MonoBehaviour
     // Gets the input from the player
     public virtual void LocalInput()
     {
-        if (_playerController.Conditions.IsBouncing)
+        if (_playerController.Conditions.IsCollidingLeft)
         {
-            _horizontalInput = 0f;
-            return;
+            if (_horizontalInput < 0f)
+            {
+                _horizontalInput = 0f;
+                return;
+            }
+            
         }
-        else
+        else if (_playerController.Conditions.IsCollidingRight)
         {
-            _horizontalInput = Input.GetAxis("Horizontal");
-            _verticalInput = Input.GetAxis("Vertical");
+            if (_horizontalInput > 0f)
+            {
+                _horizontalInput = 0f;
+                return;
+            }
         }
 
+        _horizontalInput = Input.GetAxis("Horizontal");
+        _verticalInput = Input.GetAxis("Vertical");
+       
         GetInput();
     }
 

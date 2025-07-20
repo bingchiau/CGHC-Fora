@@ -123,8 +123,8 @@ public class PlayerController : MonoBehaviour
         // Alan change
         transform.position += (Vector3)_movePosition;
         CalculateMovement();
-        
-        
+
+
     }
 
     #region Ray Origins
@@ -380,20 +380,14 @@ public class PlayerController : MonoBehaviour
         rayBottom += (Vector2)transform.up * _skin;
         rayTop -= (Vector2)transform.up * _skin;
 
-        float rayLength;
-        float turnAngle = 22.5f;
+        float rayLength = Mathf.Abs(_force.x * Time.deltaTime) + _boundsWidth / 2f + _skin;
 
         for (int i = 0; i < horizontalRayCount; i++)
         {
-            Vector2 origin = Vector2.Lerp(rayBottom, rayTop, i / (float)(horizontalRayCount - 1));
-            
-            rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
+            Vector2 rayOrigin = Vector2.Lerp(rayBottom, rayTop, (float)i / (horizontalRayCount - 1));
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction * transform.right, rayLength, collideWith);
+            Debug.DrawRay(rayOrigin, transform.right * rayLength * direction, Color.cyan);
 
-            float temp = rayLength;
-            
-            RaycastHit2D hit = Physics2D.Raycast(origin, direction * transform.right, rayLength, collideWith);
-            Debug.DrawRay(origin, transform.right * rayLength * direction, Color.cyan);
-            turnAngle += 22.5f;
 
             if (!hit) continue;
 
@@ -451,12 +445,12 @@ public class PlayerController : MonoBehaviour
             // 5) Otherwise it’s a wall – block horizontal movement
             if (direction > 0)
             {
-                _movePosition.x = hit.distance - temp;
+                _movePosition.x = hit.distance - _boundsWidth / 2f - _skin;
                 _conditions.IsCollidingRight = true;
             }
             else
             {
-                _movePosition.x = -hit.distance + temp;
+                _movePosition.x = -hit.distance + _boundsWidth / 2f + _skin;
                 _conditions.IsCollidingLeft = true;
             }
 

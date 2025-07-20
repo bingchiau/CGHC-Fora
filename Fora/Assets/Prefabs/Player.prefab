@@ -159,7 +159,9 @@ GameObject:
   - component: {fileID: 5107393054429176165}
   - component: {fileID: 2602808519105835487}
   - component: {fileID: 887303546173535630}
-  m_Layer: 0
+  - component: {fileID: 8528931612341855148}
+  - component: {fileID: 4062958691865615426}
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -283,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gravity: -20
-  _fallMultiplier: 1.5
+  _fallMultiplier: 1.3
   _weight: 1
   collideWith:
     serializedVersion: 2
@@ -329,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16412ed990c17a4f954f6159e18d864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxJumpHeight: 5
+  _maxJumpHeight: 3
   _minJumpHeight: 1
   _maxJumps: 1
 --- !u!96 &5107393054429176165
@@ -457,12 +459,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913bf232a1345c240801f41396ed491d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dashPower: 15
+  _minDashPower: 5
+  _maxDashPower: 15
   _dashDuration: 0.3
-  _dashCooldown: 0.5
+  _dashCooldown: 0.3
   _maxDashes: 1
   _dashTrail: {fileID: 5107393054429176165}
   aim: {fileID: 5969962939511435056}
+  _whatCanBounce:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &887303546173535630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,6 +486,36 @@ MonoBehaviour:
   shootPoint: {fileID: 7658335721864813758}
   fireRate: 0.2
   damage: 5
+--- !u!114 &8528931612341855148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543793056131580008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a133cff0f60b3ad4586e3e796981c31f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifes: 3
+--- !u!114 &4062958691865615426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543793056131580008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4601317d4094a144fabbbcd3bf457fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  isInvincible: 0
+  invincibilityDuration: 2
+  flashFrequency: 10
 --- !u!1 &3932523266426000708
 GameObject:
   m_ObjectHideFlags: 0
