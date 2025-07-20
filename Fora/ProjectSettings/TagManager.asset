@@ -9,15 +9,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Collider
   - SlopeMap
   - Map
-  - 
-  - 
-  - 
+  - PlayerHitBox
+  - Enemy
+  - EnemyHitBox
   - 
   - 
   - 

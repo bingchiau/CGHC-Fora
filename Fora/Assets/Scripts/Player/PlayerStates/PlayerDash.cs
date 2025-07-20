@@ -13,6 +13,7 @@ public class PlayerDash : PlayerStates
     [SerializeField] private int _maxDashes = 1;
     [SerializeField] private TrailRenderer _dashTrail;
     [SerializeField] private GameObject aim;
+    [SerializeField] private LayerMask _whatCanBounce;
     
     private bool _finishCooldown = false;
     private bool _canBounce;
@@ -96,7 +97,7 @@ public class PlayerDash : PlayerStates
         while (timer < _dashDuration)
         {
             _playerController.Conditions.IsBouncing = true;
-            RaycastHit2D ray = Physics2D.Raycast(_playerController.transform.position, direction, 0.7f, LayerMask.GetMask("Map"));
+            RaycastHit2D ray = Physics2D.Raycast(_playerController.transform.position, direction, 0.7f, _whatCanBounce);
             Debug.DrawRay(_playerController.transform.position, direction * 0.7f, Color.green);
             if (ray)
             {
@@ -125,7 +126,7 @@ public class PlayerDash : PlayerStates
         
         _playerController.Conditions.IsDashing = false;
         
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(_dashCooldown);
         _finishCooldown = true;
         _playerController.Conditions.IsBouncing = false;
         _playerController.ResumeGravity();
@@ -135,7 +136,7 @@ public class PlayerDash : PlayerStates
     private IEnumerator BounceCooldown()
     {
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(_dashCooldown * 2);
         _canBounce = false;
          
     }

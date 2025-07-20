@@ -29,12 +29,7 @@ public class PlayerStates : MonoBehaviour
     // Gets the input from the player
     public virtual void LocalInput()
     {
-        if (_playerController.Conditions.IsBouncing)
-        {
-            _horizontalInput = 0f;
-            return;
-        }
-        else if (_playerController.Conditions.IsCollidingLeft)
+        if (_playerController.Conditions.IsCollidingLeft)
         {
             if (_horizontalInput < 0f)
             {
