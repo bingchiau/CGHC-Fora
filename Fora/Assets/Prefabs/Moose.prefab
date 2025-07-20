@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4285789628989887932
 Transform:
   m_ObjectHideFlags: 0
@@ -272,7 +272,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 300
-  currentHealth: 0
   isInvincible: 0
   bossDeathScene: {fileID: 0}
   deathSceneDelay: 2
@@ -290,7 +289,7 @@ GameObject:
   - component: {fileID: 3963385124916178316}
   - component: {fileID: 707985096711105283}
   m_Layer: 0
-  m_Name: SNES - Super Metroid - Ridley-Tail_1 (1)
+  m_Name: TailSeg_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352,8 +351,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
   m_SortingLayer: 5
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -2032264247, guid: 75cde6f3c6dce1a46a09bc0aa5fbe527, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 1739145862, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -465,7 +464,7 @@ Transform:
   m_GameObject: {fileID: 3230595508388619800}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.89, y: -0.1, z: 0}
+  m_LocalPosition: {x: 3.16, y: -0.04, z: 0}
   m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -495,12 +494,12 @@ MonoBehaviour:
   player: {fileID: 0}
   idleWaveFrequency: 2
   idleWaveAmplitude: 15
-  sweepAngle: 235.7
-  sweepSpeed: 201.6
-  idleSegmentLength: 0.43
-  attackSegmentLength: 0.93
-  sweepWaveAmplitude: 81.2
-  triggerRadius: 6
+  sweepAngle: 304.6
+  sweepSpeed: 286.3
+  idleSegmentLength: 0.47
+  attackSegmentLength: 0.72
+  sweepWaveAmplitude: 148.5
+  triggerRadius: 4.6
   sweepCooldown: 2
 --- !u!1 &4322232934184136440
 GameObject:
@@ -516,7 +515,7 @@ GameObject:
   - component: {fileID: 6820453270551761592}
   - component: {fileID: 1273811127899072369}
   m_Layer: 0
-  m_Name: SNES - Super Metroid - Ridley-Tail_2
+  m_Name: TailSeg_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -578,8 +577,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
   m_SortingLayer: 5
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -2126234843, guid: 75cde6f3c6dce1a46a09bc0aa5fbe527, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -617674412, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -679,7 +678,7 @@ GameObject:
   - component: {fileID: 1883535626486043916}
   - component: {fileID: 5877761897411463255}
   m_Layer: 0
-  m_Name: SNES - Super Metroid - Ridley-Tail_3
+  m_Name: TailEnd_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -693,13 +692,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5369445916572688647}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.42560986, w: 0.90490675}
-  m_LocalPosition: {x: 1.02, y: 0.17, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.07, y: 0.09, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3384556207525826826}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 50.379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7782839803254555534
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -740,8 +739,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
   m_SortingLayer: 5
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 41200594, guid: 75cde6f3c6dce1a46a09bc0aa5fbe527, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -1953883476, guid: 11739430f6d079f449a0df4fa1dd03fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -841,7 +840,7 @@ GameObject:
   - component: {fileID: 1386366665644642076}
   - component: {fileID: 4227538342392068304}
   m_Layer: 0
-  m_Name: SNES - Super Metroid - Ridley-Tail_0 (1)
+  m_Name: TailSeg_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -903,8 +902,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
   m_SortingLayer: 5
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -1193360977, guid: 75cde6f3c6dce1a46a09bc0aa5fbe527, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 1739145862, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1004,7 +1003,7 @@ GameObject:
   - component: {fileID: 3696572747398124259}
   - component: {fileID: 6346718035580099214}
   m_Layer: 0
-  m_Name: SNES - Super Metroid - Ridley-Tail_2 (1)
+  m_Name: TailSeg_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1066,8 +1065,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
   m_SortingLayer: 5
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -2126234843, guid: 75cde6f3c6dce1a46a09bc0aa5fbe527, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 1739145862, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1198,7 +1197,7 @@ GameObject:
   - component: {fileID: 6700462099690842224}
   - component: {fileID: 5303840679452259836}
   m_Layer: 0
-  m_Name: SNES - Super Metroid - Ridley-Tail_1
+  m_Name: TailSeg_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1260,8 +1259,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
   m_SortingLayer: 5
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -2032264247, guid: 75cde6f3c6dce1a46a09bc0aa5fbe527, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -617674412, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1392,7 +1391,7 @@ GameObject:
   - component: {fileID: 859087888041516323}
   - component: {fileID: 2243732226052013325}
   m_Layer: 0
-  m_Name: SNES - Super Metroid - Ridley-Tail_0
+  m_Name: TailSeg_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1454,8 +1453,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
   m_SortingLayer: 5
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -1193360977, guid: 75cde6f3c6dce1a46a09bc0aa5fbe527, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -617674412, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

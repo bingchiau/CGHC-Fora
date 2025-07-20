@@ -15485,6 +15485,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2606844401760950927}
+    - target: {fileID: 1032415194943295186, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: triggerRadius
+      value: 4.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3222116471496418144, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: m_Name
+      value: TailSeg_1
+      objectReference: {fileID: 0}
     - target: {fileID: 3229295096796296234, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
       propertyPath: player
       value: 
@@ -15529,10 +15537,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4322232934184136440, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: m_Name
+      value: TailSeg_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369445916572688647, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: m_Name
+      value: TailEnd_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322643299752391118, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: m_Name
+      value: TailSeg_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6794809132458306542, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: m_Name
+      value: TailSeg_1
+      objectReference: {fileID: 0}
     - target: {fileID: 7106229761122106857, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
       propertyPath: bossDeathScene
       value: 
       objectReference: {fileID: 425291414}
+    - target: {fileID: 7442311303375005425, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7442311303375005425, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 8451049629874171479, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: m_Name
+      value: TailSeg_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9157514546539633355, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: m_Name
+      value: TailSeg_0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
