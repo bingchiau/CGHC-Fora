@@ -122,6 +122,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &65365596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 65365598}
+  - component: {fileID: 65365597}
+  m_Layer: 0
+  m_Name: BossEscapeHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &65365597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65365596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b4a55c59dca35469478ce6ffc16a95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &65365598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65365596}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 116.2236, y: -40.56692, z: -0.05933079}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &397409229
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,8 +402,8 @@ MonoBehaviour:
     rotation: -24
     duration: 0.5
   camera2D: {fileID: 5998152616819334098}
-  bossDeathHandler: {fileID: 1875937242}
-  objectToActivateBeforeDestroy: {fileID: 1778673533}
+  bossEscapeHandler: {fileID: 65365597}
+  objectToActivateBeforeEscape: {fileID: 1778673533}
   objectToFadeOut: {fileID: 1622703276}
   fadeOutDuration: 2
 --- !u!1 &619394800
@@ -17675,50 +17719,6 @@ MonoBehaviour:
   camera2D: {fileID: 5998152616819334098}
   rotationAngle: 13
   rotationDuration: 4
---- !u!1 &1875937241
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1875937243}
-  - component: {fileID: 1875937242}
-  m_Layer: 0
-  m_Name: BossDeathHandler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1875937242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875937241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24ea1e29d1209df40835e8da52ba2a10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1875937243
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875937241}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &564610467373932366
 Transform:
   m_ObjectHideFlags: 0
@@ -17752,11 +17752,11 @@ PrefabInstance:
       objectReference: {fileID: 3489371747581674925}
     - target: {fileID: 7495783217031418463, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 126.6
+      value: 115.28
       objectReference: {fileID: 0}
     - target: {fileID: 7495783217031418463, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -45.7
+      value: -43.08
       objectReference: {fileID: 0}
     - target: {fileID: 7495783217031418463, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17861,6 +17861,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7106229761122106857, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
       propertyPath: bossDeathScene
+      value: 
+      objectReference: {fileID: 425291414}
+    - target: {fileID: 7106229761122106857, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: bossEscapeScene
       value: 
       objectReference: {fileID: 425291414}
     m_RemovedComponents: []
@@ -18051,7 +18055,7 @@ SceneRoots:
   - {fileID: 1146209160}
   - {fileID: 912830678}
   - {fileID: 397409230}
-  - {fileID: 1875937243}
+  - {fileID: 65365598}
   - {fileID: 1967484468504465940}
   - {fileID: 425291416}
   - {fileID: 1778673536}

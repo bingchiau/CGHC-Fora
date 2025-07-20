@@ -18,8 +18,8 @@ public class MooseApproach : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Camera2D camera2D;
-    [SerializeField] private BossDeathHandler bossDeathHandler;
-    [SerializeField] private GameObject objectToActivateBeforeDestroy;
+    [SerializeField] private BossEscapeHandler bossEscapeHandler; // ⬅ Renamed from BossDeathHandler
+    [SerializeField] private GameObject objectToActivateBeforeEscape;
 
     [Header("Fade Out Settings")]
     [SerializeField] private GameObject objectToFadeOut;
@@ -53,7 +53,7 @@ public class MooseApproach : MonoBehaviour
     {
         if (currentIndex >= waypoints.Length - 1)
         {
-            StartCoroutine(FinalSequence());
+            StartCoroutine(EscapeSequence());
             enabled = false;
             return;
         }
@@ -76,15 +76,15 @@ public class MooseApproach : MonoBehaviour
         }
     }
 
-    private IEnumerator FinalSequence()
+    private IEnumerator EscapeSequence()
     {
-        if (objectToActivateBeforeDestroy != null)
-            objectToActivateBeforeDestroy.SetActive(true);
+        if (objectToActivateBeforeEscape != null)
+            objectToActivateBeforeEscape.SetActive(true);
 
-        if (bossDeathHandler != null && camera2D != null)
-            bossDeathHandler.ShakeCameraAfterDelay(camera2D, 5f, 60f, 0.07f);
+        if (bossEscapeHandler != null && camera2D != null)
+            bossEscapeHandler.ShakeCameraAfterDelay(camera2D, 5f, 60f, 0.07f);
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(5f); // wait before fade starts
 
         if (objectToFadeOut != null && objectToFadeOut.TryGetComponent(out FadeEffect fade))
         {

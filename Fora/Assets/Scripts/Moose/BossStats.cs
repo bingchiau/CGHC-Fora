@@ -7,9 +7,9 @@ public class BossStats : MonoBehaviour
     [SerializeField] private int maxHealth = 300;
     [SerializeField] private bool isInvincible = false;
 
-    [Header("After Death")]
-    [SerializeField] private GameObject bossDeathScene;
-    [SerializeField] private float deathSceneDelay = 2f;
+    [Header("Escape Sequence")]
+    [SerializeField] private GameObject bossEscapeScene;
+    [SerializeField] private float escapeDelay = 2f;
 
     private int currentHealth;
 
@@ -17,12 +17,14 @@ public class BossStats : MonoBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.K))
         {
-            Debug.Log("[BossStats] DEV: Forced death.");
+            Debug.Log("[BossStats] DEV: Forced escape (K key).");
             currentHealth = 0;
-            Die();
+            Escape();
         }
+#endif
     }
 
     public void TakeDamage(int amount)
@@ -32,7 +34,8 @@ public class BossStats : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth - amount, 0);
         Debug.Log($"[BossStats] Took {amount} damage. HP: {currentHealth}");
 
-        if (currentHealth == 0) Die();
+        if (currentHealth == 0)
+            Escape();
     }
 
     public void Heal(int amount)
@@ -43,12 +46,12 @@ public class BossStats : MonoBehaviour
 
     public void ResetHealth() => currentHealth = maxHealth;
 
-    private void Die()
+    private void Escape()
     {
-        Debug.Log("[BossStats] Boss has died.");
-        if (FindObjectOfType<BossDeathHandler>() is BossDeathHandler handler)
+        Debug.Log("[BossStats] Boss is escaping.");
+        if (FindObjectOfType<BossEscapeHandler>() is BossEscapeHandler handler)
         {
-            handler.HandleBossDeath(gameObject, bossDeathScene, deathSceneDelay);
+            handler.HandleBossEscape(gameObject, bossEscapeScene, escapeDelay);
         }
     }
 }
