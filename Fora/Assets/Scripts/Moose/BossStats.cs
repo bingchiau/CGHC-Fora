@@ -1,71 +1,57 @@
 ﻿using UnityEngine;
 
+[DisallowMultipleComponent]
 public class BossStats : MonoBehaviour
 {
     [Header("Health Settings")]
-    public int maxHealth = 300;
-    public int currentHealth;
+    [SerializeField] private int maxHealth = 300;
+    [SerializeField] private bool isInvincible = false;
 
-    public bool isInvincible = false;
+    [Header("Escape Sequence")]
+    [SerializeField] private GameObject bossEscapeScene;
+    [SerializeField] private float escapeDelay = 2f;
 
-    [Header("After Death")]
-    public GameObject bossDeathScene; // The object to activate
-    public float deathSceneDelay = 2f; // Delay before activating and destroying
+    private int currentHealth;
 
-    void Awake()
+    private void Awake() => currentHealth = maxHealth;
+
+    private void Update()
     {
-        currentHealth = maxHealth;
-    }
-
-    void Update()
-    {
-        // DEV key to force kill
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.K))
         {
-            Debug.Log("DEV: Forced boss death via K key");
-            currentHealth = 0;
-            Die();
+            Debug.Log("[BossStats] DEV: Forced escape (K key).");
+            currentHealth = 20;
+            Escape();
         }
+#endif
     }
 
     public void TakeDamage(int amount)
     {
-        if (isInvincible) return;
+        if (isInvincible || currentHealth <= 0) return;
 
-        currentHealth -= amount;
-        currentHealth = Mathf.Max(currentHealth, 0);
+        currentHealth = Mathf.Max(currentHealth - amount, 0);
+        Debug.Log($"[BossStats] Took {amount} damage. HP: {currentHealth}");
 
-        Debug.Log($"Boss took {amount} damage. Current Health: {currentHealth}");
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        if (currentHealth == 20)
+            Escape();
     }
 
     public void Heal(int amount)
     {
-        currentHealth += amount;
-        currentHealth = Mathf.Min(currentHealth, maxHealth);
-
-        Debug.Log($"Boss healed {amount}. Current Health: {currentHealth}");
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        Debug.Log($"[BossStats] Healed {amount}. HP: {currentHealth}");
     }
 
-    private void Die()
-    {
-        Debug.Log("Boss has died!");
+    public void ResetHealth() => currentHealth = maxHealth;
 
-        // Use the death handler to finish up
-        BossDeathHandler handler = FindObjectOfType<BossDeathHandler>();
-        if (handler != null)
+    private void Escape()
+    {
+        Debug.Log("[BossStats] Boss is escaping.");
+        if (FindObjectOfType<BossEscapeHandler>() is BossEscapeHandler handler)
         {
-            handler.HandleBossDeath(gameObject, bossDeathScene, deathSceneDelay);
+            handler.HandleBossEscape(gameObject, bossEscapeScene, escapeDelay);
         }
-
-    }
-
-    public void ResetHealth()
-    {
-        currentHealth = maxHealth;
     }
 }
