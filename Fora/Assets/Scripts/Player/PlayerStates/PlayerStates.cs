@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStates : MonoBehaviour
@@ -33,12 +34,27 @@ public class PlayerStates : MonoBehaviour
             _horizontalInput = 0f;
             return;
         }
-        else
+        else if (_playerController.Conditions.IsCollidingLeft)
         {
-            _horizontalInput = Input.GetAxis("Horizontal");
-            _verticalInput = Input.GetAxis("Vertical");
+            if (_horizontalInput < 0f)
+            {
+                _horizontalInput = 0f;
+                return;
+            }
+            
+        }
+        else if (_playerController.Conditions.IsCollidingRight)
+        {
+            if (_horizontalInput > 0f)
+            {
+                _horizontalInput = 0f;
+                return;
+            }
         }
 
+        _horizontalInput = Input.GetAxis("Horizontal");
+        _verticalInput = Input.GetAxis("Vertical");
+       
         GetInput();
     }
 

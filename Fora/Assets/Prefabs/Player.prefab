@@ -460,7 +460,7 @@ MonoBehaviour:
   _minDashPower: 5
   _maxDashPower: 15
   _dashDuration: 0.3
-  _dashCooldown: 0.5
+  _dashCooldown: 1
   _maxDashes: 1
   _dashTrail: {fileID: 5107393054429176165}
   aim: {fileID: 5969962939511435056}
