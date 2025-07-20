@@ -72,7 +72,7 @@ public class MooseApproach : MonoBehaviour
             currentIndex++;
 
             if (currentIndex == 1 && camera2D != null)
-                camera2D.ShakeCamera(1f, 0.05f);
+                camera2D.ShakeCamera(1f, 0.25f);
         }
     }
 
@@ -82,7 +82,7 @@ public class MooseApproach : MonoBehaviour
             objectToActivateBeforeDestroy.SetActive(true);
 
         if (bossDeathHandler != null && camera2D != null)
-            bossDeathHandler.ShakeCameraAfterDelay(camera2D, 5f, 60f, 0.025f);
+            bossDeathHandler.ShakeCameraAfterDelay(camera2D, 5f, 60f, 0.07f);
 
         yield return new WaitForSeconds(5f);
 
