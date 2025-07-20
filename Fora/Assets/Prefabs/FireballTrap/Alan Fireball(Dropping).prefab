@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4255457968960378787}
   - component: {fileID: 5990837294921238855}
   - component: {fileID: 3374476245332411954}
-  - component: {fileID: 8949557589858116230}
+  - component: {fileID: -1454327181411001674}
   m_Layer: 0
-  m_Name: Dropping fireball
+  m_Name: Alan Fireball(Dropping)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071071, w: 0.7071065}
   m_LocalPosition: {x: -11.275494, y: 9.200001, z: 0.21118927}
-  m_LocalScale: {x: 0.25863096, y: 0.25863096, z: 0.25863096}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -181,7 +181,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8949557589858116230
+--- !u!114 &-1454327181411001674
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,10 +190,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1200452467657629432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 294aad797858b8a4a95d69c5a760e1ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 33fbed1f8846f8a40be2644700a0ce5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localStartOffset: {x: 0, y: 3.8, z: 0}
-  localEndOffset: {x: 0, y: -16.8, z: 5}
-  speed: 10
-  delayBeforeRespawn: 1
+  knockbackStrength: 20
