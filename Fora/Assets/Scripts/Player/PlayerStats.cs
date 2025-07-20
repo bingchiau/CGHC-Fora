@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public static PlayerStats Instance { get; private set; }
+    public int CurrentHealth => currentHealth;
+
+
     [Header("Health Settings")]
     public int maxHealth = 100;
     public int currentHealth;
@@ -14,8 +18,9 @@ public class PlayerStats : MonoBehaviour
     private float invincibilityTimer = 0f;
     private SpriteRenderer spriteRenderer;
 
-    void Awake()
+    private void Awake()
     {
+        Instance = this;
         currentHealth = maxHealth;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -24,6 +29,7 @@ public class PlayerStats : MonoBehaviour
             Debug.LogWarning("PlayerStats: No SpriteRenderer found! Flash will not work.");
         }
     }
+
 
     void Update()
     {

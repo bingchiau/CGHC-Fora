@@ -18,8 +18,8 @@ public class MooseApproach : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Camera2D camera2D;
-    [SerializeField] private BossEscapeHandler bossEscapeHandler; // ⬅ Renamed from BossDeathHandler
-    [SerializeField] private GameObject objectToActivateBeforeEscape;
+    [SerializeField] private BossEscapeHandler bossEscapeHandler;
+    [SerializeField] private GameObject[] objectsToActivateBeforeEscape;
 
     [Header("Fade Out Settings")]
     [SerializeField] private GameObject objectToFadeOut;
@@ -72,17 +72,24 @@ public class MooseApproach : MonoBehaviour
             currentIndex++;
 
             if (currentIndex == 1 && camera2D != null)
-                camera2D.ShakeCamera(1f, 0.25f);
+                camera2D.ShakeCamera(1f, 0.35f);
         }
     }
 
     private IEnumerator EscapeSequence()
     {
-        if (objectToActivateBeforeEscape != null)
-            objectToActivateBeforeEscape.SetActive(true);
+        // ✅ Activate objects
+        if (objectsToActivateBeforeEscape != null)
+        {
+            foreach (GameObject obj in objectsToActivateBeforeEscape)
+            {
+                if (obj != null)
+                    obj.SetActive(true);
+            }
+        }
 
         if (bossEscapeHandler != null && camera2D != null)
-            bossEscapeHandler.ShakeCameraAfterDelay(camera2D, 5f, 60f, 0.07f);
+            bossEscapeHandler.ShakeCameraAfterDelay(camera2D, 5f, 60f, 0.12f);
 
         yield return new WaitForSeconds(5f); // wait before fade starts
 
@@ -93,8 +100,19 @@ public class MooseApproach : MonoBehaviour
             objectToFadeOut.SetActive(false);
         }
 
+        // ✅ CALL THE COUNTDOWN TIMER HERE
+        if (CountdownTimerUI.Instance != null)
+        {
+            CountdownTimerUI.Instance.StartTimer(60f, new Vector2(0f, 0f), new Vector2(700f, 420f), 3f);
+        }
+        else
+        {
+            Debug.LogWarning("[MooseApproach] CountdownTimerUI not found in scene.");
+        }
+
         Destroy(gameObject);
     }
+
 
     private void ApplyWaypoint(int index)
     {
