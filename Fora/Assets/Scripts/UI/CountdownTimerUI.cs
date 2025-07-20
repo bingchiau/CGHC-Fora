@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using TMPro;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CountdownTimerUI : MonoBehaviour
 {
@@ -69,7 +70,7 @@ public class CountdownTimerUI : MonoBehaviour
         if (remainingTime <= 0f)
         {
             isCounting = false;
-            // Optionally: Hide or trigger something
+            // SceneManager.LoadScene("LoseScene"); 
         }
     }
 
@@ -80,4 +81,6 @@ public class CountdownTimerUI : MonoBehaviour
         int fraction = Mathf.FloorToInt((time * 100f) % 100);
         timerText.text = $"{minutes:00}' {seconds:00}\"{fraction:00}";
     }
+
+    public float RemainingTime => remainingTime;
 }

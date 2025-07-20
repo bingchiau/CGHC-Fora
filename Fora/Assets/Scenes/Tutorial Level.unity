@@ -243,9 +243,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 65365598}
-  - {fileID: 104401544}
   - {fileID: 397409230}
+  - {fileID: 104401544}
+  - {fileID: 65365598}
   - {fileID: 425291416}
   - {fileID: 1778673536}
   - {fileID: 848890810}
@@ -822,6 +822,7 @@ GameObject:
   - component: {fileID: 848890810}
   - component: {fileID: 848890812}
   - component: {fileID: 848890811}
+  - component: {fileID: 848890813}
   m_Layer: 0
   m_Name: FinishPoint
   m_TagString: Untagged
@@ -916,6 +917,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &848890813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848890809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b79fe60a2f1b544a70e72d2c2bfc03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTag: Player
+  winSceneName: WinScene
 --- !u!1 &912830676
 GameObject:
   m_ObjectHideFlags: 0
