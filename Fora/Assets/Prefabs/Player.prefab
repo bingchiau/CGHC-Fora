@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16412ed990c17a4f954f6159e18d864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxJumpHeight: 5
+  _maxJumpHeight: 3
   _minJumpHeight: 1
   _maxJumps: 1
 --- !u!96 &5107393054429176165
@@ -457,7 +457,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913bf232a1345c240801f41396ed491d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dashPower: 15
+  _minDashPower: 5
+  _maxDashPower: 15
   _dashDuration: 0.3
   _dashCooldown: 0.5
   _maxDashes: 1
