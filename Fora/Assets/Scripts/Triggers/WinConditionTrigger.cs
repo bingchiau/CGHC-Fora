@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Collider2D))]
 public class WinConditionTrigger : MonoBehaviour
 {
     [Tooltip("The tag of the player object.")]
@@ -14,15 +14,15 @@ public class WinConditionTrigger : MonoBehaviour
     private void Awake()
     {
         // Ensure the collider is set as trigger
-        Collider col = GetComponent<Collider>();
+        Collider2D col = GetComponent<Collider2D>();
         if (!col.isTrigger)
         {
-            Debug.LogWarning("[WinConditionTrigger] Collider was not set as trigger. Enabling it now.");
+            Debug.LogWarning("[WinConditionTrigger] 2D Collider was not set as trigger. Enabling it now.");
             col.isTrigger = true;
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag(playerTag))
         {
