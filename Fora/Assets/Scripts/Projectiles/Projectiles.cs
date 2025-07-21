@@ -11,12 +11,26 @@ public class Projectiles : MonoBehaviour
     [Range(1f, 10f)]
     [SerializeField] private float _lifeTime = 1.5f;
 
+    [SerializeField] private bool _enemyBullet;
+
+    private GameObject _player;
     private Rigidbody2D _rb;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _rb.velocity = transform.up * _speed;
+        _player = GameObject.FindGameObjectWithTag("Player");
+
+        if (_enemyBullet && _player != null)
+        {
+            Vector3 direction = _player.transform.position - transform.position;
+            _rb.velocity = new Vector2(direction.x, direction.y).normalized * _speed;
+        }
+        else if (!_enemyBullet)
+        {
+            _rb.velocity = transform.up * _speed;
+        }
+
         Destroy(gameObject, _lifeTime);
     }
 

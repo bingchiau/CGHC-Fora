@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - WaterDroplet
+  - Nuts
   layers:
   - Default
   - TransparentFX

@@ -5,20 +5,7 @@ using UnityEngine;
 
 public class ProjectilesDamage : MonoBehaviour
 {
-    private PlayerShoot _playerShoot;
-
-    private Rigidbody2D _rb;
-
-    private void Start()
-    {
-        _rb = GetComponent<Rigidbody2D>();
-
-        if (this.CompareTag("WaterDroplet"))
-        {
-            _playerShoot = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShoot>();
-        }
-
-    }
+    public int Damage;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,7 +14,7 @@ public class ProjectilesDamage : MonoBehaviour
 
         if (playerStats != null)
         {
-            playerStats.TakeDamage((int)_playerShoot.damage);
+            playerStats.TakeDamage(Damage);
             Destroy(gameObject);
         }
     }

@@ -485,7 +485,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 425885748081601758, guid: 4e85de14f200e66438aafe105cb07bd0, type: 3}
   shootPoint: {fileID: 7658335721864813758}
   fireRate: 0.2
-  damage: 5
+  damage: 10
 --- !u!114 &4062958691865615426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,6 +503,7 @@ MonoBehaviour:
   isInvincible: 0
   invincibilityDuration: 2
   flashFrequency: 10
+  _isAlive: 1
 --- !u!95 &5006270075339105308
 Animator:
   serializedVersion: 5

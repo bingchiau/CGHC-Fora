@@ -535,7 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _walkSpeed: 2
-  _attackZone: {fileID: 0}
+  _attackZone: {fileID: 4946289820605472263}
   _directionVector: {x: 0, y: 0}
 --- !u!114 &2058516382026190822
 MonoBehaviour:

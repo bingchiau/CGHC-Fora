@@ -26,6 +26,7 @@ public class EnemyConditions : MonoBehaviour
     private void Start()
     {
         _boxCollider2D = GetComponent<BoxCollider2D>();
+        Debug.Log(_boxCollider2D.gameObject);
     }
 
     private void Update()
