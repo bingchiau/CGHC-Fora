@@ -11,6 +11,18 @@ public class BossArenaActivator : MonoBehaviour
     [SerializeField] private GameObject objectToFadeOut;
     [SerializeField] private float fadeDuration = 2f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip activationSound;
+    [SerializeField] private float soundDuration = 2f;
+
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        _audioSource = gameObject.AddComponent<AudioSource>();
+        _audioSource.playOnAwake = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
@@ -20,10 +32,17 @@ public class BossArenaActivator : MonoBehaviour
 
     private System.Collections.IEnumerator ActivationSequence()
     {
+        // Play sound
+        if (activationSound != null)
+        {
+            _audioSource.clip = activationSound;
+            _audioSource.Play();
+        }
+
         // Fade in
         if (objectToFadeIn != null)
         {
-            objectToFadeIn.SetActive(true); // Ensure it's active to fade in
+            objectToFadeIn.SetActive(true);
             if (objectToFadeIn.TryGetComponent(out FadeEffect fadeIn))
                 fadeIn.FadeIn(fadeDuration);
         }
@@ -35,8 +54,8 @@ public class BossArenaActivator : MonoBehaviour
                 fadeOut.FadeOut(fadeDuration);
         }
 
-        // Wait before activating boss
-        yield return new WaitForSeconds(3f);
+        // Wait for the sound duration
+        yield return new WaitForSeconds(soundDuration);
 
         boss?.SetActive(true);
 
