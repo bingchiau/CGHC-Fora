@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Collider2D))]
 public class BossArenaActivator : MonoBehaviour
@@ -11,16 +12,21 @@ public class BossArenaActivator : MonoBehaviour
     [SerializeField] private GameObject objectToFadeOut;
     [SerializeField] private float fadeDuration = 2f;
 
-    [Header("Audio")]
+    [Header("Activation Sound")]
     [SerializeField] private AudioClip activationSound;
+    [Range(0f, 1f)]
+    [SerializeField] private float activationSoundVolume = 1f;
     [SerializeField] private float soundDuration = 2f;
 
     private AudioSource _audioSource;
 
     private void Awake()
     {
+        // Create internal AudioSource
         _audioSource = gameObject.AddComponent<AudioSource>();
         _audioSource.playOnAwake = false;
+        _audioSource.loop = false;
+        _audioSource.spatialBlend = 0f; // 0 = 2D sound
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -30,11 +36,12 @@ public class BossArenaActivator : MonoBehaviour
         StartCoroutine(ActivationSequence());
     }
 
-    private System.Collections.IEnumerator ActivationSequence()
+    private IEnumerator ActivationSequence()
     {
-        // Play sound
+        // 🔊 Play activation sound
         if (activationSound != null)
         {
+            _audioSource.volume = activationSoundVolume;
             _audioSource.clip = activationSound;
             _audioSource.Play();
         }
@@ -54,11 +61,19 @@ public class BossArenaActivator : MonoBehaviour
                 fadeOut.FadeOut(fadeDuration);
         }
 
-        // Wait for the sound duration
+        // 🔊 Start BGM
+        if (BackgroundMusicPlayer.Instance != null)
+        {
+            BackgroundMusicPlayer.Instance.PlayMusic();
+        }
+        else
+        {
+            Debug.LogWarning("[BossArenaActivator] BackgroundMusicPlayer.Instance not found.");
+        }
+
         yield return new WaitForSeconds(soundDuration);
 
         boss?.SetActive(true);
-
         Debug.Log("[BossArenaActivator] Boss activated after delay.");
         gameObject.SetActive(false);
     }
