@@ -13,11 +13,15 @@ public class Projectiles_explode : Projectiles
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    override public void DestroyThis()
+    override public void DestroyThis(Collider2D collision)
     {
-        _rb.velocity = Vector3.zero;
-        _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, 0f);
-        _bomb.SetActive(true);
+        if (collision.gameObject.layer == 8 || collision.CompareTag("Player"))
+        {
+            _rb.velocity = Vector3.zero;
+            _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, 0f);
+            _bomb.SetActive(true);
+        }
+       
 
     }
 }

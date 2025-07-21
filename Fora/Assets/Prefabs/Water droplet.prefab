@@ -164,6 +164,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _lifeTime: 1.5
+  _enemyBullet: 0
+  _rb: {fileID: 0}
 --- !u!114 &4541114965678686903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,4 +178,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c38ff773d8f29794681cf546505c969b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 10
+  Damage: 20

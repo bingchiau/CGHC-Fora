@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b7fdaf9a4bd9b24993ac3920d6bbc76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _walkSpeed: 2
+  _walkSpeed: 3
   _attackZone: {fileID: 4946289820605472263}
   _directionVector: {x: 0, y: 0}
 --- !u!114 &2058516382026190822
