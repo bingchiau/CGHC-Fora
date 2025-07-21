@@ -7,15 +7,12 @@ public class Attack : MonoBehaviour
 {
     [SerializeField] private int _attackDamaged;
 
-    private Collider2D _col;
-    private Vector2 _knockback;
     private Rigidbody2D _rb;
 
     public static Action<Vector2> OnHit;
 
     private void Start()
     {
-        _col = GetComponent<Collider2D>();
         _rb = GetComponentInParent<Rigidbody2D>();
     }
 
@@ -28,7 +25,6 @@ public class Attack : MonoBehaviour
         {
             playerStats.TakeDamage(_attackDamaged);
             StartCoroutine(HitStun());
-            OnHit?.Invoke(_knockback);
         }
     }
 

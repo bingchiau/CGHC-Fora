@@ -12,7 +12,7 @@ public class PlayerShoot : PlayerStates
     [SerializeField] private Transform shootPoint;
     [Range(0.1f, 2f)]
     [SerializeField] private float fireRate = 0.5f;
-    [SerializeField] private float damage = 5f;
+    public float damage = 10f;
 
     private float _fireTimer;
 
