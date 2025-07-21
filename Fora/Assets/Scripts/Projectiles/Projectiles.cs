@@ -14,9 +14,9 @@ public class Projectiles : MonoBehaviour
     [SerializeField] private bool _enemyBullet;
 
     private GameObject _player;
-    private Rigidbody2D _rb;
+    public Rigidbody2D _rb;
 
-    private void Start()
+    protected virtual void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _player = GameObject.FindGameObjectWithTag("Player");
@@ -44,7 +44,12 @@ public class Projectiles : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            Destroy(gameObject);
+            DestroyThis();
         }
+    }
+
+    public virtual void DestroyThis()
+    {
+        Destroy(gameObject);
     }
 }

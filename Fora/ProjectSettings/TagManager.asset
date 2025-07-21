@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - WaterDroplet
   - Nuts
+  - Bomb
   layers:
   - Default
   - TransparentFX

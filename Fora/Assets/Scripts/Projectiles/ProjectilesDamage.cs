@@ -15,7 +15,12 @@ public class ProjectilesDamage : MonoBehaviour
         if (playerStats != null)
         {
             playerStats.TakeDamage(Damage);
-            Destroy(gameObject);
+            DestroyThis();
         }
+    }
+
+    public virtual void DestroyThis()
+    {
+        Destroy(gameObject);
     }
 }
