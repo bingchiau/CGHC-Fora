@@ -12,6 +12,7 @@ public class Shoot : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Instantiate(_nuts, animator.transform.position, Quaternion.identity);
+        animator.SetBool("canHit", true);
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

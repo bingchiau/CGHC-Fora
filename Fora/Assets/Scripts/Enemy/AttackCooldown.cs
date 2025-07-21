@@ -14,6 +14,11 @@ public class AttackCooldown : MonoBehaviour
         private set
         {
             _animator.SetFloat("attackCountdown", Mathf.Max(value, 0));
+            
+            if (_animator.GetFloat("attackCountdown") <= 0.1f)
+            {
+                _animator.SetBool("canHit", false);
+            }
         } 
     }
 

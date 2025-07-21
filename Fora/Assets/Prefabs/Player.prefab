@@ -484,8 +484,7 @@ MonoBehaviour:
   aim: {fileID: 5969962939511435056}
   projectilePrefab: {fileID: 425885748081601758, guid: 4e85de14f200e66438aafe105cb07bd0, type: 3}
   shootPoint: {fileID: 7658335721864813758}
-  fireRate: 0.2
-  damage: 10
+  fireRate: 1
 --- !u!114 &4062958691865615426
 MonoBehaviour:
   m_ObjectHideFlags: 0
