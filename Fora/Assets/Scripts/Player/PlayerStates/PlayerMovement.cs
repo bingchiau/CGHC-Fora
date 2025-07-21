@@ -49,8 +49,9 @@ public class PlayerMovement : PlayerStates
         if (!CanMove)
         {
             moveSpeed = 0f;
+            _playerController.SetVerticalForce(0f);
         }
-        
+
         moveSpeed = EvaluateFriction(moveSpeed);
         _playerController.SetHorizontalForce(moveSpeed);
         

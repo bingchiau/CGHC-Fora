@@ -84,6 +84,8 @@ public class PlayerStats : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
 
+        _animator.SetTrigger("isHit");
+
         Debug.Log($"Player took {amount} damage. Current Health: {currentHealth}");
 
         if (currentHealth <= 0)

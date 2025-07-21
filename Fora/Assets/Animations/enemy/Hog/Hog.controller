@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6800bb9ac79440941b594b31f7396737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dashForce: 25
+  _dashForce: 35
 --- !u!1107 &-1075033395656048745
 AnimatorStateMachine:
   serializedVersion: 6

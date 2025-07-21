@@ -98,9 +98,10 @@ public class Hog : MonoBehaviour
         {
             Direction = WalkDirection.Left;
         }
-        else if(Direction == WalkDirection.Left)
+        else if (Direction == WalkDirection.Left)
         {
             Direction = WalkDirection.Right;
         }
     }
+
 }
