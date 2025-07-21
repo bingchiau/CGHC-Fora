@@ -34,6 +34,14 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public bool CanHit
+    {
+        get
+        {
+            return _animator.GetBool("canHit");
+        }
+    }
+
     private void Awake()
     {
         Instance = this;
@@ -79,14 +87,14 @@ public class PlayerStats : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (isInvincible && !IsAlive) return;
+        if (isInvincible || !IsAlive || !CanHit) return;
 
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
 
         _animator.SetTrigger("isHit");
 
-        Debug.Log($"Player took {amount} damage. Current Health: {currentHealth}");
+        Debug.Log($"{gameObject} took {amount} damage. Current Health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
