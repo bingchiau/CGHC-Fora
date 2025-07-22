@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MooseTailController : MonoBehaviour
 {
     [Header("Tail Segments")]
-    public Transform[] segments; // base to tip
+    public Transform[] segments;
 
     [Header("Player")]
     public Transform player;
@@ -13,19 +13,25 @@ public class MooseTailController : MonoBehaviour
     public float idleWaveAmplitude = 15f;
 
     [Header("Sweep Settings")]
-    public float sweepAngle = 120f;     // total degrees of sweep
-    public float sweepSpeed = 200f;     // degrees per second
+    public float sweepAngle = 120f;
+    public float sweepSpeed = 200f;
 
     [Header("Segment Spacing")]
     public float idleSegmentLength = 0.5f;
     public float attackSegmentLength = 1f;
 
     [Header("Tail Bend")]
-    public float sweepWaveAmplitude = 20f; // how curvy during sweep
+    public float sweepWaveAmplitude = 20f;
 
     [Header("Trigger Radius")]
-    public float triggerRadius = 3f;   // range to detect player
-    public float sweepCooldown = 3f;   // Cooldown between sweeps
+    public float triggerRadius = 3f;
+    public float sweepCooldown = 3f;
+
+    [Header("Sweep Sound")]
+    [SerializeField] private AudioClip sweepSound;
+    [SerializeField] private float sweepSoundVolume = 1f;
+
+    private AudioSource _audioSource;
 
     private enum TailState { Idle, Sweep }
     private TailState state = TailState.Idle;
@@ -34,7 +40,13 @@ public class MooseTailController : MonoBehaviour
     private float sweepTargetAngle;
     private float sweepCurrentAngle;
 
-    private float nextSweepTime = 0f; // cooldown timer
+    private float nextSweepTime = 0f;
+
+    void Awake()
+    {
+        _audioSource = gameObject.AddComponent<AudioSource>();
+        _audioSource.playOnAwake = false;
+    }
 
     void Update()
     {
@@ -104,9 +116,25 @@ public class MooseTailController : MonoBehaviour
         sweepCurrentAngle = sweepStartAngle;
 
         state = TailState.Sweep;
-
         nextSweepTime = Time.time + sweepCooldown;
+
+        // 🔊 Play sweep sound with limited duration
+        if (sweepSound != null)
+        {
+            _audioSource.clip = sweepSound;
+            _audioSource.volume = sweepSoundVolume;
+            _audioSource.Play();
+            StartCoroutine(StopSweepSoundAfterDelay(1f));
+        }
     }
+
+    private System.Collections.IEnumerator StopSweepSoundAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        _audioSource.Stop();
+    }
+
+
 
     void OnDrawGizmosSelected()
     {

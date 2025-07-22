@@ -5,7 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wall
-  - Level component
+  - WaterDroplet
+  - Nuts
+  - Bomb
   layers:
   - Default
   - TransparentFX
@@ -16,10 +18,10 @@ TagManager:
   - Collider
   - SlopeMap
   - Map
-  - PlayerHitBox
   - Enemy
+  - PlayerHitBox
   - EnemyHitBox
-  - 
+  - Bullet
   - 
   - 
   - 
@@ -61,12 +63,12 @@ TagManager:
   - name: Player
     uniqueID: 3310002175
     locked: 0
+  - name: Effects
+    uniqueID: 497070927
+    locked: 0
   - name: UI
     uniqueID: 3914710737
     locked: 0
   - name: SlopeMap
     uniqueID: 4203666923
-    locked: 0
-  - name: Projectile
-    uniqueID: 3138369251
     locked: 0

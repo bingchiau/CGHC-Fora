@@ -24,6 +24,7 @@ public class PlayerMovement : PlayerStates
     // Moves the player
     private void MovePlayer()
     {
+
         if (Mathf.Abs(_horizontalMovement) > 0.1f)
         {
             _movement = _horizontalMovement;
@@ -44,7 +45,13 @@ public class PlayerMovement : PlayerStates
         {
             moveSpeed = _movement * moveSpeed;
         }
-        
+
+        if (!CanMove)
+        {
+            moveSpeed = 0f;
+            _playerController.SetVerticalForce(0f);
+        }
+
         moveSpeed = EvaluateFriction(moveSpeed);
         _playerController.SetHorizontalForce(moveSpeed);
         

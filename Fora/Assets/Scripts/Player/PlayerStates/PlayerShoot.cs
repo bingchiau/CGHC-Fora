@@ -12,8 +12,9 @@ public class PlayerShoot : PlayerStates
     [SerializeField] private Transform shootPoint;
     [Range(0.1f, 2f)]
     [SerializeField] private float fireRate = 0.5f;
-    [SerializeField] private float damage = 5f;
 
+    private ProjectilesDamage _pDamage;
+    private float _damage;
     private float _fireTimer;
 
     private Vector2 _mousePos;
@@ -21,6 +22,8 @@ public class PlayerShoot : PlayerStates
     protected override void InitState()
     {
         base.InitState();
+        _pDamage = projectilePrefab.GetComponent<ProjectilesDamage>();
+        _damage = _pDamage.Damage;
     }
 
     public override void ExecuteState()
@@ -68,7 +71,7 @@ public class PlayerShoot : PlayerStates
         if (CanShoot())
         {
             Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
-            _playerController.ReduceWeight(damage / 100);
+            _playerController.ReduceWeight(_damage / 100);
             UIManager.Instance.UpdateWeight(_playerController.WeightRatio);
         }
     }

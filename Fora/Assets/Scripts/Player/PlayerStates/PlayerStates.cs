@@ -9,6 +9,16 @@ public class PlayerStates : MonoBehaviour
     protected float _horizontalInput;
     protected float _verticalInput;
 
+    private Animator _animator;
+
+    public bool CanMove
+    {
+        get
+        {
+            return _animator.GetBool("canMove");
+        }
+    }
+
     protected virtual void Start()
     {
         InitState();
@@ -17,7 +27,8 @@ public class PlayerStates : MonoBehaviour
     // We call some logic need in the start
     protected virtual void InitState()
     {
-        _playerController = GetComponent<PlayerController>();       
+        _playerController = GetComponent<PlayerController>();   
+        _animator = GetComponent<Animator>();
     }
 
     // Override to create state logic

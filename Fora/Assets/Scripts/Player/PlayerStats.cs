@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public static PlayerStats Instance { get; private set; }
+    public int CurrentHealth => currentHealth;
+
+
     [Header("Health Settings")]
     public int maxHealth = 100;
     public int currentHealth;
@@ -13,10 +17,36 @@ public class PlayerStats : MonoBehaviour
 
     private float invincibilityTimer = 0f;
     private SpriteRenderer spriteRenderer;
+    private Animator _animator;
 
-    void Awake()
+    [SerializeField] private bool _isAlive = true;
+
+    public bool IsAlive
     {
+        get
+        {
+            return _isAlive;
+        }
+        set
+        {
+            _isAlive = value;
+            _animator.SetBool("isAlive", value);
+        }
+    }
+
+    public bool CanHit
+    {
+        get
+        {
+            return _animator.GetBool("canHit");
+        }
+    }
+
+    private void Awake()
+    {
+        Instance = this;
         currentHealth = maxHealth;
+        _animator = GetComponent<Animator>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer == null)
@@ -24,6 +54,7 @@ public class PlayerStats : MonoBehaviour
             Debug.LogWarning("PlayerStats: No SpriteRenderer found! Flash will not work.");
         }
     }
+
 
     void Update()
     {
@@ -56,12 +87,14 @@ public class PlayerStats : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (isInvincible) return;
+        if (isInvincible || !IsAlive || !CanHit) return;
 
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
 
-        Debug.Log($"Player took {amount} damage. Current Health: {currentHealth}");
+        _animator.SetTrigger("isHit");
+
+        Debug.Log($"{gameObject} took {amount} damage. Current Health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
@@ -84,7 +117,7 @@ public class PlayerStats : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player has died.");
-        // Optional: handle death animation, game over, respawn, etc.
+        IsAlive = false;
     }
 
     public void ResetHealth()

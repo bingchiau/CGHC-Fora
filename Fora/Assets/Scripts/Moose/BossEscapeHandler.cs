@@ -1,13 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 
 public class BossEscapeHandler : MonoBehaviour
 {
-    /// <summary>
-    /// Handles boss escape: deactivate, wait, activate escape scene, and destroy boss.
-    /// </summary>
+    public static BossEscapeHandler Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     public void HandleBossEscape(GameObject boss, GameObject bossEscapeScene, float delay)
     {
         StartCoroutine(EscapeSequence(boss, bossEscapeScene, delay));
@@ -24,9 +26,6 @@ public class BossEscapeHandler : MonoBehaviour
         Destroy(boss);
     }
 
-    /// <summary>
-    /// Triggers a delayed camera shake — useful for dramatic escape moments.
-    /// </summary>
     public void ShakeCameraAfterDelay(Camera2D camera, float delay, float duration, float magnitude)
     {
         StartCoroutine(ShakeAfterDelay(camera, delay, duration, magnitude));

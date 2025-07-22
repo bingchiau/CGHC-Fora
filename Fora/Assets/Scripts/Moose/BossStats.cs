@@ -21,7 +21,7 @@ public class BossStats : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             Debug.Log("[BossStats] DEV: Forced escape (K key).");
-            currentHealth = 0;
+            currentHealth = 20;
             Escape();
         }
 #endif
@@ -34,7 +34,7 @@ public class BossStats : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth - amount, 0);
         Debug.Log($"[BossStats] Took {amount} damage. HP: {currentHealth}");
 
-        if (currentHealth == 0)
+        if (currentHealth == 20)
             Escape();
     }
 
