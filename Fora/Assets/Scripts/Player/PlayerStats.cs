@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -60,6 +61,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (isInvincible)
         {
+            _animator.enabled = false;
             invincibilityTimer -= Time.deltaTime;
 
             if (spriteRenderer != null)
@@ -68,6 +70,7 @@ public class PlayerStats : MonoBehaviour
                 float wave = Mathf.Sin(Time.time * flashFrequency * Mathf.PI * 2);
                 float alpha = Mathf.Abs(wave); // oscillates between 0 and 1
 
+
                 // Flash as white, fading in/out
                 spriteRenderer.color = new Color(1f, 1f, 1f, alpha);
             }
@@ -75,7 +78,7 @@ public class PlayerStats : MonoBehaviour
             if (invincibilityTimer <= 0f)
             {
                 isInvincible = false;
-
+                _animator.enabled = true;
                 // Restore full opaque normal color
                 if (spriteRenderer != null)
                 {
@@ -99,8 +102,15 @@ public class PlayerStats : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+            return;
         }
 
+        StartCoroutine(StartInvicible());
+    }
+
+    private IEnumerator StartInvicible()
+    {
+        yield return new WaitForSeconds(0.6f);
         // Start invincibility frames
         isInvincible = true;
         invincibilityTimer = invincibilityDuration;

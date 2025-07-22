@@ -484,7 +484,7 @@ MonoBehaviour:
   aim: {fileID: 5969962939511435056}
   projectilePrefab: {fileID: 425885748081601758, guid: 4e85de14f200e66438aafe105cb07bd0, type: 3}
   shootPoint: {fileID: 7658335721864813758}
-  fireRate: 0.7
+  fireRate: 0.6
 --- !u!114 &4062958691865615426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,7 +501,7 @@ MonoBehaviour:
   currentHealth: 0
   isInvincible: 0
   invincibilityDuration: 2
-  flashFrequency: 10
+  flashFrequency: 1.5
   _isAlive: 1
 --- !u!95 &5006270075339105308
 Animator:
@@ -783,7 +783,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
