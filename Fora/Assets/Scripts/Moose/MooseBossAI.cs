@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class MooseBossAI : MonoBehaviour
@@ -11,13 +11,24 @@ public class MooseBossAI : MonoBehaviour
 
     [Header("Fireball Attack Settings")]
     public int fireballAttackWaypointIndex = 2;
-    public float fireballAttackChance = 0.5f; // Chance to perform fireball attack at waypoint
-    public float fireballAttackDuration = 3f;  // How long to shoot fireballs
-    public float fireballFireRate = 0.5f;      // How often to shoot fireballs
-    public float fireballSpeed = 5f;           // Speed of each fireball
+    public float fireballAttackChance = 0.5f;
+    public float fireballAttackDuration = 3f;
+    public float fireballFireRate = 0.5f;
+    public float fireballSpeed = 5f;
 
+    [Header("Fireball Sound")]
+    [SerializeField] private AudioClip fireballSound;
+    [SerializeField] private float fireballSoundVolume = 1f;
+
+    private AudioSource _audioSource;
     private int previousWaypointIndex = -1;
     private bool isAttacking = false;
+
+    void Awake()
+    {
+        _audioSource = gameObject.AddComponent<AudioSource>();
+        _audioSource.playOnAwake = false;
+    }
 
     void Update()
     {
@@ -77,5 +88,9 @@ public class MooseBossAI : MonoBehaviour
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         fireball.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        // 🔊 Play fireball sound
+        if (fireballSound != null)
+            _audioSource.PlayOneShot(fireballSound, fireballSoundVolume);
     }
 }

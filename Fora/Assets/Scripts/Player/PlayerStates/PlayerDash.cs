@@ -147,4 +147,10 @@ public class PlayerDash : PlayerStates
         float dashPower = Mathf.Lerp(max, min, _playerController.WeightRatio);
         return dashPower;
     }
+
+    public void RefillDash()
+    {
+        DashLeft = _maxDashes;
+        _finishCooldown = true;
+    }
 }

@@ -25,6 +25,11 @@ public class MooseApproach : MonoBehaviour
     [SerializeField] private GameObject objectToFadeOut;
     [SerializeField] private float fadeOutDuration = 1.5f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip arrivalSound;
+    [SerializeField] private float arrivalSoundVolume = 1f;
+
+    private AudioSource _audioSource;
     private Vector2[] worldPositions;
     private Vector2 basePosition;
     private int currentIndex = 0;
@@ -44,6 +49,15 @@ public class MooseApproach : MonoBehaviour
         for (int i = 0; i < waypoints.Length; i++)
         {
             worldPositions[i] = basePosition + waypoints[i].offset;
+        }
+
+        _audioSource = gameObject.AddComponent<AudioSource>();
+        _audioSource.playOnAwake = false;
+
+        // ✅ Play sound at start
+        if (arrivalSound != null)
+        {
+            _audioSource.PlayOneShot(arrivalSound, arrivalSoundVolume);
         }
 
         ApplyWaypoint(0);
@@ -72,13 +86,14 @@ public class MooseApproach : MonoBehaviour
             currentIndex++;
 
             if (currentIndex == 1 && camera2D != null)
+            {
                 camera2D.ShakeCamera(1f, 0.35f);
+            }
         }
     }
 
     private IEnumerator EscapeSequence()
     {
-        // ✅ Activate objects
         if (objectsToActivateBeforeEscape != null)
         {
             foreach (GameObject obj in objectsToActivateBeforeEscape)
@@ -91,7 +106,7 @@ public class MooseApproach : MonoBehaviour
         if (bossEscapeHandler != null && camera2D != null)
             bossEscapeHandler.ShakeCameraAfterDelay(camera2D, 5f, 60f, 0.12f);
 
-        yield return new WaitForSeconds(5f); // wait before fade starts
+        yield return new WaitForSeconds(5f);
 
         if (objectToFadeOut != null && objectToFadeOut.TryGetComponent(out FadeEffect fade))
         {
@@ -100,7 +115,6 @@ public class MooseApproach : MonoBehaviour
             objectToFadeOut.SetActive(false);
         }
 
-        // ✅ CALL THE COUNTDOWN TIMER HERE
         if (CountdownTimerUI.Instance != null)
         {
             CountdownTimerUI.Instance.StartTimer(60f, new Vector2(0f, 0f), new Vector2(700f, 420f), 3f);
@@ -112,7 +126,6 @@ public class MooseApproach : MonoBehaviour
 
         Destroy(gameObject);
     }
-
 
     private void ApplyWaypoint(int index)
     {

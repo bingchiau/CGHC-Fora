@@ -64,7 +64,9 @@ public class PlayerController : MonoBehaviour
     private float _originalGravity;
     private Vector2 _force;
     private Vector2 _movePosition;
-    private float _skin = 0.06f;
+    //private float _skin = 0.06f;
+    // Alan change
+    private float _skin = 0.02f;
 
     private bool _checkStop = false;
 
@@ -117,7 +119,9 @@ public class PlayerController : MonoBehaviour
         }
         _weightRatio = _weight / _maxWeight; // Calculate weight ratio
 
-        transform.Translate(_movePosition, Space.Self);
+        //transform.Translate(_movePosition, Space.Self);
+        // Alan change
+        transform.position += (Vector3)_movePosition;
         CalculateMovement();
 
 
@@ -198,7 +202,7 @@ public class PlayerController : MonoBehaviour
     public void ResumeGravity()
     {
         _gravity = _originalGravity;
-    }   
+    }
 
     #endregion
 
@@ -209,8 +213,12 @@ public class PlayerController : MonoBehaviour
         _weight += weight * Time.deltaTime;
         if (_weight > _maxWeight)
         {
-            _weight = _maxWeight; 
+            _weight = _maxWeight;
         }
+
+        _weightRatio = _weight / _maxWeight;
+
+        UIManager.Instance.UpdateWeight(_weightRatio); // Update UI
     }
 
     public void ReduceWeight(float weight)
@@ -218,8 +226,12 @@ public class PlayerController : MonoBehaviour
         _weight -= weight;
         if (_weight < _minWeight)
         {
-            _weight = _minWeight; 
+            _weight = _minWeight;
         }
+
+        _weightRatio = _weight / _maxWeight; // Recalculate weight ratio
+
+        UIManager.Instance.UpdateWeight(_weightRatio); // Update UI 
     }
 
     #endregion
@@ -298,7 +310,9 @@ public class PlayerController : MonoBehaviour
         {
             Vector2 rayOrigin = Vector2.Lerp(leftOrigin, rightOrigin, (float)i / (float)(verticalRayCount - 1));
 
-            rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
+            //rayLength = Mathf.Round((_boundsHeight / 2f + _skin) * Mathf.Sin(turnAngle * Mathf.Deg2Rad) * 1000.0f) * 0.001f; // Adjust ray length based on angle
+            // Alan change
+            rayLength = (_boundsHeight / 2f + _skin) * Mathf.Max(Mathf.Sin(turnAngle * Mathf.Deg2Rad), 0.1f);
             float temp = rayLength;
             if (_movePosition.y < 0)
             {
@@ -412,6 +426,10 @@ public class PlayerController : MonoBehaviour
                     _movePosition.y = _force.y * Time.deltaTime; // allow jump
                     _conditions.IsCollidingBelow = false;
                     _conditions.IsOnSlope = false;
+
+                    // Alan - For platform follow (Disable follow when jumping)
+                    transform.SetParent(null);
+
                 }
 
                 _force.y = 0f;
@@ -504,4 +522,11 @@ public class PlayerController : MonoBehaviour
         return bounceDir;
     }
     #endregion
+
+    // Alan - For platform follow transform
+    public void ApplyPlatformOffset(Vector3 offset)
+    {
+        transform.position += offset;
+    }
+
 }

@@ -7,8 +7,9 @@ public class CountdownTimerUI : MonoBehaviour
     public static CountdownTimerUI Instance { get; private set; }
 
     [Header("UI References")]
-    [SerializeField] private GameObject timerCanvas; 
+    [SerializeField] private GameObject timerCanvas;
     [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private StormMessageUI stormMessageUI; // 🔸 Add this
 
     private RectTransform rectTransform;
     private float remainingTime;
@@ -31,7 +32,6 @@ public class CountdownTimerUI : MonoBehaviour
         if (timerText != null)
             rectTransform = timerText.GetComponent<RectTransform>();
 
-        // Hide UI until called
         if (timerCanvas != null)
             timerCanvas.SetActive(false);
     }
@@ -50,6 +50,10 @@ public class CountdownTimerUI : MonoBehaviour
 
         if (rectTransform != null)
             rectTransform.anchoredPosition = startPosition;
+
+        // 🔸 Show storm message here
+        if (stormMessageUI != null)
+            stormMessageUI.ShowStormMessage();
     }
 
     private void Update()
@@ -70,7 +74,7 @@ public class CountdownTimerUI : MonoBehaviour
         if (remainingTime <= 0f)
         {
             isCounting = false;
-            // SceneManager.LoadScene("LoseScene"); 
+            // SceneManager.LoadScene("LoseScene");
         }
     }
 
