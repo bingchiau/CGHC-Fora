@@ -16,13 +16,13 @@ GameObject:
   - component: {fileID: 211371094769699085}
   - component: {fileID: 7942647009438942524}
   - component: {fileID: 7106229761122106857}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Moose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4285789628989887932
 Transform:
   m_ObjectHideFlags: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   - {x: -10.87, y: 3.89, z: 0}
   - {x: 3.49, y: 3.18, z: 0}
   - {x: 2.02, y: -1.35, z: 0}
-  timeToCompletePath: 6
+  timeToCompletePath: 3
 --- !u!114 &3229295096796296234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +132,9 @@ MonoBehaviour:
   fireballAttackChance: 0.4
   fireballAttackDuration: 3
   fireballFireRate: 0.5
-  fireballSpeed: 5
+  fireballSpeed: 6
+  fireballSound: {fileID: 8300000, guid: 9c8bae09ca5b0d54e81d99a91faf9daa, type: 3}
+  fireballSoundVolume: 1
 --- !u!114 &516874973405156528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec42eb209dfd1a4cbf703c0cd450833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 20
+  damageAmount: 10
 --- !u!60 &211371094769699085
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -273,8 +275,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 300
   isInvincible: 0
-  bossDeathScene: {fileID: 0}
-  deathSceneDelay: 2
+  bossEscapeScene: {fileID: 0}
+  escapeDelay: 2
 --- !u!1 &3222116471496418144
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +290,7 @@ GameObject:
   - component: {fileID: 456044786386572035}
   - component: {fileID: 3963385124916178316}
   - component: {fileID: 707985096711105283}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TailSeg_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7442311303375005425}
   - component: {fileID: 1032415194943295186}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,10 +499,12 @@ MonoBehaviour:
   sweepAngle: 304.6
   sweepSpeed: 286.3
   idleSegmentLength: 0.47
-  attackSegmentLength: 0.72
+  attackSegmentLength: 1
   sweepWaveAmplitude: 148.5
   triggerRadius: 4.6
   sweepCooldown: 2
+  sweepSound: {fileID: 8300000, guid: 04fc03ffd3453874eaa117f2f78ca684, type: 3}
+  sweepSoundVolume: 1
 --- !u!1 &4322232934184136440
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +518,7 @@ GameObject:
   - component: {fileID: 8224611254996708825}
   - component: {fileID: 6820453270551761592}
   - component: {fileID: 1273811127899072369}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TailSeg_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -677,7 +681,7 @@ GameObject:
   - component: {fileID: 406110861956765936}
   - component: {fileID: 1883535626486043916}
   - component: {fileID: 5877761897411463255}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TailEnd_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,7 +843,7 @@ GameObject:
   - component: {fileID: 852726168131935922}
   - component: {fileID: 1386366665644642076}
   - component: {fileID: 4227538342392068304}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TailSeg_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1002,7 +1006,7 @@ GameObject:
   - component: {fileID: 3165070908297066159}
   - component: {fileID: 3696572747398124259}
   - component: {fileID: 6346718035580099214}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TailSeg_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1161,7 +1165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6267842886619840135}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TailTriggerZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1196,7 +1200,7 @@ GameObject:
   - component: {fileID: 3292944026678415456}
   - component: {fileID: 6700462099690842224}
   - component: {fileID: 5303840679452259836}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TailSeg_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1355,7 +1359,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8210492833965684939}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FireballSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1390,7 +1394,7 @@ GameObject:
   - component: {fileID: 7841824171309455666}
   - component: {fileID: 859087888041516323}
   - component: {fileID: 2243732226052013325}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TailSeg_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

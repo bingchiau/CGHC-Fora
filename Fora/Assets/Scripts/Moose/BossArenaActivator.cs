@@ -43,6 +43,9 @@ public class BossArenaActivator : MonoBehaviour
                 fadeOut.FadeOut(fadeDuration);
         }
 
+        // ⏳ Wait before music transition
+        yield return new WaitForSeconds(1f);
+
         // 🔁 Transition music using cinematic stinger
         if (BackgroundMusicPlayer.Instance != null)
         {
@@ -61,4 +64,5 @@ public class BossArenaActivator : MonoBehaviour
 
         gameObject.SetActive(false); // deactivate trigger
     }
+
 }
