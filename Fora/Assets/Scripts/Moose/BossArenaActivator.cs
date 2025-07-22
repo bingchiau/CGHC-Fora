@@ -12,22 +12,13 @@ public class BossArenaActivator : MonoBehaviour
     [SerializeField] private GameObject objectToFadeOut;
     [SerializeField] private float fadeDuration = 2f;
 
-    [Header("Activation Sound")]
-    [SerializeField] private AudioClip activationSound;
-    [Range(0f, 1f)]
-    [SerializeField] private float activationSoundVolume = 1f;
+    [Header("Music Transition")]
+    [SerializeField] private AudioClip bossStinger;
+    [SerializeField] private AudioClip bossBGM;
+    [SerializeField] private float stingerDelay = 1.5f;
+
+    [Header("Delay Before Boss Appears")]
     [SerializeField] private float soundDuration = 2f;
-
-    private AudioSource _audioSource;
-
-    private void Awake()
-    {
-        // Create internal AudioSource
-        _audioSource = gameObject.AddComponent<AudioSource>();
-        _audioSource.playOnAwake = false;
-        _audioSource.loop = false;
-        _audioSource.spatialBlend = 0f; // 0 = 2D sound
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -38,15 +29,7 @@ public class BossArenaActivator : MonoBehaviour
 
     private IEnumerator ActivationSequence()
     {
-        // 🔊 Play activation sound
-        if (activationSound != null)
-        {
-            _audioSource.volume = activationSoundVolume;
-            _audioSource.clip = activationSound;
-            _audioSource.Play();
-        }
-
-        // Fade in
+        // ⬛ Fade visuals
         if (objectToFadeIn != null)
         {
             objectToFadeIn.SetActive(true);
@@ -54,27 +37,28 @@ public class BossArenaActivator : MonoBehaviour
                 fadeIn.FadeIn(fadeDuration);
         }
 
-        // Fade out
         if (objectToFadeOut != null)
         {
             if (objectToFadeOut.TryGetComponent(out FadeEffect fadeOut))
                 fadeOut.FadeOut(fadeDuration);
         }
 
-        // 🔊 Start BGM
+        // 🔁 Transition music using cinematic stinger
         if (BackgroundMusicPlayer.Instance != null)
         {
-            BackgroundMusicPlayer.Instance.PlayMusic();
+            BackgroundMusicPlayer.Instance.TransitionWithStinger(bossStinger, bossBGM, stingerDelay);
         }
         else
         {
-            Debug.LogWarning("[BossArenaActivator] BackgroundMusicPlayer.Instance not found.");
+            Debug.LogWarning("[BossArenaActivator] No BackgroundMusicPlayer found.");
         }
 
         yield return new WaitForSeconds(soundDuration);
 
+        // ✅ Activate boss
         boss?.SetActive(true);
-        Debug.Log("[BossArenaActivator] Boss activated after delay.");
-        gameObject.SetActive(false);
+        Debug.Log("[BossArenaActivator] Boss activated.");
+
+        gameObject.SetActive(false); // deactivate trigger
     }
 }
