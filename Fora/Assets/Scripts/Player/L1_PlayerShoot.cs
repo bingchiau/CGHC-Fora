@@ -13,6 +13,9 @@ public class L1_PlayerShoot : MonoBehaviour
     {
         fireCooldown -= Time.deltaTime;
 
+        if (PauseGameManager.Instance != null && PauseGameManager.Instance.IsPaused)
+            return;
+
         if (Input.GetMouseButton(0) && fireCooldown <= 0f)
         {
             Shoot();
