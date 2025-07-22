@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 1559077532006139736}
   m_Layer: 9
   m_Name: Vulture
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
   isInvincible: 0
   invincibilityDuration: 0
   flashFrequency: 10
-  _isAlive: 1
+  _waterBottle: {fileID: 2247957158702949193, guid: 9867f272d2cde304680930787525aa96, type: 3}
 --- !u!114 &1559077532006139736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 3439367116203432606}
   - component: {fileID: 3616605892761984446}
   - component: {fileID: 3302478343934484032}
-  m_Layer: 11
+  m_Layer: 15
   m_Name: eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}

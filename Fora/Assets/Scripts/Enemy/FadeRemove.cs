@@ -32,7 +32,7 @@ public class FadeRemove : StateMachineBehaviour
 
         if (_timeElapsed > _fadeTime)
         {
-            Destroy(_gameObject);
+            _gameObject.SetActive(false);
         }
     }
 }

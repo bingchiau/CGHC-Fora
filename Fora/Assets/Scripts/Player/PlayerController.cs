@@ -221,6 +221,19 @@ public class PlayerController : MonoBehaviour
         UIManager.Instance.UpdateWeight(_weightRatio); // Update UI
     }
 
+    public void AddWeight_oneTime(float weight)
+    {
+        _weight += weight;
+        if (_weight > _maxWeight)
+        {
+            _weight = _maxWeight;
+        }
+
+        _weightRatio = _weight / _maxWeight;
+
+        UIManager.Instance.UpdateWeight(_weightRatio); // Update UI
+    }
+
     public void ReduceWeight(float weight)
     {
         _weight -= weight;

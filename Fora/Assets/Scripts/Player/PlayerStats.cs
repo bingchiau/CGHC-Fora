@@ -16,11 +16,15 @@ public class PlayerStats : MonoBehaviour
     public float invincibilityDuration = 2f; // 2 seconds
     public float flashFrequency = 10f;       // flashes per second
 
+    [Header("Drops")]
+    [SerializeField] private GameObject _waterBottle;
+
     private float invincibilityTimer = 0f;
     private SpriteRenderer spriteRenderer;
     private Animator _animator;
 
-    [SerializeField] private bool _isAlive = true;
+    private bool _isAlive = true;
+
 
     public bool IsAlive
     {
@@ -126,8 +130,20 @@ public class PlayerStats : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Player has died.");
+       
         IsAlive = false;
+        if (this.CompareTag("Enemy"))
+        {
+            Debug.Log("enemy has died." + this.name);
+            StartCoroutine(DelaySpawn());
+        }
+    }
+
+    private IEnumerator DelaySpawn()
+    {
+        Debug.Log(_waterBottle.name);
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(_waterBottle, transform.position, Quaternion.identity);
     }
 
     public void ResetHealth()

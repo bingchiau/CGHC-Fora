@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6518114612368973502}
   - component: {fileID: 3014810938473589429}
   - component: {fileID: 4541114965678686903}
-  m_Layer: 11
+  m_Layer: 15
   m_Name: Nuts
   m_TagString: Nuts
   m_Icon: {fileID: 0}
@@ -165,6 +165,7 @@ MonoBehaviour:
   _speed: 6
   _lifeTime: 1.5
   _enemyBullet: 1
+  _rb: {fileID: 0}
 --- !u!114 &4541114965678686903
 MonoBehaviour:
   m_ObjectHideFlags: 0

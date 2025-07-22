@@ -8,23 +8,24 @@ TagManager:
   - WaterDroplet
   - Nuts
   - Bomb
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - Collectables
   - Water
   - UI
   - Collider
   - SlopeMap
   - Map
   - Enemy
-  - PlayerHitBox
-  - EnemyHitBox
+  - Player
+  - 
   - Bullet
   - InvisibleWall
-  - 
-  - 
+  - PlayerHitBox
+  - EnemyHitBox
   - 
   - 
   - 

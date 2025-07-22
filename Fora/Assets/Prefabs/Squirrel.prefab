@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2074785139106827005}
   - component: {fileID: 2943985242421754871}
   - component: {fileID: 2483166298247082758}
-  m_Layer: 11
+  m_Layer: 15
   m_Name: eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 1287471666006947848}
   m_Layer: 9
   m_Name: Squirrel
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -485,7 +485,7 @@ MonoBehaviour:
   isInvincible: 0
   invincibilityDuration: 0
   flashFrequency: 10
-  _isAlive: 1
+  _waterBottle: {fileID: 2247957158702949193, guid: 9867f272d2cde304680930787525aa96, type: 3}
 --- !u!114 &1287471666006947848
 MonoBehaviour:
   m_ObjectHideFlags: 0
