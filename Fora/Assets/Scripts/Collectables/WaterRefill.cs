@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WaterRefill : MonoBehaviour
 {
+    [SerializeField] private float _refillAmount = 1.4f;
     private PlayerController _playerController;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -14,7 +15,7 @@ public class WaterRefill : MonoBehaviour
 
             if (_playerController != null)
             {
-                _playerController.AddWeight_oneTime(2f);
+                _playerController.AddWeight_oneTime(_refillAmount);
             }
             gameObject.SetActive(false);
         }

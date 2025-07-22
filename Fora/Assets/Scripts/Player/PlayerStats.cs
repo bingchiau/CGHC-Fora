@@ -114,7 +114,7 @@ public class PlayerStats : MonoBehaviour
 
     private IEnumerator StartInvicible()
     {
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.5f);
         // Start invincibility frames
         isInvincible = true;
         invincibilityTimer = invincibilityDuration;
@@ -141,7 +141,6 @@ public class PlayerStats : MonoBehaviour
 
     private IEnumerator DelaySpawn()
     {
-        Debug.Log(_waterBottle.name);
         yield return new WaitForSeconds(0.5f);
         Instantiate(_waterBottle, transform.position, Quaternion.identity);
     }

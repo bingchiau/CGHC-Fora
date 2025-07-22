@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class FadeRemove : StateMachineBehaviour
     private GameObject _gameObject;
     Color _startColor;
 
+    public static Action<GameObject> OnEnemyDie;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -32,6 +34,7 @@ public class FadeRemove : StateMachineBehaviour
 
         if (_timeElapsed > _fadeTime)
         {
+            OnEnemyDie?.Invoke(_gameObject);
             _gameObject.SetActive(false);
         }
     }

@@ -21,15 +21,7 @@ public class FireBlockage : MonoBehaviour
 
     private void Update()
     {
-        // Check if still have enemies
-        foreach (var enemy in _enemies)
-        {
-            if (enemy == null)
-            {
-                _enemies.Remove(enemy);
-            }
-        }
-
+        // Check still got enemy alive
         if (_enemies.Count <= 0)
         {
             _reignite = true;
@@ -47,6 +39,8 @@ public class FireBlockage : MonoBehaviour
         }
 
         _displayHealth = (int)_health;
+        Debug.Log(_displayHealth);
+
         _text.text = _displayHealth.ToString();
     }
 
@@ -58,5 +52,27 @@ public class FireBlockage : MonoBehaviour
         }
     }
 
+    private void RemoveEnemy(GameObject dieEnemy)
+    {
+        // Check if still have enemies
+        for (int enemy = 0; enemy < _enemies.Count; enemy++) 
+        {
+            if (_enemies[enemy] == dieEnemy)
+            {
+                _enemies.Remove(_enemies[enemy]);
+                _maxHealth -= 40;
+                _health = _maxHealth;
+            }
+        }
+    }
 
+    private void OnEnable()
+    {
+        FadeRemove.OnEnemyDie += RemoveEnemy;
+    }
+
+    private void OnDisable()
+    {
+        FadeRemove.OnEnemyDie -= RemoveEnemy;
+    }
 }
