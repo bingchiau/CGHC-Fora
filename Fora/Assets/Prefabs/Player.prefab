@@ -231,7 +231,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.71875, y: 0.96875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -319,6 +319,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxSpeed: 10
   _minSpeed: 3
+  animator: {fileID: 5006270075339105308}
+  speedParam: Speed
+  speedThreshold: 0.1
 --- !u!114 &7099955891876718503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,7 +487,7 @@ MonoBehaviour:
   aim: {fileID: 5969962939511435056}
   projectilePrefab: {fileID: 425885748081601758, guid: 4e85de14f200e66438aafe105cb07bd0, type: 3}
   shootPoint: {fileID: 7658335721864813758}
-  fireRate: 0.6
+  fireRate: 0.5
 --- !u!114 &4062958691865615426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,7 +505,7 @@ MonoBehaviour:
   isInvincible: 0
   invincibilityDuration: 2
   flashFrequency: 1.5
-  _isAlive: 1
+  _waterBottle: {fileID: 0}
 --- !u!95 &5006270075339105308
 Animator:
   serializedVersion: 5

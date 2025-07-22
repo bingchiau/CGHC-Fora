@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +7,11 @@ public class PlayerMovement : PlayerStates
     [Header("Settings")]
     [SerializeField] private float _maxSpeed = 10f;
     [SerializeField] private float _minSpeed = 3f;
+
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private string speedParam = "Speed";
+    [SerializeField] private float speedThreshold = 0.1f;
 
     private float _horizontalMovement;
     private float _movement;
@@ -21,10 +26,8 @@ public class PlayerMovement : PlayerStates
         MovePlayer();
     }
 
-    // Moves the player
     private void MovePlayer()
     {
-
         if (Mathf.Abs(_horizontalMovement) > 0.1f)
         {
             _movement = _horizontalMovement;
@@ -39,7 +42,6 @@ public class PlayerMovement : PlayerStates
         if (_playerController.Conditions.IsBouncing)
         {
             moveSpeed = _movement * 3f;
-
         }
         else
         {
@@ -54,10 +56,15 @@ public class PlayerMovement : PlayerStates
 
         moveSpeed = EvaluateFriction(moveSpeed);
         _playerController.SetHorizontalForce(moveSpeed);
-        
+
+        // ✅ Animation update
+        if (animator != null)
+        {
+            float animationSpeed = Mathf.Abs(moveSpeed);
+            animator.SetFloat(speedParam, animationSpeed);
+        }
     }
 
-    // Initialize our internal movement direction
     protected override void GetInput()
     {
         _horizontalMovement = _horizontalInput;
@@ -74,10 +81,6 @@ public class PlayerMovement : PlayerStates
 
     private float EvaluateWeight(float max, float min)
     {
-
-        float moveSpeed = Mathf.Lerp(max, min, _playerController.WeightRatio);
-        return moveSpeed;
+        return Mathf.Lerp(max, min, _playerController.WeightRatio);
     }
-    
 }
-
