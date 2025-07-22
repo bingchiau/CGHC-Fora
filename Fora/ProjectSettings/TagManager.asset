@@ -22,7 +22,7 @@ TagManager:
   - PlayerHitBox
   - EnemyHitBox
   - Bullet
-  - 
+  - InvisibleWall
   - 
   - 
   - 
