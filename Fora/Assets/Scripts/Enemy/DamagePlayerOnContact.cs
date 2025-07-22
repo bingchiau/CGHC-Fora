@@ -10,6 +10,7 @@ public class DamagePlayerOnContact : MonoBehaviour
         TryDamage(other);
     }
 
+    // Optional: Remove this if you only want damage once on enter
     private void OnTriggerStay2D(Collider2D other)
     {
         TryDamage(other);
