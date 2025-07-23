@@ -11,7 +11,7 @@ public class PlayerMovement : PlayerStates
     [Header("Animation")]
     [SerializeField] private Animator animator;
     [SerializeField] private string speedParam = "Speed";
-    [SerializeField] private float speedThreshold = 0.1f;
+    //[SerializeField] private float speedThreshold = 0.1f;
 
     private float _horizontalMovement;
     private float _movement;
