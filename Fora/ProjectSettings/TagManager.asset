@@ -18,12 +18,12 @@ TagManager:
   - UI
   - Collider
   - SlopeMap
+  - InvisibleWall
   - Map
   - Enemy
   - Player
-  - 
   - Bullet
-  - InvisibleWall
+  - 
   - PlayerHitBox
   - EnemyHitBox
   - 

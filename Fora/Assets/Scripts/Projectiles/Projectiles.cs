@@ -47,7 +47,7 @@ public class Projectiles : MonoBehaviour
 
     public virtual void DestroyThis(Collider2D collision)
     {
-        if (collision.gameObject.layer == 8)
+        if (collision.gameObject.layer == 9)
         {
             Destroy(gameObject);
         }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 523004829545524986}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5533937629105869160}
   - component: {fileID: 6096868480417645175}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Warning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 8873262681032580781}
   - component: {fileID: 4649944692873196465}
   - component: {fileID: 1287471666006947848}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Squirrel
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -451,7 +451,7 @@ MonoBehaviour:
   horizontalRayCount: 4
   _collideWith:
     serializedVersion: 2
-    m_Bits: 8448
+    m_Bits: 768
   IsCollidingWall: 0
 --- !u!114 &8873262681032580781
 MonoBehaviour:
