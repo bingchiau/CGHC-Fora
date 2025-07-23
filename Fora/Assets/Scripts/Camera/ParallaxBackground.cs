@@ -2,32 +2,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Manages all parallax layers and responds to camera movement updates.
+/// Collects and manages all child ParallaxLayer components and moves them based on camera input.
 /// </summary>
 [ExecuteInEditMode]
 public class ParallaxBackground : MonoBehaviour
 {
-    [Tooltip("Reference to the ParallaxCamera that triggers updates.")]
+    [Tooltip("Reference to the camera script that triggers parallax updates.")]
     public ParallaxCamera parallaxCamera;
 
     private readonly List<ParallaxLayer> _parallaxLayers = new();
 
     void Start()
     {
-        // Auto-find main camera if none assigned
+        // Auto-assign ParallaxCamera if not set
         if (parallaxCamera == null)
             parallaxCamera = Camera.main.GetComponent<ParallaxCamera>();
 
         if (parallaxCamera != null)
             parallaxCamera.onCameraTranslate += MoveLayers;
 
-        CacheParallaxLayers();
+        CacheLayers();
     }
 
     /// <summary>
-    /// Collects all child objects with ParallaxLayer components.
+    /// Gathers all ParallaxLayer components from children.
     /// </summary>
-    private void CacheParallaxLayers()
+    private void CacheLayers()
     {
         _parallaxLayers.Clear();
 
@@ -44,7 +44,7 @@ public class ParallaxBackground : MonoBehaviour
     }
 
     /// <summary>
-    /// Moves each layer based on the camera delta.
+    /// Moves each parallax layer according to the camera's horizontal movement.
     /// </summary>
     private void MoveLayers(float delta)
     {

@@ -1,22 +1,23 @@
 using UnityEngine;
 
 /// <summary>
-/// Represents a single background layer with a unique parallax factor.
-/// Moves horizontally relative to the camera delta.
+/// Represents a single parallax layer that moves at a specific factor relative to camera.
 /// </summary>
 [ExecuteInEditMode]
 public class ParallaxLayer : MonoBehaviour
 {
-    [Tooltip("Determines how much this layer moves relative to the camera. 0 = static, 1 = full camera movement.")]
-    public float parallaxFactor = 0.5f;
+    [Tooltip("Objects further in the background should have more positive values.\nObjects closer to the foreground should have more negative values.")]
+    [Range(-1f, 1f)]
+    public float parallaxFactor = 0.2f;
 
     /// <summary>
-    /// Moves the layer based on the camera delta and parallax factor.
+    /// Moves the layer horizontally based on camera delta and parallax factor.
     /// </summary>
+    /// <param name="delta">Horizontal delta movement from the camera</param>
     public void Move(float delta)
     {
-        Vector3 pos = transform.localPosition;
-        pos.x -= delta * parallaxFactor;
-        transform.localPosition = pos;
+        Vector3 newPosition = transform.localPosition;
+        newPosition.x -= delta * parallaxFactor;
+        transform.localPosition = newPosition;
     }
 }
