@@ -84,10 +84,11 @@ public class PlayerStats : MonoBehaviour
         if (isInvincible || !IsAlive || !CanHit) return;
 
         currentHealth = Mathf.Max(currentHealth - amount, 0);
-        NotifyHealthChanged();
         _animator.SetTrigger("isHit");
-
         Debug.Log($"{gameObject.name} took {amount} damage. Current Health: {currentHealth}");
+
+        NotifyHealthChanged();
+        
 
         if (currentHealth <= 0)
         {
@@ -101,9 +102,9 @@ public class PlayerStats : MonoBehaviour
 
     private IEnumerator StartInvincible()
     {
+        yield return new WaitForSeconds(0.7f);
         isInvincible = true;
-        invincibilityTimer = invincibilityDuration;
-        yield return null; // Optional: add delay if needed for animation timing
+        invincibilityTimer = invincibilityDuration;  
     }
 
     public void Heal(int amount)
@@ -134,5 +135,10 @@ public class PlayerStats : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (_waterBottle != null)
             Instantiate(_waterBottle, transform.position, Quaternion.identity);
+    }
+
+    public void AfterHit()
+    {
+        _animator.SetBool("canHit", true);
     }
 }
