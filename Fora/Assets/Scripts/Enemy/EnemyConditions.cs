@@ -66,7 +66,6 @@ public class EnemyConditions : MonoBehaviour
 
             if (hit)
             {
-                Debug.Log(hit.collider.name);
                 IsCollidingWall = true;
             }
             else
