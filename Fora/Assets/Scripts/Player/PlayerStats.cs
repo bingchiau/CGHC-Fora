@@ -136,8 +136,14 @@ public class PlayerStats : MonoBehaviour
         }
         else if (CompareTag("Player"))
         {
-            OnDeath?.Invoke(gameObject.GetComponent<PlayerMotor>());
+            StartCoroutine(DelayDie());
         }
+    }
+
+    private IEnumerator DelayDie()
+    {
+        yield return new WaitForSeconds(1f);
+        OnDeath?.Invoke(gameObject.GetComponent<PlayerMotor>());
     }
 
     private IEnumerator DelaySpawn()

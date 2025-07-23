@@ -45,16 +45,7 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RevivePlayer();
-
-            for (int i = 0; i < areas[_currentArea].Count; i++)
-            {
-                areas[_currentArea][i].SetActive(true);
-                areas[_currentArea][i].GetComponent<PlayerStats>().ResetHealth();
-            }
-        }
+        //...
     }
 
     // Revives our player
@@ -70,9 +61,13 @@ public class LevelManager : MonoBehaviour
 
     private void PlayerDeath(PlayerMotor player)
     {
-        //_currentPlayer = player;
-        //_animator = player.GetComponent<Animator>();
-        //_spriteRenderer = player.GetComponent<SpriteRenderer>();
+        RevivePlayer();
+
+        for (int i = 0; i < areas[_currentArea].Count; i++)
+        {
+            areas[_currentArea][i].SetActive(true);
+            areas[_currentArea][i].GetComponent<PlayerStats>().ResetHealth();
+        }
     }
 
     private void GetCurrentDieLevel(Transform spawnPoint, int area_enemy)

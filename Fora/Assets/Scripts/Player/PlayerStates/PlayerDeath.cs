@@ -32,6 +32,7 @@ public class PlayerDeath : StateMachineBehaviour
 
         if (_timeElapsed > _fadeTime)
         {
+            _gameObject.SetActive(false);
             Destroy(_gameObject);
         }
     }

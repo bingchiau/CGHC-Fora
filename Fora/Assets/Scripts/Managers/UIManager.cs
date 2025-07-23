@@ -36,7 +36,7 @@ public class UIManager : Singleton<UIManager>
 
     private void UpdateWeightImageReference(PlayerMotor player)
     {
-        _weightImage = GameObject.FindGameObjectWithTag("WeightBar").GetComponent<Image>();
+        _weightImage = player.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>();
     }
 
     private void OnEnable()
