@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -26,6 +27,8 @@ public class PlayerStats : MonoBehaviour
 
     public event System.Action<int> OnHealthChanged;
 
+    public static Action<PlayerMotor> OnDeath;
+
     public bool IsAlive
     {
         get => _isAlive;
@@ -49,6 +52,8 @@ public class PlayerStats : MonoBehaviour
         {
             Debug.LogWarning("PlayerStats: No SpriteRenderer found! Flash will not work.");
         }
+
+        ResetHealth();
     }
 
     private void Update()
@@ -117,6 +122,7 @@ public class PlayerStats : MonoBehaviour
     public void ResetHealth()
     {
         currentHealth = maxHealth;
+        IsAlive = true;
         NotifyHealthChanged();
     }
 
@@ -127,6 +133,10 @@ public class PlayerStats : MonoBehaviour
         {
             Debug.Log($"Enemy '{name}' has died.");
             StartCoroutine(DelaySpawn());
+        }
+        else if (CompareTag("Player"))
+        {
+            OnDeath?.Invoke(gameObject.GetComponent<PlayerMotor>());
         }
     }
 

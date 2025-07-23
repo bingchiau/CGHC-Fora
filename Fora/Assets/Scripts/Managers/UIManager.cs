@@ -31,4 +31,18 @@ public class UIManager : Singleton<UIManager>
         _weightImage.color = Color.Lerp(_color[_currentColorIndex], _color[_targetColorIndex], _weightImage.fillAmount);
     }
 
+    private void UpdateWeightImageReference(PlayerMotor player)
+    {
+        _weightImage = GameObject.FindGameObjectWithTag("WeightBar").GetComponent<Image>();
+    }
+
+    private void OnEnable()
+    {
+        LevelManager.OnRevive += UpdateWeightImageReference;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.OnRevive -= UpdateWeightImageReference;
+    }
 }

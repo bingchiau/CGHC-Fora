@@ -522,7 +522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  currentHealth: 0
+  currentHealth: 100
   isInvincible: 0
   invincibilityDuration: 2
   flashFrequency: 1.5
@@ -649,7 +649,7 @@ GameObject:
   - component: {fileID: 8907940984826917410}
   m_Layer: 5
   m_Name: WeightBar
-  m_TagString: Untagged
+  m_TagString: WeightBar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

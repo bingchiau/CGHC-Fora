@@ -21,4 +21,19 @@ public class Level2_PlayerHealthUI : MonoBehaviour
         _displayHealth = _playerStats.CurrentHealth;
         _health.text = "Health " + _displayHealth.ToString();
     }
+
+    private void UpdatePlayerStatReference(PlayerMotor player)
+    {
+        _playerStats = player.GetComponent<PlayerStats>();
+    }
+
+    private void OnEnable()
+    {
+        LevelManager.OnRevive += UpdatePlayerStatReference;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.OnRevive -= UpdatePlayerStatReference;
+    }
 }

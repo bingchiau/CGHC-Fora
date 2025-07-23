@@ -10,6 +10,7 @@ TagManager:
   - Bomb
   - Enemy
   - DeadZone
+  - WeightBar
   layers:
   - Default
   - TransparentFX

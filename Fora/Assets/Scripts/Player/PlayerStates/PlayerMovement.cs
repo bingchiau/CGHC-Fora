@@ -28,6 +28,8 @@ public class PlayerMovement : PlayerStates
 
     private void MovePlayer()
     {
+        Debug.Log("CanMove" + CanMove);
+        
         if (Mathf.Abs(_horizontalMovement) > 0.1f)
         {
             _movement = _horizontalMovement;

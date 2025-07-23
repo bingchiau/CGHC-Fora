@@ -55,6 +55,7 @@ public class Camera2D : MonoBehaviour
     // Returns the position of our target
     private Vector3 GetTargetPosition(PlayerMotor player)
     {
+        if (player == null) return Vector3.zero;
         float xPos = player.transform.position.x * horizontalInFluence;
         float yPos = player.transform.position.y * verticalInFluence;
         return new Vector3(xPos, yPos, transform.position.z);
@@ -63,6 +64,7 @@ public class Camera2D : MonoBehaviour
     // Centers the camera on the target immediately
     private void CenterOnTarget(PlayerMotor player)
     {
+        _playerToFollow = player;
         Vector3 targetPosition = GetTargetPosition(player);
         _targetHorizontalSmoothFollow = targetPosition.x;
         _targetVerticalSmoothFollow = targetPosition.y;
@@ -144,5 +146,15 @@ public class Camera2D : MonoBehaviour
         rotationDuration = duration;
         rotationTimer = 0f;
         isRotating = true;
+    }
+
+    private void OnEnable()
+    {
+        LevelManager.OnRevive += CenterOnTarget;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.OnRevive -= CenterOnTarget;
     }
 }

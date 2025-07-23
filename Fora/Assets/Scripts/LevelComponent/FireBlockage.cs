@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,10 +10,13 @@ public class FireBlockage : MonoBehaviour
     [SerializeField] private int _maxHealth;
     [SerializeField] private List<GameObject> _enemies;
     [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private Transform _nextSpawnPoint;
 
     private float _health;
     private int _displayHealth;
     private bool _reignite;
+
+    public static Action<Transform> OnBreak;
 
     private void Start()
     {
@@ -35,6 +39,7 @@ public class FireBlockage : MonoBehaviour
 
         if (_health <= 0)
         {
+            OnBreak?.Invoke(_nextSpawnPoint);
             gameObject.SetActive(false);
         }
 

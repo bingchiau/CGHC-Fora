@@ -40,6 +40,8 @@ public class PlayerDash : PlayerStates
         }
 
         _dashPower = EvaluateWeight(_maxDashPower, _minDashPower);
+
+        Debug.Log(_dashPower);
     }
 
     protected override void GetInput()
@@ -113,6 +115,7 @@ public class PlayerDash : PlayerStates
             else
             {
                 _playerController.SetForce(_dashPower * direction.normalized);
+                Debug.Log(_dashPower + " " + direction.normalized);
             }
             
             timer += Time.deltaTime;
