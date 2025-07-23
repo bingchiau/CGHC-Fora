@@ -88,7 +88,10 @@ public class PlayerController : MonoBehaviour
         _weightRatio = _weight / _maxWeight;
         UIManager.Instance.UpdateWeight(_weightRatio); // Update weight at the start
 
-        _originalGravity = _gravity;    
+        _originalGravity = _gravity;
+
+        // Alan change (- prevent collision with trigger collider)
+        Physics2D.queriesHitTriggers = false;
     }
 
     private void Update()

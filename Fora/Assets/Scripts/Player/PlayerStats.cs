@@ -88,7 +88,7 @@ public class PlayerStats : MonoBehaviour
         Debug.Log($"{gameObject.name} took {amount} damage. Current Health: {currentHealth}");
 
         NotifyHealthChanged();
-        
+
 
         if (currentHealth <= 0)
         {
@@ -140,5 +140,19 @@ public class PlayerStats : MonoBehaviour
     public void AfterHit()
     {
         _animator.SetBool("canHit", true);
+    }
+
+    // Alan change
+    public void ForceDamage(int amount)
+    {
+        currentHealth = Mathf.Max(currentHealth - amount, 0);
+        Debug.Log($"{gameObject.name} took {amount} fire damage. Current Health: {currentHealth}");
+
+        NotifyHealthChanged();
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 }
