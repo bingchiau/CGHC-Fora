@@ -7,6 +7,10 @@ public class Level3Respawn : MonoBehaviour
     [Header("Player Prefab")]
     public GameObject playerPrefab;
 
+    [Header("References")]
+    [SerializeField] private MooseBossAI mooseBossAI;
+    [SerializeField] private MooseTailController mooseTailController;
+
     private GameObject currentPlayer;
     private PlayerStats currentStats;
     private Vector3 spawnPoint;
@@ -59,6 +63,13 @@ public class Level3Respawn : MonoBehaviour
         }
 
         currentStats.currentHealth = currentStats.maxHealth;
+
+        if (mooseBossAI != null)
+            mooseBossAI.player = currentPlayer.transform;
+
+        if (mooseTailController != null)
+            mooseTailController.player = currentPlayer.transform;
+
 
         if (mainCamera != null)
         {
