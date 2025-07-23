@@ -9,7 +9,6 @@ public class ProjectilesDamage : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("hit");
         PlayerStats playerStats = collision.GetComponent<PlayerStats>();
 
         if (playerStats != null)

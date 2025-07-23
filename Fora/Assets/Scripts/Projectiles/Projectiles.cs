@@ -32,6 +32,7 @@ public class Projectiles : MonoBehaviour
         }
 
         Destroy(gameObject, _lifeTime);
+        
     }
 
     private void FixedUpdate()
