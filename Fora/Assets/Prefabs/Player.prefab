@@ -225,7 +225,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -984965121
   m_SortingLayer: 7
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1030934117, guid: bd69fb01b0cfc5f498ee086aeb5055af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -310,7 +310,7 @@ MonoBehaviour:
   _weight: 1
   collideWith:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
   verticalRayCount: 7
   horizontalRayCount: 7
   maxSlopeAngle: 50
@@ -397,8 +397,8 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -984965121
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Time: 0.5
   m_PreviewTimeScale: 1
@@ -508,7 +508,7 @@ MonoBehaviour:
   aim: {fileID: 5969962939511435056}
   projectilePrefab: {fileID: 425885748081601758, guid: 4e85de14f200e66438aafe105cb07bd0, type: 3}
   shootPoint: {fileID: 7658335721864813758}
-  fireRate: 0.5
+  fireRate: 0.6
 --- !u!114 &4062958691865615426
 MonoBehaviour:
   m_ObjectHideFlags: 0

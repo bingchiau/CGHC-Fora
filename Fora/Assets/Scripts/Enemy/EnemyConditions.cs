@@ -26,7 +26,6 @@ public class EnemyConditions : MonoBehaviour
     private void Start()
     {
         _boxCollider2D = GetComponent<BoxCollider2D>();
-        Debug.Log(_boxCollider2D.gameObject);
     }
 
     private void Update()
@@ -63,10 +62,11 @@ public class EnemyConditions : MonoBehaviour
         {
             Vector2 rayOrigin = Vector2.Lerp(rayHorizontalBottom, rayHorizontalTop, (float)i / (horizontalRayCount - 1));
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction * transform.right, rayLenght, _collideWith);
-            Debug.DrawRay(rayOrigin, transform.right * rayLenght * direction, Color.cyan);
+            Debug.DrawRay(rayOrigin, transform.right * rayLenght * direction, Color.cyan); 
 
             if (hit)
             {
+                Debug.Log(hit.collider.name);
                 IsCollidingWall = true;
             }
             else
