@@ -4,57 +4,36 @@ using UnityEngine;
 
 public class FloatZone : MonoBehaviour
 {
-    [Header("References")]
-    public PlayerController playerController;
-
     [Header("Wind Settings")]
     public float windForce = 30f;
-    //public float bounceMultiplier = 1.5f;
     public float fallSpeedThreshold = -5f;
 
-    private bool playerInside = false;
-
-    private void Start()
-    {
-        if (playerController == null)
-        {
-            playerController = FindObjectOfType<PlayerController>();
-            if (playerController == null)
-            {
-                Debug.LogWarning("FloatZone: No PlayerController found in scene.");
-            }
-        }
-    }
+    private PlayerController playerControllerInside;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == playerController?.gameObject)
+        PlayerController controller = other.GetComponent<PlayerController>();
+        if (controller != null)
         {
-            playerInside = true;
+            playerControllerInside = controller;
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject == playerController?.gameObject)
+        if (playerControllerInside != null && other.gameObject == playerControllerInside.gameObject)
         {
-            playerInside = false;
+            playerControllerInside = null;
         }
     }
 
     private void Update()
     {
-        if (!playerInside || playerController == null) return;
+        if (playerControllerInside == null) return;
 
-        Vector2 playerVelocity = playerController.Force;
-
+        Vector2 playerVelocity = playerControllerInside.Force;
         float forceToApply = windForce;
 
-        /*if (playerVelocity.y < fallSpeedThreshold)
-        {
-            forceToApply *= bounceMultiplier;
-        }*/
-
-        playerController.SetVerticalForce(forceToApply);
+        playerControllerInside.SetVerticalForce(forceToApply);
     }
 }

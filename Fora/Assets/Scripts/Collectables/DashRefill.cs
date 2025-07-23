@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DashRefill : MonoBehaviour
 {
-    public GameObject playerObject;           
+    public GameObject playerObject;
     public float cooldownTime = 5f;
     public float fadeDuration = 1f;
 
@@ -19,31 +19,42 @@ public class DashRefill : MonoBehaviour
         if (spriteRenderer == null)
             Debug.LogWarning("DashRefill: No SpriteRenderer found!");
 
-        // Automatically find the player object if not assigned
         if (playerObject == null)
+        {
+            StartCoroutine(FindPlayerObjectWithDelay());
+        }
+    }
+
+    private IEnumerator FindPlayerObjectWithDelay()
+    {
+        float timer = 0f;
+        while (playerObject == null && timer < 5f)
         {
             PlayerDash playerDash = FindObjectOfType<PlayerDash>();
             if (playerDash != null)
             {
                 playerObject = playerDash.gameObject;
+                Debug.Log("DashRefill: Found PlayerDash.");
+                yield break;
             }
-            else
-            {
-                Debug.LogWarning("DashRefill: No PlayerDash found in scene.");
-            }
+
+            timer += 0.5f;
+            yield return new WaitForSeconds(0.5f);
         }
+
+        if (playerObject == null)
+            Debug.LogWarning("DashRefill: No PlayerDash found in scene after waiting.");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isOnCooldown) return;
+        if (isOnCooldown || playerObject == null) return;
 
         if (other.gameObject == playerObject)
         {
             PlayerDash playerDash = playerObject.GetComponent<PlayerDash>();
             if (playerDash != null)
             {
-                // !!PLAY SOUND!!
                 playerDash.RefillDash();
                 StartCoroutine(RefillCooldown());
             }

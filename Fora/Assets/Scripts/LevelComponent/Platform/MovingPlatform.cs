@@ -110,4 +110,30 @@ public class MovingPlatform2D : MonoBehaviour
 
         isReturningToStart = true;
     }
+
+    private void OnDrawGizmos()
+    {
+        if (relativePathPoints == null || relativePathPoints.Length < 2)
+            return;
+
+        Gizmos.color = Color.green;
+        Vector3 origin = transform.position;
+
+        for (int i = 0; i < relativePathPoints.Length; i++)
+        {
+            Vector3 worldPoint = origin + (Vector3)relativePathPoints[i];
+            Gizmos.DrawSphere(worldPoint, 0.1f);
+
+            if (i > 0)
+            {
+                Vector3 prevWorldPoint = origin + (Vector3)relativePathPoints[i - 1];
+                Gizmos.DrawLine(prevWorldPoint, worldPoint);
+            }
+        }
+
+        // Optionally connect end to start
+        Vector3 firstPoint = origin + (Vector3)relativePathPoints[0];
+        Vector3 lastPoint = origin + (Vector3)relativePathPoints[relativePathPoints.Length - 1];
+        Gizmos.DrawLine(lastPoint, firstPoint);
+    }
 }
