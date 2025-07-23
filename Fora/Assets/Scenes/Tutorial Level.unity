@@ -59319,6 +59319,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 516874973405156528, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 543674880265445318, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
       propertyPath: m_Name
       value: Moose
@@ -59331,6 +59335,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2606844401760950927}
+    - target: {fileID: 3804751739181822587, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4184986695538006697, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4285789628989887932, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
       propertyPath: m_LocalPosition.x
       value: 131.42
@@ -59371,10 +59383,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5854780418985300758, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5911738911842705091, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041448570643631816, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7106229761122106857, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
       propertyPath: bossEscapeScene
       value: 
       objectReference: {fileID: 425291414}
+    - target: {fileID: 8019418357178773459, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387148583957501915, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
