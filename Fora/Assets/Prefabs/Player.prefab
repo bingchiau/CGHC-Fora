@@ -492,7 +492,7 @@ MonoBehaviour:
   aim: {fileID: 5969962939511435056}
   _whatCanBounce:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
 --- !u!114 &887303546173535630
 MonoBehaviour:
   m_ObjectHideFlags: 0
