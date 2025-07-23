@@ -31,8 +31,14 @@ public class FireballCollisionCircular : MonoBehaviour
         if (pc != null)
         {
             Vector2 hitPos = player.GetComponent<Collider2D>().ClosestPoint(transform.position);
-            Vector2 knockbackDir = controller.GetKnockbackDirection(hitPos);
+            Vector2 knockbackDir = (hitPos - (Vector2)transform.position).normalized;
             pc.SetForce(knockbackDir * controller.KnockbackStrength);
+        }
+
+        PlayerStats ps = player.GetComponent<PlayerStats>();
+        if (ps != null)
+        {
+            ps.TakeDamage(controller.DamageAmount);
         }
     }
 }

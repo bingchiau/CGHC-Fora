@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class MovingPlatform2D : MonoBehaviour
@@ -7,126 +6,134 @@ public class MovingPlatform2D : MonoBehaviour
     [Tooltip("Points relative to the object’s starting position in the scene.")]
     [SerializeField] private Vector2[] relativePathPoints;
     [SerializeField] private float moveSpeed = 2f;
-    [SerializeField] private float waitTime = 1f;
+    [SerializeField] private float waitTime = 0f;
 
     private Vector3[] worldPoints;
-    private int currentIndex = 0;
+    private int currentIndex = 1;
+    private bool isActivated = false;
     private bool isWaiting = false;
+    private bool isReturningToStart = false;
 
-    // This will store the original position permanently
-    private Vector3 storedStartPosition;
-
-    private PlayerController customPlayer;
-
-    private Vector3 lastPos;
-
+    private Transform passenger;
+    private Transform triggerReference;
+    private Vector3 lastTriggerPos;
 
     private void Awake()
     {
-        // Save the platform's position BEFORE any movement
-        storedStartPosition = transform.position;
-    }
-
-    private void Start()
-    {
-        // Convert relative offsets to world-space points
         worldPoints = new Vector3[relativePathPoints.Length];
         for (int i = 0; i < relativePathPoints.Length; i++)
         {
-            worldPoints[i] = storedStartPosition + (Vector3)relativePathPoints[i];
+            worldPoints[i] = transform.position + (Vector3)relativePathPoints[i];
         }
-
-        // Move to the first point immediately
-        transform.position = worldPoints[0];
-        currentIndex = 1;
     }
 
     private void Update()
     {
-        if (worldPoints == null || isWaiting || worldPoints.Length < 2) return;
-        MoveToTarget();
-    }
+        if (worldPoints == null || worldPoints.Length < 2 || isWaiting)
+            return;
 
-    private void LateUpdate()
-    {
-        if (customPlayer != null)
+        if (isReturningToStart)
         {
-            Vector3 delta = transform.position - lastPos;
-            customPlayer.ApplyPlatformOffset(delta);
+            ReturnToStart();
+        }
+        else if (isActivated)
+        {
+            MoveToTarget();
         }
 
-        lastPos = transform.position;
+        HandlePassengerMovement();
     }
 
     private void MoveToTarget()
     {
         Vector3 target = worldPoints[currentIndex];
-        Vector3 current = transform.position;
-        Vector3 direction = (target - current).normalized;
-        float distance = Vector3.Distance(current, target);
+        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
 
-        transform.position += direction * moveSpeed * Time.deltaTime;
-
-        if (distance < 0.05f)
+        if (Vector3.Distance(transform.position, target) < 0.01f)
         {
             transform.position = target;
-            StartCoroutine(WaitBeforeNextPoint());
+            currentIndex = (currentIndex + 1) % worldPoints.Length;
+
+            if (waitTime > 0f)
+                StartCoroutine(WaitBeforeNextMove());
         }
     }
 
-    private IEnumerator WaitBeforeNextPoint()
+    private System.Collections.IEnumerator WaitBeforeNextMove()
     {
         isWaiting = true;
         yield return new WaitForSeconds(waitTime);
-        currentIndex = (currentIndex + 1) % worldPoints.Length;
         isWaiting = false;
     }
 
-    private void OnDrawGizmosSelected()
+    private void ReturnToStart()
     {
-        if (relativePathPoints == null || relativePathPoints.Length == 0) return;
+        Vector3 start = worldPoints[0];
+        transform.position = Vector3.MoveTowards(transform.position, start, moveSpeed * Time.deltaTime);
 
-        // Use current position in editor as origin
-        Vector3 origin = Application.isPlaying ? storedStartPosition : transform.position;
+        if (Vector3.Distance(transform.position, start) < 0.05f)
+        {
+            transform.position = start;
+            isReturningToStart = false;
+            isActivated = false;
+            currentIndex = 1;
+        }
+    }
 
-        Gizmos.color = Color.yellow;
+    private void HandlePassengerMovement()
+    {
+        if (passenger != null && triggerReference != null)
+        {
+            Vector3 triggerDelta = triggerReference.position - lastTriggerPos;
+            passenger.position += triggerDelta;
+            lastTriggerPos = triggerReference.position;
+        }
+    }
+
+    public void ActivatePlatform(Collider2D player, Transform trigger)
+    {
+        isActivated = true;
+        isReturningToStart = false;
+
+        passenger = player.transform;
+        triggerReference = trigger;
+        lastTriggerPos = trigger.position;
+    }
+
+    public void DeactivatePlatform(Collider2D player)
+    {
+        if (passenger == player.transform)
+        {
+            passenger = null;
+            triggerReference = null;
+        }
+
+        isReturningToStart = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (relativePathPoints == null || relativePathPoints.Length < 2)
+            return;
+
+        Gizmos.color = Color.green;
+        Vector3 origin = transform.position;
 
         for (int i = 0; i < relativePathPoints.Length; i++)
         {
             Vector3 worldPoint = origin + (Vector3)relativePathPoints[i];
-            Gizmos.DrawSphere(worldPoint, 0.15f);
+            Gizmos.DrawSphere(worldPoint, 0.1f);
 
             if (i > 0)
             {
-                Vector3 prev = origin + (Vector3)relativePathPoints[i - 1];
-                Gizmos.DrawLine(prev, worldPoint);
+                Vector3 prevWorldPoint = origin + (Vector3)relativePathPoints[i - 1];
+                Gizmos.DrawLine(prevWorldPoint, worldPoint);
             }
         }
 
-        // Optional loop line
-        if (relativePathPoints.Length > 1)
-        {
-            Vector3 first = origin + (Vector3)relativePathPoints[0];
-            Vector3 last = origin + (Vector3)relativePathPoints[^1];
-            Gizmos.color = new Color(1f, 1f, 0f, 0.3f);
-            Gizmos.DrawLine(last, first);
-        }
-    }
-
-    // PLAYER FOLLOW PLATFORM
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            customPlayer = other.GetComponentInParent<PlayerController>();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            customPlayer = null;
-        }
+        // Optionally connect end to start
+        Vector3 firstPoint = origin + (Vector3)relativePathPoints[0];
+        Vector3 lastPoint = origin + (Vector3)relativePathPoints[relativePathPoints.Length - 1];
+        Gizmos.DrawLine(lastPoint, firstPoint);
     }
 }

@@ -10,6 +10,7 @@ public class CircularFireball : MonoBehaviour
     [SerializeField] private bool clockwise = true;
     [SerializeField] private float knockbackStrength = 20f;
     [SerializeField] private float respawnDelay = 2f;
+    [SerializeField] private int damageAmount = 1;
 
     private GameObject spawnedFireball;
     private float angle; // Radians
@@ -17,6 +18,7 @@ public class CircularFireball : MonoBehaviour
     private Vector3 center;
 
     public float KnockbackStrength => knockbackStrength;
+    public int DamageAmount => damageAmount;
 
     void Start()
     {

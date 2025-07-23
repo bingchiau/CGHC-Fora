@@ -57,7 +57,6 @@ public class PlayerMovement : PlayerStates
         moveSpeed = EvaluateFriction(moveSpeed);
         _playerController.SetHorizontalForce(moveSpeed);
 
-        // ✅ Animation update
         if (animator != null)
         {
             float animationSpeed = Mathf.Abs(moveSpeed);

@@ -32,8 +32,16 @@ public class FireballCollisionDropping : MonoBehaviour
         PlayerController pc = player.GetComponent<PlayerController>();
         if (pc != null)
         {
-            Vector2 knockbackDir = controller.GetKnockbackDirection();
-            pc.SetForce(knockbackDir * controller.KnockbackStrength);
+            Vector2 knockbackDir = -controller.GetKnockbackDirection();
+            knockbackDir.y = Mathf.Abs(knockbackDir.y); // Ensure positive upward Y
+            knockbackDir += Vector2.up * 0.5f;          // Optional boost
+            pc.SetForce(knockbackDir.normalized * controller.KnockbackStrength);
+        }
+
+        PlayerStats ps = player.GetComponent<PlayerStats>();
+        if (ps != null)
+        {
+            ps.TakeDamage(controller.DamageAmount);
         }
     }
 }

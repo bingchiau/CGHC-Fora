@@ -44,13 +44,25 @@ public class Camera2D : MonoBehaviour
         CenterOnTarget(_playerToFollow);
         startRotation = transform.rotation;
         targetRotation = transform.rotation;
+
+        Debug.Log("Camera2D Start() running!");
+
     }
 
     private void Update()
     {
         MoveCamera();
         RotateCamera();
+
+        Debug.Log("Camera2D Update() running...");
     }
+
+    public void SetTarget(PlayerMotor player)
+    {
+        _playerToFollow = player;
+        CenterOnTarget(_playerToFollow);
+    }
+
 
     // Returns the position of our target
     private Vector3 GetTargetPosition(PlayerMotor player)

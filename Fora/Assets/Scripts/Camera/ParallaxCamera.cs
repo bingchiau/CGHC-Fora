@@ -1,29 +1,31 @@
 using UnityEngine;
 
+/// <summary>
+/// Detects horizontal camera movement and notifies subscribed layers with delta movement.
+/// </summary>
 [ExecuteInEditMode]
 public class ParallaxCamera : MonoBehaviour
 {
     public delegate void ParallaxCameraDelegate(float deltaMovement);
     public ParallaxCameraDelegate onCameraTranslate;
 
-    private float oldPosition;
+    private float _previousX;
 
     void Start()
     {
-        oldPosition = transform.position.x;
+        _previousX = transform.position.x;
     }
 
     void Update()
     {
-        if (transform.position.x != oldPosition)
-        {
-            if (onCameraTranslate != null)
-            {
-                float delta = oldPosition - transform.position.x;
-                onCameraTranslate(delta);
-            }
+        float currentX = transform.position.x;
 
-            oldPosition = transform.position.x;
+        // Broadcast delta only when camera moves horizontally
+        if (!Mathf.Approximately(currentX, _previousX))
+        {
+            float delta = _previousX - currentX;
+            onCameraTranslate?.Invoke(delta);
+            _previousX = currentX;
         }
     }
 }

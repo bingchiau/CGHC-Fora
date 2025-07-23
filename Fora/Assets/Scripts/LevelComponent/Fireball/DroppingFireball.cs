@@ -9,6 +9,10 @@ public class DroppingFireball : MonoBehaviour
     [SerializeField] private float speed = 1f;
     [SerializeField] private float spawnCycleTime = 1f;
     [SerializeField] private float knockbackStrength = 20f;
+    [SerializeField] private int damageAmount = 1;
+
+    public float KnockbackStrength => knockbackStrength;
+    public int DamageAmount => damageAmount;
 
     private GameObject spawnedFireball;
     private SpriteRenderer fireballRenderer;
@@ -23,7 +27,6 @@ public class DroppingFireball : MonoBehaviour
 
     public Vector3 StartPosition => _origin + localStartOffset;
     public Vector3 EndPosition => _origin + localEndOffset;
-    public float KnockbackStrength => knockbackStrength;
 
     void Start()
     {
@@ -75,7 +78,13 @@ public class DroppingFireball : MonoBehaviour
         if (spawnedFireball != null)
             Destroy(spawnedFireball); // Destroy old one if it somehow remains
 
-        spawnedFireball = Instantiate(fireballPrefab, StartPosition, Quaternion.Euler(0, 0, 90f), transform);
+        Vector3 direction = EndPosition - StartPosition;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        angle += 180f; // Flip the angle
+
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        spawnedFireball = Instantiate(fireballPrefab, StartPosition, rotation, transform);
+
         fireballRenderer = spawnedFireball.GetComponent<SpriteRenderer>();
         fireballCollider = spawnedFireball.GetComponent<Collider2D>();
 
