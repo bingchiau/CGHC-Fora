@@ -11,16 +11,20 @@ public class FireBlockage : MonoBehaviour
     [SerializeField] private List<GameObject> _enemies;
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private Transform _nextSpawnPoint;
+    [SerializeField] private int _areaOfEnemies;
 
+    private int _startHealth;
     private float _health;
     private int _displayHealth;
     private bool _reignite;
+    private List<GameObject> _deadEnemies = new List<GameObject>();
 
-    public static Action<Transform> OnBreak;
+    public static Action<Transform, int> OnBreak;
 
     private void Start()
     {
         _health = _maxHealth;
+        _startHealth = _maxHealth;
     }
 
     private void Update()
@@ -40,7 +44,7 @@ public class FireBlockage : MonoBehaviour
         // Add next spawn point
         if (_health <= 0)
         {
-            OnBreak?.Invoke(_nextSpawnPoint);
+            OnBreak?.Invoke(_nextSpawnPoint, _areaOfEnemies);
             gameObject.SetActive(false);
         }
 
@@ -64,20 +68,36 @@ public class FireBlockage : MonoBehaviour
         {
             if (_enemies[enemy] == dieEnemy)
             {
+                _deadEnemies.Add(_enemies[enemy]);
                 _enemies.Remove(_enemies[enemy]);
+                
                 _maxHealth -= 40;
                 _health = _maxHealth;
             }
         }
     }
 
+    private void ResetHealth(PlayerMotor player)
+    {
+        _maxHealth = _startHealth;
+        _health = _maxHealth;
+
+        for (int enemy = 0; enemy < _deadEnemies.Count; enemy++)
+        {
+            _enemies.Add(_deadEnemies[enemy]);
+            _deadEnemies.Remove(_deadEnemies[enemy]);
+        }
+    }
+
     private void OnEnable()
     {
         FadeRemove.OnEnemyDie += RemoveEnemy;
+        LevelManager.OnRevive += ResetHealth;
     }
 
     private void OnDisable()
     {
         FadeRemove.OnEnemyDie -= RemoveEnemy;
+        LevelManager.OnRevive -= ResetHealth;
     }
 }

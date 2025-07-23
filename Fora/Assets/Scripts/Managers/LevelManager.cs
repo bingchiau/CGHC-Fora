@@ -9,17 +9,38 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Transform _firstLevelSpawnPoint;
     [SerializeField] private GameObject _playerPrefab;
 
+    [SerializeField] private List<GameObject> _area1;
+    [SerializeField] private List<GameObject> _area2;
+    [SerializeField] private List<GameObject> _area3;
+    [SerializeField] private List<GameObject> _area4;
+    [SerializeField] private List<GameObject> _area5;
+    [SerializeField] private List<GameObject> _area6;
+    [SerializeField] private List<GameObject> _area7;
+    [SerializeField] private List<GameObject> _area8;
+
+    // Dictionary to easy access all enemies
+    Dictionary<int, List<GameObject>> areas = new Dictionary<int, List<GameObject>>();
+
+    private int _currentArea;
     private GameObject _currentPlayer;
     private Transform _currentSpawnPoint;
-    private GameObject _lastLevelFire;
-    private Animator _animator;
-    private SpriteRenderer _spriteRenderer;
 
     public static Action<PlayerMotor> OnRevive;
 
     private void Start()
     {
         _currentSpawnPoint = _firstLevelSpawnPoint;
+        _currentArea = 1;
+
+        // Add area to dictionary
+        areas.Add(1, _area1);
+        areas.Add(2, _area2);
+        areas.Add(3, _area3);
+        areas.Add(4, _area4);
+        areas.Add(5, _area5);
+        areas.Add(6, _area6);
+        areas.Add(7, _area7);
+        areas.Add(8, _area8);
     }
 
     private void Update()
@@ -27,6 +48,12 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             RevivePlayer();
+
+            for (int i = 0; i < areas[_currentArea].Count; i++)
+            {
+                areas[_currentArea][i].SetActive(true);
+                areas[_currentArea][i].GetComponent<PlayerStats>().ResetHealth();
+            }
         }
     }
 
@@ -48,14 +75,16 @@ public class LevelManager : MonoBehaviour
         //_spriteRenderer = player.GetComponent<SpriteRenderer>();
     }
 
-    private void GetCurrentDieLevel(Transform spawnPoint)
+    private void GetCurrentDieLevel(Transform spawnPoint, int area_enemy)
     {
         _currentSpawnPoint = spawnPoint;
+        _currentArea = area_enemy;
     }
 
-    public void SetNewSpawnPoint(Transform spawnPoint)
+    public void SetNewSpawnPoint(Transform spawnPoint, int area_enemy)
     {
         _currentSpawnPoint = spawnPoint;
+        _currentArea = area_enemy;
     }
 
     private void OnEnable()

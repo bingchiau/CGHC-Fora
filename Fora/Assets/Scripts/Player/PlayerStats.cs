@@ -122,7 +122,7 @@ public class PlayerStats : MonoBehaviour
     public void ResetHealth()
     {
         currentHealth = maxHealth;
-        IsAlive = true;
+        IsAlive = true; 
         NotifyHealthChanged();
     }
 

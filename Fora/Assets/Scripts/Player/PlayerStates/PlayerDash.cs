@@ -24,7 +24,8 @@ public class PlayerDash : PlayerStates
     {
         base.InitState();
         DashLeft = _maxDashes;
-        _dashTrail = GetComponent<TrailRenderer>();
+
+        _dashTrail = GetComponent<TrailRenderer>()?. GetComponent<TrailRenderer>();
     }
 
     public override void ExecuteState()
@@ -90,9 +91,8 @@ public class PlayerDash : PlayerStates
 
         _playerController.Conditions.IsDashing = true;
         _playerController.StopGravity();
-        _dashTrail.emitting = true;
 
-        
+        _dashTrail.emitting = true;
 
         while (timer < _dashDuration)
         {
