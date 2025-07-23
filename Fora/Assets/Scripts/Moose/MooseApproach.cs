@@ -54,9 +54,9 @@ public class MooseApproach : MonoBehaviour
         _audioSource = gameObject.AddComponent<AudioSource>();
         _audioSource.playOnAwake = false;
 
-        // ✅ Play sound at start
         if (arrivalSound != null)
         {
+            arrivalSound.LoadAudioData();
             _audioSource.PlayOneShot(arrivalSound, arrivalSoundVolume);
         }
 
@@ -67,7 +67,7 @@ public class MooseApproach : MonoBehaviour
     {
         if (currentIndex >= waypoints.Length - 1)
         {
-            StartCoroutine(EscapeSequence());
+            StartCoroutine(EscapeSequenceSmooth());
             enabled = false;
             return;
         }
@@ -92,19 +92,24 @@ public class MooseApproach : MonoBehaviour
         }
     }
 
-    private IEnumerator EscapeSequence()
+    private IEnumerator EscapeSequenceSmooth()
     {
+        // ⏳ Frame 1: Activate objects staggered
         if (objectsToActivateBeforeEscape != null)
         {
             foreach (GameObject obj in objectsToActivateBeforeEscape)
             {
                 if (obj != null)
                     obj.SetActive(true);
+                yield return null;
             }
         }
 
         if (bossEscapeHandler != null && camera2D != null)
+        {
+            yield return null; // let camera handle update load separately
             bossEscapeHandler.ShakeCameraAfterDelay(camera2D, 5f, 60f, 0.12f);
+        }
 
         yield return new WaitForSeconds(5f);
 
@@ -115,6 +120,8 @@ public class MooseApproach : MonoBehaviour
             objectToFadeOut.SetActive(false);
         }
 
+        yield return null;
+
         if (CountdownTimerUI.Instance != null)
         {
             CountdownTimerUI.Instance.StartTimer(60f, new Vector2(0f, 0f), new Vector2(689f, 474f), 4f);
@@ -124,6 +131,8 @@ public class MooseApproach : MonoBehaviour
             Debug.LogWarning("[MooseApproach] CountdownTimerUI not found in scene.");
         }
 
+        // Final frame: destroy
+        yield return null;
         Destroy(gameObject);
     }
 
