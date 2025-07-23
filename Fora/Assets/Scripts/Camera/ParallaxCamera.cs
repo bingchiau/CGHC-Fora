@@ -1,29 +1,33 @@
 using UnityEngine;
 
+/// <summary>
+/// Detects camera movement and broadcasts horizontal delta to listeners (e.g., ParallaxBackground).
+/// </summary>
 [ExecuteInEditMode]
 public class ParallaxCamera : MonoBehaviour
 {
     public delegate void ParallaxCameraDelegate(float deltaMovement);
     public ParallaxCameraDelegate onCameraTranslate;
 
-    private float oldPosition;
+    private float _previousX;
 
     void Start()
     {
-        oldPosition = transform.position.x;
+        _previousX = transform.position.x;
     }
 
     void Update()
     {
-        if (transform.position.x != oldPosition)
-        {
-            if (onCameraTranslate != null)
-            {
-                float delta = oldPosition - transform.position.x;
-                onCameraTranslate(delta);
-            }
+        float currentX = transform.position.x;
 
-            oldPosition = transform.position.x;
+        // Only trigger if there's horizontal movement
+        if (!Mathf.Approximately(currentX, _previousX))
+        {
+            float delta = _previousX - currentX;
+
+            onCameraTranslate?.Invoke(delta); // Broadcast delta to all listeners
+
+            _previousX = currentX;
         }
     }
 }
