@@ -37,6 +37,7 @@ public class FireBlockage : MonoBehaviour
             _health += 5 * Time.deltaTime;
         }
 
+        // Add next spawn point
         if (_health <= 0)
         {
             OnBreak?.Invoke(_nextSpawnPoint);
@@ -52,7 +53,7 @@ public class FireBlockage : MonoBehaviour
     {
         if (collision.CompareTag("WaterDroplet"))
         {
-            _health -= 20;
+            _health -= 300;
         }
     }
 

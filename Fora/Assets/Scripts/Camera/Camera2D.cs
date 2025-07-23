@@ -55,7 +55,7 @@ public class Camera2D : MonoBehaviour
     // Returns the position of our target
     private Vector3 GetTargetPosition(PlayerMotor player)
     {
-        if (player == null) return Vector3.zero;
+        if (player == null) return transform.position;
         float xPos = player.transform.position.x * horizontalInFluence;
         float yPos = player.transform.position.y * verticalInFluence;
         return new Vector3(xPos, yPos, transform.position.z);

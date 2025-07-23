@@ -26,9 +26,12 @@ public class UIManager : Singleton<UIManager>
 
     private void InternalWeightUpdate()
     {
-        _weightImage.fillAmount = Mathf.Lerp(_weightImage.fillAmount, _weightRatio, Time.deltaTime * 10f);
+        if (_weightImage != null)
+        {
+            _weightImage.fillAmount = Mathf.Lerp(_weightImage.fillAmount, _weightRatio, Time.deltaTime * 10f);
 
-        _weightImage.color = Color.Lerp(_color[_currentColorIndex], _color[_targetColorIndex], _weightImage.fillAmount);
+            _weightImage.color = Color.Lerp(_color[_currentColorIndex], _color[_targetColorIndex], _weightImage.fillAmount);
+        }
     }
 
     private void UpdateWeightImageReference(PlayerMotor player)

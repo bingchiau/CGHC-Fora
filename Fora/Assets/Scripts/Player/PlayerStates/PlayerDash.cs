@@ -40,8 +40,6 @@ public class PlayerDash : PlayerStates
         }
 
         _dashPower = EvaluateWeight(_maxDashPower, _minDashPower);
-
-        Debug.Log(_dashPower);
     }
 
     protected override void GetInput()
@@ -103,7 +101,6 @@ public class PlayerDash : PlayerStates
             Debug.DrawRay(_playerController.transform.position, direction * 0.7f, Color.green);
             if (ray)
             {
-                Debug.Log("hit a wall");
                 _canBounce = true;    
             }
             
@@ -115,7 +112,6 @@ public class PlayerDash : PlayerStates
             else
             {
                 _playerController.SetForce(_dashPower * direction.normalized);
-                Debug.Log(_dashPower + " " + direction.normalized);
             }
             
             timer += Time.deltaTime;

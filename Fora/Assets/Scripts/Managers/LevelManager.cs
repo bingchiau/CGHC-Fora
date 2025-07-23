@@ -53,6 +53,11 @@ public class LevelManager : MonoBehaviour
         _currentSpawnPoint = spawnPoint;
     }
 
+    public void SetNewSpawnPoint(Transform spawnPoint)
+    {
+        _currentSpawnPoint = spawnPoint;
+    }
+
     private void OnEnable()
     {
         PlayerStats.OnDeath += PlayerDeath;

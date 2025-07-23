@@ -552,7 +552,7 @@ public class PlayerController : MonoBehaviour
     // Alan - For platform follow transform
     public void ApplyPlatformOffset(Vector3 offset)
     {
-        transform.position += offset;
+        transform.position += offset;        
     }
 
 }
