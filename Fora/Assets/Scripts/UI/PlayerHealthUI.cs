@@ -30,6 +30,8 @@ public class PlayerHealthUI : MonoBehaviour
 
     private void UpdateHealthText(int currentHealth)
     {
+        Debug.Log("health ui");
+
         if (healthText == null)
         {
             Debug.LogWarning("HealthText UI is not assigned.");

@@ -100,10 +100,10 @@ TextureImporter:
       name: Fora-sprite-roll-Sheet_0
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 0
-        width: 24
-        height: 23
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,10 +121,10 @@ TextureImporter:
       name: Fora-sprite-roll-Sheet_1
       rect:
         serializedVersion: 2
-        x: 37
+        x: 32
         y: 0
-        width: 24
-        height: 25
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,10 +142,10 @@ TextureImporter:
       name: Fora-sprite-roll-Sheet_2
       rect:
         serializedVersion: 2
-        x: 69
+        x: 64
         y: 0
-        width: 23
-        height: 24
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,10 +163,10 @@ TextureImporter:
       name: Fora-sprite-roll-Sheet_3
       rect:
         serializedVersion: 2
-        x: 101
+        x: 96
         y: 0
-        width: 23
-        height: 23
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,10 +184,10 @@ TextureImporter:
       name: Fora-sprite-roll-Sheet_4
       rect:
         serializedVersion: 2
-        x: 132
+        x: 128
         y: 0
-        width: 24
-        height: 23
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,10 +205,10 @@ TextureImporter:
       name: Fora-sprite-roll-Sheet_5
       rect:
         serializedVersion: 2
-        x: 164
+        x: 160
         y: 0
-        width: 23
-        height: 23
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,10 +226,10 @@ TextureImporter:
       name: Fora-sprite-roll-Sheet_6
       rect:
         serializedVersion: 2
-        x: 196
+        x: 192
         y: 0
-        width: 23
-        height: 24
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -247,10 +247,10 @@ TextureImporter:
       name: Fora-sprite-roll-Sheet_7
       rect:
         serializedVersion: 2
-        x: 227
+        x: 224
         y: 0
-        width: 24
-        height: 25
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

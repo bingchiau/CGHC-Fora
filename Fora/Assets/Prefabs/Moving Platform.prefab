@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 3464559270367747760}
   - component: {fileID: 1999432250773399331}
   - component: {fileID: 8609945567806623841}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Moving Platform
   m_TagString: Level component
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 169320981
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 103406320, guid: e515c7796b974ae4c8e4d64a6d33f2a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

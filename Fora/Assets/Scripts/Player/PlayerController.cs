@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -72,6 +73,8 @@ public class PlayerController : MonoBehaviour
 
     private float _internalFaceDirection = 1f; // 1 for right, -1 for left
     private float _faceDirection;
+
+    private DeadZone _deadZone;
 
     #endregion
 
@@ -373,6 +376,16 @@ public class PlayerController : MonoBehaviour
                 if (hitObject.GetComponent<SpecialSurface>() != null)
                 {
                     Friction = hitObject.GetComponent<SpecialSurface>().Friction;
+                }
+
+                if (hitObject.CompareTag("DeadZone"))
+                {
+                    _deadZone = hitObject.GetComponent<DeadZone>();
+
+                    if (_deadZone != null)
+                    {
+                        _deadZone.Die(this.gameObject);
+                    }
                 }
 
                 //_conditions.IsBouncing = false;

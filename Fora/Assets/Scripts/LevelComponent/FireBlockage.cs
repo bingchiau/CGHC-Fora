@@ -39,7 +39,6 @@ public class FireBlockage : MonoBehaviour
         }
 
         _displayHealth = (int)_health;
-        Debug.Log(_displayHealth);
 
         _text.text = _displayHealth.ToString();
     }

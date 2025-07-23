@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class Projectiles_explode : Projectiles
@@ -15,7 +16,7 @@ public class Projectiles_explode : Projectiles
 
     override public void DestroyThis(Collider2D collision)
     {
-        if (collision.gameObject.layer == 8 || collision.CompareTag("Player"))
+        if (collision.gameObject.layer == 9 || collision.CompareTag("Player"))
         {
             _rb.velocity = Vector3.zero;
             _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, 0f);

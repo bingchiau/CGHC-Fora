@@ -15,7 +15,14 @@ public class PlayerStates : MonoBehaviour
     {
         get
         {
-            return _animator.GetBool("canMove");
+            if (_animator.enabled == false)
+            {
+                return true;
+            }
+            else
+            {
+                return _animator.GetBool("canMove");
+            }
         }
     }
 

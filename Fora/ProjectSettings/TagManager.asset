@@ -9,6 +9,7 @@ TagManager:
   - Nuts
   - Bomb
   - Enemy
+  - DeadZone
   layers:
   - Default
   - TransparentFX
@@ -18,12 +19,12 @@ TagManager:
   - UI
   - Collider
   - SlopeMap
+  - InvisibleWall
   - Map
   - Enemy
   - Player
-  - 
   - Bullet
-  - InvisibleWall
+  - 
   - PlayerHitBox
   - EnemyHitBox
   - 
@@ -49,6 +50,9 @@ TagManager:
   - name: Background
     uniqueID: 3092236485
     locked: 0
+  - name: Effects
+    uniqueID: 497070927
+    locked: 0
   - name: Map
     uniqueID: 169320981
     locked: 0
@@ -64,12 +68,12 @@ TagManager:
   - name: Player
     uniqueID: 3310002175
     locked: 0
-  - name: Effects
-    uniqueID: 497070927
-    locked: 0
   - name: UI
     uniqueID: 3914710737
     locked: 0
   - name: SlopeMap
     uniqueID: 4203666923
+    locked: 0
+  - name: Foreground
+    uniqueID: 160580063
     locked: 0
