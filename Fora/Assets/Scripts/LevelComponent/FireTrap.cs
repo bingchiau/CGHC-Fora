@@ -3,14 +3,13 @@ using UnityEngine;
 
 public class FireTrap : MonoBehaviour
 {
-    [SerializeField] private int damagePerTick = 1;
-    [SerializeField] private float tickInterval = 1f;
+    public int damagePerTick = 1;
+    public float tickInterval = 1f;
 
     private Coroutine damageCoroutine;
 
     private bool isDisabled = false;
-    [SerializeField] private float disableDuration = 3f;
-    [SerializeField] private float reenableDelay = 0.5f; 
+    public float disableDuration = 3f;
 
     private Collider2D col;
     private Animator anim;
@@ -73,10 +72,8 @@ public class FireTrap : MonoBehaviour
         yield return new WaitForSeconds(disableDuration);
 
         anim.SetTrigger("Ignite");
-
-        yield return new WaitForSeconds(reenableDelay); // delay AFTER ignite before re-enabling collider
-
         col.enabled = true;
+
         isDisabled = false;
     }
 }
