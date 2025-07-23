@@ -2958,7 +2958,7 @@ GameObject:
   - component: {fileID: 427155025}
   - component: {fileID: 427155024}
   m_Layer: 0
-  m_Name: Bird ambience
+  m_Name: -- BGA -- Bird ambience
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
