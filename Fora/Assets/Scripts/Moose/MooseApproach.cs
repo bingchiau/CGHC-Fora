@@ -117,7 +117,7 @@ public class MooseApproach : MonoBehaviour
 
         if (CountdownTimerUI.Instance != null)
         {
-            CountdownTimerUI.Instance.StartTimer(60f, new Vector2(0f, 0f), new Vector2(-23f, -57f), 3f);
+            CountdownTimerUI.Instance.StartTimer(60f, new Vector2(0f, 0f), new Vector2(689f, 474f), 4f);
         }
         else
         {
