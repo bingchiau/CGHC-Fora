@@ -14,9 +14,21 @@ public class FloatZone : MonoBehaviour
 
     private bool playerInside = false;
 
+    private void Start()
+    {
+        if (playerController == null)
+        {
+            playerController = FindObjectOfType<PlayerController>();
+            if (playerController == null)
+            {
+                Debug.LogWarning("FloatZone: No PlayerController found in scene.");
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == playerController.gameObject)
+        if (other.gameObject == playerController?.gameObject)
         {
             playerInside = true;
         }
@@ -24,7 +36,7 @@ public class FloatZone : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject == playerController.gameObject)
+        if (other.gameObject == playerController?.gameObject)
         {
             playerInside = false;
         }
@@ -32,7 +44,7 @@ public class FloatZone : MonoBehaviour
 
     private void Update()
     {
-        if (!playerInside) return;
+        if (!playerInside || playerController == null) return;
 
         Vector2 playerVelocity = playerController.Force;
 
@@ -43,11 +55,6 @@ public class FloatZone : MonoBehaviour
             forceToApply *= bounceMultiplier;
         }*/
 
-        playerController.SetVerticalForce(windForce);   // WITHOUT bounceMultiplier
-
-
-        // Directly apply upward force through your controller
         playerController.SetVerticalForce(forceToApply);
     }
-
 }
