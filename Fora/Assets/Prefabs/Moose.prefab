@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 211371094769699085}
   - component: {fileID: 7942647009438942524}
   - component: {fileID: 7106229761122106857}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Moose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fa7d9e5f6adb88c4f98f70c0a8ebfe69, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -129,10 +129,10 @@ MonoBehaviour:
   fireballPrefab: {fileID: 8602327959006207736, guid: 64533b8bfb49688478a3f8cb288cc16c, type: 3}
   fireballSpawnPoint: {fileID: 8210492833965684939}
   fireballAttackWaypointIndex: 3
-  fireballAttackChance: 0.4
-  fireballAttackDuration: 3
-  fireballFireRate: 0.5
-  fireballSpeed: 6
+  fireballAttackChance: 0.5
+  fireballAttackDuration: 4
+  fireballFireRate: 0.4
+  fireballSpeed: 7
   fireballSound: {fileID: 8300000, guid: 9c8bae09ca5b0d54e81d99a91faf9daa, type: 3}
   fireballSoundVolume: 1
 --- !u!114 &516874973405156528
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec42eb209dfd1a4cbf703c0cd450833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 10
+  damageAmount: 7
 --- !u!60 &211371094769699085
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -289,8 +289,8 @@ GameObject:
   - component: {fileID: 8477734459203791589}
   - component: {fileID: 456044786386572035}
   - component: {fileID: 3963385124916178316}
-  - component: {fileID: 707985096711105283}
-  m_Layer: 9
+  - component: {fileID: 5911738911842705091}
+  m_Layer: 10
   m_Name: TailSeg_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 1739145862, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -427,7 +427,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &707985096711105283
+--- !u!114 &5911738911842705091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -439,7 +439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec42eb209dfd1a4cbf703c0cd450833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 20
+  damageAmount: 2
 --- !u!1 &3230595508388619800
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,7 +450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7442311303375005425}
   - component: {fileID: 1032415194943295186}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,11 +498,11 @@ MonoBehaviour:
   idleWaveAmplitude: 15
   sweepAngle: 304.6
   sweepSpeed: 286.3
-  idleSegmentLength: 0.47
-  attackSegmentLength: 1
+  idleSegmentLength: 0.6
+  attackSegmentLength: 1.2
   sweepWaveAmplitude: 148.5
-  triggerRadius: 4.6
-  sweepCooldown: 2
+  triggerRadius: 5.5
+  sweepCooldown: 1.3
   sweepSound: {fileID: 8300000, guid: 04fc03ffd3453874eaa117f2f78ca684, type: 3}
   sweepSoundVolume: 1
 --- !u!1 &4322232934184136440
@@ -517,8 +517,8 @@ GameObject:
   - component: {fileID: 2264243449976206736}
   - component: {fileID: 8224611254996708825}
   - component: {fileID: 6820453270551761592}
-  - component: {fileID: 1273811127899072369}
-  m_Layer: 9
+  - component: {fileID: 8019418357178773459}
+  m_Layer: 10
   m_Name: TailSeg_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,7 +580,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: -617674412, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -655,7 +655,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1273811127899072369
+--- !u!114 &8019418357178773459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -667,7 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec42eb209dfd1a4cbf703c0cd450833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 20
+  damageAmount: 2
 --- !u!1 &5369445916572688647
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,8 +680,8 @@ GameObject:
   - component: {fileID: 7782839803254555534}
   - component: {fileID: 406110861956765936}
   - component: {fileID: 1883535626486043916}
-  - component: {fileID: 5877761897411463255}
-  m_Layer: 9
+  - component: {fileID: 8387148583957501915}
+  m_Layer: 10
   m_Name: TailEnd_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -742,7 +742,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: -1953883476, guid: 11739430f6d079f449a0df4fa1dd03fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -817,7 +817,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5877761897411463255
+--- !u!114 &8387148583957501915
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -829,7 +829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec42eb209dfd1a4cbf703c0cd450833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 20
+  damageAmount: 2
 --- !u!1 &6322643299752391118
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,8 +842,8 @@ GameObject:
   - component: {fileID: 6369186922609614785}
   - component: {fileID: 852726168131935922}
   - component: {fileID: 1386366665644642076}
-  - component: {fileID: 4227538342392068304}
-  m_Layer: 9
+  - component: {fileID: 5854780418985300758}
+  m_Layer: 10
   m_Name: TailSeg_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -905,7 +905,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 1739145862, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -980,7 +980,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4227538342392068304
+--- !u!114 &5854780418985300758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -992,7 +992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec42eb209dfd1a4cbf703c0cd450833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 20
+  damageAmount: 2
 --- !u!1 &6794809132458306542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,8 +1005,8 @@ GameObject:
   - component: {fileID: 8723182388178313854}
   - component: {fileID: 3165070908297066159}
   - component: {fileID: 3696572747398124259}
-  - component: {fileID: 6346718035580099214}
-  m_Layer: 9
+  - component: {fileID: 6041448570643631816}
+  m_Layer: 10
   m_Name: TailSeg_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1068,7 +1068,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 1739145862, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1143,7 +1143,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6346718035580099214
+--- !u!114 &6041448570643631816
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1155,7 +1155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec42eb209dfd1a4cbf703c0cd450833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 20
+  damageAmount: 2
 --- !u!1 &7578164132438401461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,7 +1165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6267842886619840135}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: TailTriggerZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1199,8 +1199,8 @@ GameObject:
   - component: {fileID: 4517556287411662357}
   - component: {fileID: 3292944026678415456}
   - component: {fileID: 6700462099690842224}
-  - component: {fileID: 5303840679452259836}
-  m_Layer: 9
+  - component: {fileID: 4184986695538006697}
+  m_Layer: 10
   m_Name: TailSeg_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1262,7 +1262,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: -617674412, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1337,7 +1337,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5303840679452259836
+--- !u!114 &4184986695538006697
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1349,7 +1349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec42eb209dfd1a4cbf703c0cd450833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 20
+  damageAmount: 2
 --- !u!1 &8826257212572541173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1359,7 +1359,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8210492833965684939}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: FireballSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1393,8 +1393,8 @@ GameObject:
   - component: {fileID: 6540537469093953661}
   - component: {fileID: 7841824171309455666}
   - component: {fileID: 859087888041516323}
-  - component: {fileID: 2243732226052013325}
-  m_Layer: 9
+  - component: {fileID: 3804751739181822587}
+  m_Layer: 10
   m_Name: TailSeg_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1456,7 +1456,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 565287067
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: -617674412, guid: 5ea262867b576d84085d06ed579222de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1531,7 +1531,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2243732226052013325
+--- !u!114 &3804751739181822587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1543,4 +1543,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec42eb209dfd1a4cbf703c0cd450833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 20
+  damageAmount: 2
