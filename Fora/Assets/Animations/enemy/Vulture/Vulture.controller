@@ -27,12 +27,12 @@ AnimatorStateMachine:
   - {fileID: 7305278301462138600}
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: 2225284670539606712}
-    second:
-    - {fileID: -7081791177773172111}
   - first: {fileID: 2909372882473071202}
     second:
     - {fileID: -5088263074568103689}
+  - first: {fileID: 2225284670539606712}
+    second:
+    - {fileID: -7081791177773172111}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 580, y: 30, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nuts: {fileID: 425885748081601758, guid: 108081e7895cf424e99a50b478e63011, type: 3}
-  _cooldown: 5
+  _cooldown: 8
 --- !u!1109 &-5088263074568103689
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -252,7 +252,7 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: attackCountdown
     m_Type: 1
-    m_DefaultFloat: 0
+    m_DefaultFloat: 8
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
@@ -276,6 +276,18 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
 --- !u!114 &332539796439657209
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9a44f5c8cc807f4ea0d52c6787d9b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &752499380234598908
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -343,7 +355,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -7903658185897229040}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 752499380234598908}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

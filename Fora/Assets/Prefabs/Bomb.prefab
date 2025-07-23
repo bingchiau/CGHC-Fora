@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7835669926890250563}
   - component: {fileID: -7548721837587717689}
   - component: {fileID: 5807184327054575317}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bomb
   m_TagString: Bomb
   m_Icon: {fileID: 0}
@@ -300,4 +300,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197b56f06c4f2cd4eb039d32a9a9616d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 20
+  Damage: 10
