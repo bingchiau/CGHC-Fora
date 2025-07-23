@@ -9,6 +9,7 @@ TagManager:
   - Nuts
   - Bomb
   - Enemy
+  - DeadZone
   layers:
   - Default
   - TransparentFX
