@@ -49,6 +49,9 @@ TagManager:
   - name: Background
     uniqueID: 3092236485
     locked: 0
+  - name: Effects
+    uniqueID: 497070927
+    locked: 0
   - name: Map
     uniqueID: 169320981
     locked: 0
@@ -63,9 +66,6 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3310002175
-    locked: 0
-  - name: Effects
-    uniqueID: 497070927
     locked: 0
   - name: UI
     uniqueID: 3914710737
