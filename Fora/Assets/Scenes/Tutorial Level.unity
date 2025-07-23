@@ -7966,9 +7966,9 @@ GameObject:
   - component: {fileID: 1021720781}
   - component: {fileID: 1021720780}
   - component: {fileID: 1021720779}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Floor & Wall
-  m_TagString: Wall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58634,9 +58634,9 @@ GameObject:
   - component: {fileID: 1622703281}
   - component: {fileID: 1622703280}
   - component: {fileID: 1622703283}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Boss Door
-  m_TagString: Wall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
