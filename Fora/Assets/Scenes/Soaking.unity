@@ -2552,15 +2552,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2565331811242213544, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.499893
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2565331811242213544, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15.179277
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2565331811242213544, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.9427347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2565331811242213544, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2596,23 +2596,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6472432179725460064, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: m_Name
-      value: Moving Platform
+      value: Moving Platform (lv2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
+      propertyPath: relativePathPoints.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: relativePathPoints.Array.data[0].x
-      value: 12
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: relativePathPoints.Array.data[0].y
-      value: 36
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: relativePathPoints.Array.data[1].x
-      value: 18.5
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: relativePathPoints.Array.data[1].y
-      value: 36
+      value: 21
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2933,11 +2937,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6472432179725460064, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: m_Name
-      value: Moving Platform (2)
+      value: Moving Platform (lvl2) (2)
       objectReference: {fileID: 0}
     - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
+      propertyPath: relativePathPoints.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: relativePathPoints.Array.data[0].x
@@ -15629,10 +15637,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806ad30bf1403f54c8d3af9be5ddbd54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTag: Player
+  weightBarName: WeightBar
   _weightImage: {fileID: 8055181962534117825}
   _color:
   - {r: 0.036049128, g: 1, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+  _currentPlayer: {fileID: 0}
 --- !u!4 &912830678
 Transform:
   m_ObjectHideFlags: 0
@@ -68397,11 +68408,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6472432179725460064, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: m_Name
-      value: Moving Platform (3)
+      value: Moving Platform (lvl2) (3)
       objectReference: {fileID: 0}
     - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: moveSpeed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
+      propertyPath: relativePathPoints.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8609945567806623841, guid: c980358579d0f0f47a8f73562e7986f3, type: 3}
       propertyPath: relativePathPoints.Array.data[0].x
