@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Level3Respawn : MonoBehaviour
 {
@@ -11,44 +11,31 @@ public class Level3Respawn : MonoBehaviour
     [SerializeField] private MooseBossAI mooseBossAI;
     [SerializeField] private MooseTailController mooseTailController;
 
+    [Header("Scene Settings")]
+    public string sceneToLoad;
+    public float sceneLoadDelay = 2f; 
+    private bool isLoadingScene = false;
+
     private GameObject currentPlayer;
     private PlayerStats currentStats;
     private Vector3 spawnPoint;
-
     private Camera2D mainCamera;
-
-    [SerializeField] private float respawnDelay = 2f; // Delay in seconds
-    private bool isRespawning = false; // Prevent multiple coroutines
 
     private void Start()
     {
         spawnPoint = transform.position;
         mainCamera = FindObjectOfType<Camera2D>();
-
         SpawnPlayer();
     }
 
     private void Update()
     {
-        if (currentPlayer == null || currentStats == null || isRespawning) return;
+        if (currentPlayer == null || currentStats == null || isLoadingScene) return;
 
         if (currentStats.currentHealth <= 0)
         {
-            StartCoroutine(RespawnAfterDelay());
+            StartCoroutine(LoadSceneAfterDelay());
         }
-    }
-
-    private IEnumerator RespawnAfterDelay()
-    {
-        isRespawning = true;
-
-        Destroy(currentPlayer);
-        currentStats = null;
-
-        yield return new WaitForSeconds(respawnDelay);
-
-        SpawnPlayer();
-        isRespawning = false;
     }
 
     private void SpawnPlayer()
@@ -70,7 +57,6 @@ public class Level3Respawn : MonoBehaviour
         if (mooseTailController != null)
             mooseTailController.player = currentPlayer.transform;
 
-
         if (mainCamera != null)
         {
             if (!mainCamera.enabled) mainCamera.enabled = true;
@@ -82,4 +68,20 @@ public class Level3Respawn : MonoBehaviour
             }
         }
     }
+
+    private IEnumerator LoadSceneAfterDelay()
+    {
+        isLoadingScene = true;
+        yield return new WaitForSeconds(sceneLoadDelay);
+
+        if (!string.IsNullOrEmpty(sceneToLoad))
+        {
+            SceneManager.LoadScene(sceneToLoad);
+        }
+        else
+        {
+            Debug.LogWarning("Scene name not set in Level3Respawn script.");
+        }
+    }
+
 }
