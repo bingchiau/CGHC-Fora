@@ -147,6 +147,7 @@ MonoBehaviour:
   playerTag: Player
   pickupSound: {fileID: 0}
   soundVolume: 1
+  sceneToLoad: Soaking
 --- !u!50 &-486567217910892268
 Rigidbody2D:
   serializedVersion: 4

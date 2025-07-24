@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damagePerTick: 5
   tickInterval: 1
+  disableDuration: 3
 --- !u!50 &1042951834634591198
 Rigidbody2D:
   serializedVersion: 4

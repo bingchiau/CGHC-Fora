@@ -50,3 +50,4 @@ MonoBehaviour:
   speed: 16
   spawnCycleTime: 2
   knockbackStrength: 20
+  damageAmount: 5
