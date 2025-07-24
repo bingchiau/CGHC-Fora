@@ -14,7 +14,7 @@ public class Water : MonoBehaviour
         {
             return;
         }
-        _playerController.AddWeight(_weightAdd);
+        _playerController.AddWeight(_weightAdd);   
         UIManager.Instance.UpdateWeight(_playerController.WeightRatio);
     }
 

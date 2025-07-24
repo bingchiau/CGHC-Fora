@@ -88,7 +88,15 @@ public class PlayerStats : MonoBehaviour
     {
         if (isInvincible || !IsAlive || !CanHit) return;
 
-        currentHealth = Mathf.Max(currentHealth - amount, 0);
+        if (CompareTag("Player"))
+        {
+            AudioManager.Instance.PlayGetHit();
+        }
+        else if (CompareTag("Enemy"))
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.hitEnemy);
+        }
+            currentHealth = Mathf.Max(currentHealth - amount, 0);
         _animator.SetTrigger("isHit");
         Debug.Log($"{gameObject.name} took {amount} damage. Current Health: {currentHealth}");
 
@@ -136,6 +144,7 @@ public class PlayerStats : MonoBehaviour
         }
         else if (CompareTag("Player"))
         {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.die);
             StartCoroutine(DelayDie());
         }
     }

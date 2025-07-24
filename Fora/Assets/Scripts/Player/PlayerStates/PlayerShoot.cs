@@ -70,6 +70,7 @@ public class PlayerShoot : PlayerStates
     {
         if (CanShoot())
         {
+            AudioManager.Instance.PlayShoot();
             Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
             _playerController.ReduceWeight(_damage / 100);
             UIManager.Instance.UpdateWeight(_playerController.WeightRatio);

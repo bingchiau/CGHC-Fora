@@ -11,6 +11,7 @@ public class WaterRefill : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.pickUp);
             _playerController = collision.gameObject.GetComponent<PlayerController>();
 
             if (_playerController != null)

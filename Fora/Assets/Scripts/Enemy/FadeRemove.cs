@@ -34,6 +34,7 @@ public class FadeRemove : StateMachineBehaviour
 
         if (_timeElapsed > _fadeTime)
         {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.enemyDie);
             OnEnemyDie?.Invoke(_gameObject);
             _gameObject.SetActive(false);
             _spriteRenderer.color = new Color(1, 1, 1, 1);

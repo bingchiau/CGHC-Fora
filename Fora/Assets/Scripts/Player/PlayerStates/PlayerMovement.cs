@@ -82,4 +82,9 @@ public class PlayerMovement : PlayerStates
     {
         return Mathf.Lerp(max, min, _playerController.WeightRatio);
     }
+
+    public void PlayMoveSound()
+    {
+        AudioManager.Instance.PlayMoving();
+    }
 }

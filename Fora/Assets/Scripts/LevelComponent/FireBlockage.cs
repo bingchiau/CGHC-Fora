@@ -45,6 +45,7 @@ public class FireBlockage : MonoBehaviour
         if (_health <= 0)
         {
             OnBreak?.Invoke(_nextSpawnPoint, _areaOfEnemies);
+            AudioManager.Instance.PlayFireGone();
             gameObject.SetActive(false);
         }
 
@@ -57,7 +58,8 @@ public class FireBlockage : MonoBehaviour
     {
         if (collision.CompareTag("WaterDroplet"))
         {
-            _health -= 300;
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.hitFire);
+            _health -= 20;
         }
     }
 

@@ -58,6 +58,7 @@ public class PlayerDash : PlayerStates
             return;
         }
 
+        AudioManager.Instance.PlayDash();
         StartCoroutine(DashCountdown());
         StartCoroutine(BounceCooldown());
     }
