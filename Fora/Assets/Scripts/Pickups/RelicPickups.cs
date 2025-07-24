@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Collider2D))]
 public class RelicPickups : MonoBehaviour
@@ -8,6 +9,10 @@ public class RelicPickups : MonoBehaviour
     [SerializeField] private AudioClip pickupSound;
     [Range(0f, 1f)][SerializeField] private float soundVolume = 1f;
 
+    [Header("Scene Settings")]
+    [Tooltip("Exact name of the scene to load (must be in Build Settings).")]
+    [SerializeField] private string sceneToLoad;
+
     private bool pickedUp = false;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -16,30 +21,27 @@ public class RelicPickups : MonoBehaviour
 
         pickedUp = true;
 
-        Debug.Log("[GemPickup] Player picked up the gem.");
+        Debug.Log("[RelicPickups] Player picked up the relic.");
 
-        // Optional sound effect
         if (pickupSound != null)
         {
             AudioSource.PlayClipAtPoint(pickupSound, transform.position, soundVolume);
         }
 
-        // Trigger win screen or placeholder
-        TriggerWinScreen();
+        LoadScene();
 
-        // Disable the gem visually and physically
         gameObject.SetActive(false);
     }
 
-    private void TriggerWinScreen()
+    private void LoadScene()
     {
-        // TODO: Replace with actual win screen logic
-        Debug.Log("[GemPickup] WIN screen should appear now!");
-        // Example placeholder: pause the game
-        Time.timeScale = 0f;
+        if (string.IsNullOrEmpty(sceneToLoad))
+        {
+            Debug.LogWarning("[RelicPickups] No scene name set. Cannot load scene.");
+            return;
+        }
 
-        // Later you could do:
-        // WinScreenUI.Instance.Show();
-        // SceneManager.LoadScene("WinScene");
+        Debug.Log($"[RelicPickups] Loading scene: {sceneToLoad}");
+        SceneManager.LoadScene(sceneToLoad);
     }
 }

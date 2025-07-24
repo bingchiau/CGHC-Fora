@@ -1000,6 +1000,67 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &53246556
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 126.918335
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 25.243454
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.21118927
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071065
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071071
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265523108459017099, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_Name
+      value: 'Circular fireball '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8427605081043623957, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: clockwise
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
 --- !u!1 &64714246
 GameObject:
   m_ObjectHideFlags: 0
@@ -3488,6 +3549,63 @@ Transform:
   - {fileID: 314779649}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &490457534
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 130.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.369179
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.21118927
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071065
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071071
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168793480319530324, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265523108459017099, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
+      propertyPath: m_Name
+      value: Circular fireball  (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5e3fe8fd8d24acf4e9e676e0502313bb, type: 3}
 --- !u!4 &500170242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2516384122834524518, guid: 74448be0f95ed41408798fb5ba05b8bd, type: 3}
@@ -42044,7 +42162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7106229761122106857, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
       propertyPath: maxHealth
-      value: 500
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7106229761122106857, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
       propertyPath: deathEffect
@@ -72622,3 +72740,5 @@ SceneRoots:
   - {fileID: 758199265}
   - {fileID: 438263722}
   - {fileID: 2133430507}
+  - {fileID: 53246556}
+  - {fileID: 490457534}

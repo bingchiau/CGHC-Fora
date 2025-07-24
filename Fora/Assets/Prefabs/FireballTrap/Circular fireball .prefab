@@ -47,6 +47,7 @@ MonoBehaviour:
   fireballPrefab: {fileID: 1200452467657629432, guid: 410a6ac07b283af459e2a49260ebfb0f, type: 3}
   radius: 3
   revolutionsPerSecond: 0.2
-  speedModifier: 1
   clockwise: 1
   knockbackStrength: 20
+  respawnDelay: 2
+  damageAmount: 5
