@@ -3226,7 +3226,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 3543793056131580008, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
   mooseBossAI: {fileID: 1745933176}
   mooseTailController: {fileID: 2111615295}
-  respawnDelay: 3
+  sceneToLoad: Level 3
 --- !u!4 &438263722
 Transform:
   m_ObjectHideFlags: 0

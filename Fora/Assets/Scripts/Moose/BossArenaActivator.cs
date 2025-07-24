@@ -22,7 +22,7 @@ public class BossArenaActivator : MonoBehaviour
 
     private void Start()
     {
-        // 🔥 Prewarm the boss to avoid lag spike on activation
+        // Prewarm the boss to avoid lag spike on activation
         if (boss != null)
         {
             boss.SetActive(true);

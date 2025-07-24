@@ -108,7 +108,7 @@ public class MooseApproach : MonoBehaviour
         if (bossEscapeHandler != null && camera2D != null)
         {
             yield return null; // let camera handle update load separately
-            bossEscapeHandler.ShakeCameraAfterDelay(camera2D, 5f, 60f, 0.12f);
+            bossEscapeHandler.ShakeCameraAfterDelay(camera2D, 5f, 80f, 0.12f);
         }
 
         yield return new WaitForSeconds(5f);
