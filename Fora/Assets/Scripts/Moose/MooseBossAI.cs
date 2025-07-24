@@ -89,7 +89,6 @@ public class MooseBossAI : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         fireball.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        // 🔊 Play fireball sound
         if (fireballSound != null)
             _audioSource.PlayOneShot(fireballSound, fireballSoundVolume);
     }
