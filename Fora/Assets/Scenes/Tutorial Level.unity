@@ -59553,11 +59553,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7495783217031418463, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 126.2
+      value: -1.08
       objectReference: {fileID: 0}
     - target: {fileID: 7495783217031418463, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -45.2
+      value: 0.77
       objectReference: {fileID: 0}
     - target: {fileID: 7495783217031418463, guid: 9e32362591cc3d64cbfb33f9fcf473e3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -59619,6 +59619,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2606844401760950927}
+    - target: {fileID: 1032415194943295186, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: triggerRadius
+      value: 5.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032415194943295186, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
+      propertyPath: attackSegmentLength
+      value: 1.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3229295096796296234, guid: ddf6ba87520931243b5e50f12e9e1c89, type: 3}
       propertyPath: player
       value: 
