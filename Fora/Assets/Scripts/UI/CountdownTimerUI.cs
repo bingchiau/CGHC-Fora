@@ -74,7 +74,7 @@ public class CountdownTimerUI : MonoBehaviour
         if (remainingTime <= 0f)
         {
             isCounting = false;
-            // SceneManager.LoadScene("LoseScene");
+            SceneManager.LoadScene("Lose Screen");
         }
     }
 
