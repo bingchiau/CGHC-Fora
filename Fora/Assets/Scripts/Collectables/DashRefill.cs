@@ -10,6 +10,7 @@ public class DashRefill : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Collider2D col;
     private bool isOnCooldown = false;
+    private bool isFindingPlayer = false;
 
     private void Awake()
     {
@@ -19,10 +20,21 @@ public class DashRefill : MonoBehaviour
         if (spriteRenderer == null)
             Debug.LogWarning("DashRefill: No SpriteRenderer found!");
 
-        if (playerObject == null)
+        TryFindPlayer();
+    }
+
+    private void Update()
+    {
+        if (playerObject == null && !isFindingPlayer)
         {
-            StartCoroutine(FindPlayerObjectWithDelay());
+            TryFindPlayer();
         }
+    }
+
+    private void TryFindPlayer()
+    {
+        isFindingPlayer = true;
+        StartCoroutine(FindPlayerObjectWithDelay());
     }
 
     private IEnumerator FindPlayerObjectWithDelay()
@@ -35,6 +47,7 @@ public class DashRefill : MonoBehaviour
             {
                 playerObject = playerDash.gameObject;
                 Debug.Log("DashRefill: Found PlayerDash.");
+                isFindingPlayer = false;
                 yield break;
             }
 
@@ -44,6 +57,8 @@ public class DashRefill : MonoBehaviour
 
         if (playerObject == null)
             Debug.LogWarning("DashRefill: No PlayerDash found in scene after waiting.");
+
+        isFindingPlayer = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
