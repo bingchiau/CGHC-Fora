@@ -19,14 +19,19 @@ public class PlayerStats : MonoBehaviour
     [Header("Drops")]
     [SerializeField] private GameObject _waterBottle;
 
+    [Header("Audio")]
+    [SerializeField] private bool useAudioManager = true;
+    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private float sfxVolume = 1f;
+    [SerializeField] private AudioSource audioSource;
+
     private float invincibilityTimer = 0f;
     private SpriteRenderer spriteRenderer;
     private Animator _animator;
-
     private bool _isAlive = true;
 
-    public event System.Action<int> OnHealthChanged;
-
+    public event Action<int> OnHealthChanged;
     public static Action<PlayerMotor> OnDeath;
 
     public bool IsAlive
@@ -49,9 +54,10 @@ public class PlayerStats : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (spriteRenderer == null)
-        {
-            Debug.LogWarning("PlayerStats: No SpriteRenderer found! Flash will not work.");
-        }
+            Debug.LogWarning("PlayerStats: No SpriteRenderer found!");
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
 
         ResetHealth();
     }
@@ -74,14 +80,8 @@ public class PlayerStats : MonoBehaviour
         {
             isInvincible = false;
             _animator.enabled = true;
-            if (spriteRenderer != null)
-                spriteRenderer.color = Color.white;
+            if (spriteRenderer != null) spriteRenderer.color = Color.white;
         }
-    }
-
-    private void NotifyHealthChanged()
-    {
-        OnHealthChanged?.Invoke(currentHealth);
     }
 
     public void TakeDamage(int amount)
@@ -90,61 +90,64 @@ public class PlayerStats : MonoBehaviour
 
         if (CompareTag("Player"))
         {
-            AudioManager.Instance.PlayGetHit();
+            if (useAudioManager)
+                AudioManager.Instance.PlayGetHit();
+            else if (hitSound != null && audioSource != null)
+                audioSource.PlayOneShot(hitSound, sfxVolume);
         }
         else if (CompareTag("Enemy"))
         {
-            AudioManager.Instance.PlaySFX(AudioManager.Instance.hitEnemy);
+            if (useAudioManager)
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.hitEnemy);
+            else if (hitSound != null && audioSource != null)
+                audioSource.PlayOneShot(hitSound, sfxVolume);
         }
-            currentHealth = Mathf.Max(currentHealth - amount, 0);
-        _animator.SetTrigger("isHit");
-        Debug.Log($"{gameObject.name} took {amount} damage. Current Health: {currentHealth}");
 
+        currentHealth = Mathf.Max(currentHealth - amount, 0);
+        _animator.SetTrigger("isHit");
         NotifyHealthChanged();
 
-
         if (currentHealth <= 0)
-        {
             Die();
-        }
         else
-        {
             StartCoroutine(StartInvincible());
-        }
     }
 
     private IEnumerator StartInvincible()
     {
         yield return new WaitForSeconds(0.7f);
         isInvincible = true;
-        invincibilityTimer = invincibilityDuration;  
+        invincibilityTimer = invincibilityDuration;
     }
 
     public void Heal(int amount)
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         NotifyHealthChanged();
-        Debug.Log($"{gameObject.name} healed {amount}. Current Health: {currentHealth}");
     }
 
     public void ResetHealth()
     {
         currentHealth = maxHealth;
-        IsAlive = true; 
+        IsAlive = true;
         NotifyHealthChanged();
     }
 
     private void Die()
     {
         IsAlive = false;
+
         if (CompareTag("Enemy"))
         {
-            Debug.Log($"Enemy '{name}' has died.");
             StartCoroutine(DelaySpawn());
         }
         else if (CompareTag("Player"))
         {
-            AudioManager.Instance.PlaySFX(AudioManager.Instance.die);
+            if (useAudioManager)
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.die);
+            else if (deathSound != null && audioSource != null)
+                audioSource.PlayOneShot(deathSound, sfxVolume);
+
             StartCoroutine(DelayDie());
         }
     }
@@ -152,7 +155,7 @@ public class PlayerStats : MonoBehaviour
     private IEnumerator DelayDie()
     {
         yield return new WaitForSeconds(1f);
-        OnDeath?.Invoke(gameObject.GetComponent<PlayerMotor>());
+        OnDeath?.Invoke(GetComponent<PlayerMotor>());
     }
 
     private IEnumerator DelaySpawn()
@@ -162,22 +165,15 @@ public class PlayerStats : MonoBehaviour
             Instantiate(_waterBottle, transform.position, Quaternion.identity);
     }
 
-    public void AfterHit()
-    {
-        _animator.SetBool("canHit", true);
-    }
+    public void AfterHit() => _animator.SetBool("canHit", true);
 
-    // Alan change
     public void ForceDamage(int amount)
     {
         currentHealth = Mathf.Max(currentHealth - amount, 0);
-        Debug.Log($"{gameObject.name} took {amount} fire damage. Current Health: {currentHealth}");
-
         NotifyHealthChanged();
-
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
+
+    private void NotifyHealthChanged() => OnHealthChanged?.Invoke(currentHealth);
 }
