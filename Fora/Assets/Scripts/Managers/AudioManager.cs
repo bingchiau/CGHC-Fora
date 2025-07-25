@@ -33,39 +33,46 @@ public class AudioManager : Singleton<AudioManager>
 
     private void Start()
     {
+        if (bgm == null) return;
         BGM.clip = bgm;
         BGM.Play();
     }
 
     public void PlaySFX(AudioClip audio)
     {
+        if (audio == null) return;
         SFX.PlayOneShot(audio);
     }
 
     public void PlayMoving()
     {
+        if (moving == null) return;
         SFX_movement.pitch = Random.Range(0.8f, 1f);
         SFX.PlayOneShot(moving);
     }
 
     public void PlayShoot()
     {
-        SFX_movement.pitch = Random.Range(0.8f, 1f);
+        if (shoot == null) return;
+        SFX_shoot.pitch = Random.Range(0.8f, 1f);
         SFX_shoot.PlayOneShot(shoot);
     }
 
     public void PlayGetHit()
     {
+        if (getHit == null) return;
         SFX_getHit.PlayOneShot(getHit);
     }
 
     public void PlayDash()
     {
+        if (dash == null) return;
         SFX_dash.PlayOneShot(dash);
     }
 
     public void PlayFireGone()
     {
+        if (fireGone == null) return;
         SFX_fireGone.PlayOneShot(fireGone);
     }
 }
